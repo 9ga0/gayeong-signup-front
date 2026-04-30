@@ -1,7 +1,7 @@
 //import reactLogo from './assets/react.svg' //이미지 불러오기
-import './styles/SignUpScene.css' //css 불러오기
+import '../styles/SignUpPage.css' //css 불러오기
 
-function App() {
+function SignUpPage() {
   return (
     <>
       <div id="background_gradient">  
@@ -47,4 +47,4 @@ function App() {
   )
 }
 
-export default App
+export default SignUpPage
