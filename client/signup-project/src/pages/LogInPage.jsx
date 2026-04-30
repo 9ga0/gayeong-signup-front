@@ -1,7 +1,10 @@
 //import reactLogo from './assets/react.svg' //이미지 불러오기
 import '../styles/LogInPage.css' //css 불러오기
+import React from 'react';
+import { Link } from "react-router-dom";
 
-function LoginPage() {
+
+function LogIn() {
   return (
     <>
       <div id="background_gradient">  
@@ -24,7 +27,10 @@ function LoginPage() {
             className="submit_button"
             >Login</button>
 
-          <p>계정이 없으신가요?</p> 회원가입
+          <p>계정이 없으신가요?</p>
+          <ul>
+            <Link to="/SignUp"><li>회원가입</li></Link>
+          </ul>
         </main>
       </div>
 
@@ -32,4 +38,4 @@ function LoginPage() {
   )
 }
 
-export default LoginPage
+export default LogIn
