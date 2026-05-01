@@ -38,12 +38,15 @@ const InputBox=({children})=>{
 }
 
 const SubmitButton=()=>{
-  <button
-            type="submit"
-            className="submit_button"
-          >
-            제출하기
-  </button>
+  return(
+    <button
+      type="submit"
+              className="submit_button"
+            >
+              제출하기
+        
+    </button>
+  )
 }
 
 const Scene =(props) =>{
@@ -72,8 +75,8 @@ const Scene =(props) =>{
                 <input id="input" type="text" placeholder="상세주소"/>
               </div>
           </div>
+          <SubmitButton/>
       </main>
-      <SubmitButton/>
     </div>
   );
 };
