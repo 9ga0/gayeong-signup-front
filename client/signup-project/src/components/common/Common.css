@@ -13,10 +13,9 @@
   
 }
 
-#signup_box{
-  
-  width: Hug(496px);
-  Height: Hug(851px);
+#card_box{
+  width: 496px;
+  Height: 851px;
   Top: 98px;
   Left: 704px;
   padding: 50px 40px; /*top,Right과 botton,Left가 동일한경우*/
@@ -52,7 +51,7 @@
   gap: 10px;
   background-color: rgba(231, 242, 255, 1);
   border: 1px solid rgba(206, 222, 247, 0.4);
-  align-items: right;
+  float:right;  
 }
 
 #input{  /*입력창 ex) 이름,주소,비밀번호,이메일 등*/
@@ -63,8 +62,16 @@
 }
 
 p{
-  text-align:left;
-  color: black;
+  width: 51;
+  height: 24;
+  font-family: Pretendard Variable;
+  font-weight: 500;
+  font-style: Medium;
+  font-size: 20px;
+  leading-trim: NONE;
+  line-height: 100%;
+  letter-spacing: -4%;
+  color: rgba(34, 34, 34, 1);
 }
 
 .input_box{
@@ -75,4 +82,17 @@ p{
 .line_box{
   width : 414px;
   height : 53px;
+}
+h1{
+  width: 416px;
+  height: 43px;
+
+  font-family: Pretendard Variable;
+  font-weight: 600;
+  font-style: SemiBold;
+  font-size: 36px;
+  line-height: 100%;
+  letter-spacing: -4%;
+  text-align: center;
+  color: rgba(0, 0, 0, 1);
 }
