@@ -1,11 +1,10 @@
 //import reactLogo from './assets/react.svg' //이미지 불러오기
 import React from "react";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
-import '../styles/LogInPage.css'; //css 불러오기
-//import SignUpPage from "./SignUpPage";
+import '../styles/Login.css'; //css 불러오기
 
 
-function LogInPage(){
+function LogIn(){
   return (
     <>
       <div id="background_gradient">  
@@ -38,4 +37,4 @@ function LogInPage(){
   )
 }
 
-export default LogInPage
+export default LogIn
