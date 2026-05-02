@@ -29,12 +29,11 @@ const EmailBox =() =>{
     )
 }
 
-const InputBox=()=>{
+const InputBox=(children)=>{
     return(
-        <>
-            <div class="input_box">
-            </div>
-        </>
+      <div class="input_box">
+        {children}
+      </div>
     )
 }
 
