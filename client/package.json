@@ -1,5 +1,22 @@
 {
   "dependencies": {
     "react-router-dom": "^6.30.3"
-  }
+  },
+  "name": "package.json",
+  "version": "1.0.0",
+  "description": ".",
+  "main": ".",
+  "devDependencies": {},
+  "scripts": {
+    "test": "."
+  },
+  "repository": {
+    "type": "git",
+    "url": "."
+  },
+  "keywords": [
+    ".."
+  ],
+  "author": ".",
+  "license": "ISC"
 }
