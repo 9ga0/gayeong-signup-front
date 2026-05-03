@@ -10,6 +10,7 @@ const CardTitle = (props) => {
     </div>
   ) 
 };
+// 내부함수인데 작은 애들 function vs const
 
 const EmailBox =() =>{
     return(
@@ -29,10 +30,11 @@ const EmailBox =() =>{
     )
 }
 
-const InputBox=(children)=>{
+const InputBox=(props)=>{
     return(
       <div class="input_box">
-        {children}
+        {/* css로만  클래스, 컴포너늩 */}
+        {props.children}
       </div>
     )
 }
@@ -47,6 +49,6 @@ const SubmitButton=(title)=>{
         
     </button>
   )
-}
+} 
 
 export default CardTitle

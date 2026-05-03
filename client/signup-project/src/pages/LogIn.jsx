@@ -11,11 +11,14 @@ function LogIn(){
           <h1>En# SignUp!!</h1> 
 
           <form class="input_box">
+            {/* className */}
             <input id="input" type="email" placeholder="E-mail"/>
             <input id="input" type="password" placeholder="Password"/>
             <div id="line_box">
               <input id="checkbox" type="checkbox"/>아이디 저장
-              <p>비밀번호 찾기</p>
+              <p>비밀번호 찾기</p> 
+              {/* 이동ul */}
+              {/* 묶는박스 추가 */}
             </div>
 
           </form>
