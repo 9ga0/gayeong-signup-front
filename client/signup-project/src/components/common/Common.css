@@ -15,12 +15,12 @@
 
 
 #card_box{
-  width: Hug(496px);
-  Height: Hug(851px);
+  width: 496px;
+  Height: 851px;
   Top: 98px;
   Left: 704px;
   padding: 50px 40px; /*top,Right과 botton,Left가 동일한경우*/
-  gap: 10px;
+  gap: 30px 0;
   border: 1px;
   border-radius: 15px;
   border-color: rgba(137, 132, 132, 0.18);
@@ -34,8 +34,8 @@
 }
 
 .submit_button{
-  width: Fill(416px);
-  Height: Fill(53px);
+  width: 416px;
+  Height: 53px;
   border: 1px solid rgba(206, 222, 247, 1);
   gap: 10px;
   Padding: 17px 174px;
@@ -69,22 +69,24 @@ p{
   font-weight: 500;
   font-style: Medium;
   font-size: 20px;
-  leading-trim: NONE;
   line-height: 100%;
   letter-spacing: -4%;
   color: rgba(34, 34, 34, 1);
 }
 
-.input_box{
-  Padding: 12px;
-  width : 414px;
+#input_wrap{
+  gap: 8px 0 ;
+}
+#input_box{
+  gap: 24px 0 ;
+  width : 416px; 
 }
 
-.line_box{
+#line_box{
   width : 414px;
   height : 53px;
 }
-h1{
+h1{ /*ex) 회원가입, 등 제목*/
   width: 416px;
   height: 43px;
 

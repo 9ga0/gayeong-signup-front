@@ -1,13 +1,10 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
-//import App from './App.jsx'
-import LogIn from "./pages/LogIn.jsx";
-import SignUp from "./pages/SignUp.jsx";
+import App from './App.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-        {/*라우터 연결 실패로 인해 직접 페이지 바꾸면서 페이지 화면 확인*/}
-    <LogIn />  
+    <App /> 
   </StrictMode>,
 )
