@@ -1,8 +1,4 @@
 
-// p(title), 
-//EmailBox: [Input][sendButton] [input]
-//제출하기버튼(text), input(text), 
-
 const CardTitle = (props) => {
   return (
     <div>

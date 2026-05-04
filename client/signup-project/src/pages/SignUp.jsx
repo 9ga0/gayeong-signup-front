@@ -1,10 +1,9 @@
 import React from 'react';
-import CardTitle from "../components/common/Common"
+import CardTitle from "../components/common/CardTitle"
 //import InputBox from "../components/common/Common"
-//import EmailBox from "../components/common/Common"
-//import SubmitButton from "../components/common/Common"
+import EmailBox from "../components/common/EmailBox"
+import SubmitButton from "../components/common/SubmitButton"
 import '../components/common/Common.css';
-import {useNavigate} from 'react-router-dom';
 
 function InputBox(children){
     return(
@@ -13,37 +12,6 @@ function InputBox(children){
       </div>
     )
 }
-function EmailBox(){
-    return(
-        <>
-          <p>이메일<br/> </p>
-          <div>
-            <button
-                type="button"
-                className="email_button"
-                >
-                전송
-            </button>
-            <input id="input" placeholder="이메일"/>
-          </div>
-            <input id="input" placeholder="인증번호" />
-        </>
-    )
-};
-function SubmitButton(props){
-  const navigate =useNavigate();
-
-  return(
-    <button
-          type="submit"
-          className="submit_button"
-          onClick={()=> {navigate(props.link)}}
-            >
-            <p>{props.title}</p>
-        
-    </button>
-  )
-} 
 
 function SignUp() {
   return (
@@ -72,7 +40,7 @@ function SignUp() {
                 <input id="input" type="text" placeholder="상세주소"/>
               </div>
             </div>
-            <SubmitButton title="제출하기" link='/' />
+            <SubmitButton text="제출하기" link='/' />
       </main>
     </div>
   );
