@@ -15,8 +15,6 @@
 
 
 #card_box{
-  width: 496px;
-  Height: 851px;
   Top: 98px;
   Left: 704px;
   padding: 50px 40px; /*top,Right과 botton,Left가 동일한경우*/
