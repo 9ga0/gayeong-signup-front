@@ -44,14 +44,14 @@ function EmailBox(){
     return(
         <>
           <p>이메일<br/> </p>
-          <div>
+          <div id="line_box">
+            <input onChange={onChangeEmailHandler} id="input" placeholder="이메일"/>
             <button
                 type="button"
                 className="email_button"
                 >
-                전송
+                <p class='email_button_text'> 전송 </p>
             </button>
-            <input onChange={onChangeEmailHandler} id="input" placeholder="이메일"/>
           </div>
             <input id="input" placeholder="인증번호" />
         </>

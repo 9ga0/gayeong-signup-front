@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import Email from '/src/assets/Email.svg';
 import Password from '/src/assets/Password.svg';
 import FindPassWord from "./FIndPassWord";
+import SubmitButton from "../components/common/SubmitButton";
 
 function LogIn(){
 
@@ -33,10 +34,7 @@ function LogIn(){
           </form>
 
             
-          <button 
-            type="button"
-            className="submit_button"
-            >Login</button>
+          <SubmitButton text="Login"/>
 
           계정이 없으신가요?
            <Link to="/sign-up">회원가입</Link>
