@@ -95,3 +95,10 @@ h1{ /*ex) 회원가입, 등 제목*/
   text-align: center;
   color: rgba(0, 0, 0, 1);
 }
+
+#visible_btn{
+  position: absolute;
+    top: 50%;
+    right: 24px; /*인풋 박스 안 placeholder 좌우 여백 24px에 일치*/
+    transform: translateY(-50%);
+}

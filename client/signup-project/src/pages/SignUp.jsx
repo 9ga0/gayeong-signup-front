@@ -4,6 +4,7 @@ import CardTitle from "../components/common/CardTitle"
 import EmailBox from "../components/common/EmailBox"
 import SubmitButton from "../components/common/SubmitButton"
 import '../components/common/Common.css';
+import { useState } from "react";
 
 function InputBox(children){
     return(
@@ -12,8 +13,21 @@ function InputBox(children){
       </div>
     )
 }
+const onChangePasswordHandler = (e) => { //비밀번호 입력받는 핸들러
+    const { name, value } = e.target;
+    if (name === 'password') {
+      setPassword(value);
+      passwordCheckHandler(value, confirm);
+    } else {
+      setConfirm(value);
+      passwordCheckHandler(password, value);
+    }
+}
+export default function SignUp() {
+  const [password, setPassword] = useState("");
+  const [visible, setVisible] = useState(true);
+  const PASSWORD_REGEX = /^[A-Za-z0-9]{8,16}$/;
 
-function SignUp() {
   return (
     <div id="background_gradient">
       <main id="card_box">
@@ -25,8 +39,15 @@ function SignUp() {
 
               <div id="input_wrap">
                 <p>비밀번호<br/> </p>
-                <input id="input" type="password" placeholder="8~16자의 영문 대/소문자, 숫자, 특수문자"/><br/>
+                <input id="input" 
+                  value={password}
+                  type={visible ? "text": "password"}
+                  onChange={(e) => setPassword(e.target.value)}
+                  type="password" placeholder="8~16자의 영문 대/소문자, 숫자, 특수문자"/><br/>
                 <input id="input" type="password" placeholder="비밀번호 확인"/>
+                <img className="visible_btn" src="client\signup-project\src\assets\eye-lock.svg" onClick={() => setVisible(!visible)}>
+                  {/* {visible? <EyeOutlined/>:<EyeInvisibleOutlined/>} */}
+                </img>
               </div>
 
               <div id="input_wrap">
@@ -45,5 +66,3 @@ function SignUp() {
     </div>
   );
 };
-
-export default SignUp
