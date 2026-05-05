@@ -133,3 +133,9 @@ h1{ /*ex) 회원가입, 등 제목*/
     right: 24px; /*인풋 박스 안 placeholder 좌우 여백 24px에 일치*/
     transform: translateY(-50%);
 }
+
+.check_image{
+  width: 72px;
+  height: 72px;
+
+}

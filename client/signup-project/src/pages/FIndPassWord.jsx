@@ -18,7 +18,7 @@ function FindPassWord(){
               </div>
             </div>
 
-            <SubmitButton text="제출하기" link='/' />
+            <SubmitButton text="제출하기" link='/change-password' />
       </main>
     </div>
   )
