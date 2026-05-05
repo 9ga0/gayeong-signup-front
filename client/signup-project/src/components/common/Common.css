@@ -47,6 +47,7 @@
   border-radius: 10px;
   border-width: 1px;
   padding : 17px, 48px;
+  margin-right:0px;
   gap: 10px;
   background-color: rgba(231, 242, 255, 1);
   border: 1px solid rgba(206, 222, 247, 0.4);
@@ -59,6 +60,14 @@
   border: 1px solid rgba(137, 132, 132, 0.4);
   border-radius: 16px;
 }
+#input2{
+  width : 100%;
+  height : 50px;
+  border: none;
+  margin-left: 18px;
+  background-color: transparent;
+
+}
 
 p{
   font-family: Pretendard Variable;
@@ -68,6 +77,27 @@ p{
   line-height: 100%;
   letter-spacing: -4%;
   color: rgba(34, 34, 34, 1);
+}
+.button_text{
+  font-family: Pretendard Variable;
+  font-weight: 500;
+font-style: Medium;
+font-size: 16px;
+line-height: 100%;
+letter-spacing: -4%;
+color: rgba(51, 51, 51, 1);
+
+}
+.email_button_text{
+  font-family: Pretendard Variable;
+font-weight: 400;
+font-style: Regular;
+font-size: 16px;
+line-height: 100%;
+letter-spacing: -4%;
+text-align: center;
+color: rgba(51, 51, 51, 1);
+
 }
 
 #input_wrap{
@@ -81,6 +111,7 @@ p{
 #line_box{
   width : 414px;
   height : 53px;
+  display: flex;
 }
 h1{ /*ex) 회원가입, 등 제목*/
   width: 416px;
@@ -94,4 +125,17 @@ h1{ /*ex) 회원가입, 등 제목*/
   letter-spacing: -4%;
   text-align: center;
   color: rgba(0, 0, 0, 1);
+}
+
+#visible_btn{
+  position: absolute;
+    top: 50%;
+    right: 24px; /*인풋 박스 안 placeholder 좌우 여백 24px에 일치*/
+    transform: translateY(-50%);
+}
+
+.check_image{
+  width: 72px;
+  height: 72px;
+
 }
