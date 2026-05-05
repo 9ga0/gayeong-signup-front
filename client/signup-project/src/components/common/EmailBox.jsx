@@ -45,7 +45,9 @@ function EmailBox(){
         <>
           <p>이메일<br/> </p>
           <div id="line_box">
-            <input onChange={onChangeEmailHandler} id="input" placeholder="이메일"/>
+            <div class="input_container">
+                <input onChange={onChangeEmailHandler} id="input2" placeholder="이메일"/>
+            </div>
             <button
                 type="button"
                 className="email_button"
@@ -53,7 +55,9 @@ function EmailBox(){
                 <p class='email_button_text'> 전송 </p>
             </button>
           </div>
-            <input id="input" placeholder="인증번호" />
+            <div class="input_container">
+                <input id="input2" placeholder="인증번호" />
+            </div>
         </>
     )
 };

@@ -60,6 +60,14 @@
   border: 1px solid rgba(137, 132, 132, 0.4);
   border-radius: 16px;
 }
+#input2{
+  width : 100%;
+  height : 50px;
+  border: none;
+  margin-left: 18px;
+  background-color: transparent;
+
+}
 
 p{
   font-family: Pretendard Variable;
