@@ -12,6 +12,16 @@
   align-items: center;
   
 }
+.error{
+  font-family: Pretendard Variable;
+font-weight: 400;
+font-style: Regular;
+font-size: 13px;
+line-height: 100%;
+letter-spacing: -4%;
+text-align: left;
+  color: rgba(238, 67, 70, 1);
+}
 
 
 #card_box{

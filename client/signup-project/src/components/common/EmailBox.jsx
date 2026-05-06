@@ -1,65 +1,73 @@
 import React from 'react';
 import './Common.css';
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-const onChangeEmailHandler = (e) => { //이메일 입력받는 핸들러
-    const idValue = e.target.value;
-    setId(idValue);
-    emailCheckHandler(idValue); 
+export default function EmailBox() {
+  const initState = {
+    email: ''
   }
-const emailCheckHandler = async (email) => {
-    const EMAIL_REGEX = /^[0-9a-zA-Z]([-.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
-    if (email === '') {
-        //빈칸일 때: non-pass상태
-      setIdError('이메일을 입력해주세요.');
-      setIsIdAvailable(false);
-      return false;
-    } else if (!EMAIL_REGEX.test(id)) {
-        //메일 형식 지키지 않았을 때: non-pass
-      setIdError('유효하지 않은 메일입니다.');
-      setIsIdAvailable(false);
-      return false;
+  const [registerParam, setRegisterParam] = useState({ ...initState })
+  const [isOpen, setIsOpen] = useState(false) // 주소찾기 모달 열기/닫기 상태
+  const [errors, setErrors] = useState({
+    email: ''
+  })
+  const validateField = (name, value, pwValue) => {
+    let error = ''
+    switch (name) {
+      case 'email':
+        if (!value) {
+          error = '이메일을 입력해주세요.'
+        } else if (!/\S+@\S+\.\S+/.test(value)) {
+          error = '유효하지 않은 메일입니다.'
+        }
+        break
+      default:
+        break
     }
-    try {
-      const responseData = await idDuplicateCheck(id); //중복데이터 아닐때 true로 작동
-      if (responseData) {
-        //사용가능한 이메일일때 세팅
-        //: pass: 체크 아이콘 추가, 파란테두리 적용
-        setIsIdCheck(true);
-        setIsIdAvailable(true);
-        return true;
-      } else {
-        //중복된 메일 일때: non-pass: 엑스 아이콘 추가, 빨간 테두리. 
-        setIdError('중복된 메일입니다.');
-        setIsIdAvailable(false);
-        return false;
-      }
-    } catch (error) {
-      alert('서버 오류입니다. 관리자에게 문의하세요.');
-      console.error(error);
-      return false;
-    }
-}
+    return error
+  }
+  const handleChange = (e) => {
+    const { name, value } = e.target
 
-function EmailBox(){
-    return(
-        <>
-          <p>이메일<br/> </p>
-          <div id="line_box">
-            <div class="input_container">
-                <input onChange={onChangeEmailHandler} id="input2" placeholder="이메일"/>
-            </div>
-            <button
-                type="button"
-                className="email_button"
-                >
-                <p class='email_button_text'> 전송 </p>
-            </button>
-          </div>
-            <div class="input_container">
-                <input id="input2" placeholder="인증번호" />
-            </div>
-        </>
-    )
+    setRegisterParam({
+      ...registerParam,
+      [name]: value
+    });
+
+    let error
+    error = validateField(name, value)
+    setErrors({
+      ...errors,
+      [name]: error
+    })
+  }
+  
+  return (
+    <>
+      <p>이메일<br /> </p>
+      <div id="line_box">
+        <div class="input_container">
+          <input 
+            id="input2" 
+            name="email"
+            type={'text'}
+            placeholder="이메일" 
+            value={registerParam.email}
+            onChange={handleChange}
+            />
+        </div>
+        <button
+          type="button"
+          className="email_button"
+        >
+          <p class='email_button_text'> 전송 </p>
+        </button>
+      </div>
+      <div class="input_container">
+        <input id="input2" placeholder="인증번호" />
+      </div>
+      {errors.email && <div class='error'>{errors.email}</div>}
+    </>
+  )
 };
-
-export default EmailBox;

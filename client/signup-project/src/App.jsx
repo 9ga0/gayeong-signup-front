@@ -6,13 +6,15 @@ import SignUp from './pages/SignUp';
 import FindPassWord from './pages/FindPassWord';
 import ChangePassWord from './pages/ChangePassWord';
 import Success from './pages/Success';
+import RegisterComponent from './pages/TestSignUp.jsx'
+
 
 function App() {
   return (
     <div>
       <BrowserRouter>
         <Routes>
-            <Route path ="/" element = {< LogIn/>}/> 
+            <Route path ="/" element = {< SignUp/>}/> 
             {/* <Route path ="/log-in" element = {< LogIn/>}/> */}
             <Route path ="/sign-up" element = {<SignUp />}/>
             <Route path ="/find-password" element = {<FindPassWord />}/>
