@@ -6,7 +6,7 @@ const SubmitButton=(props)=>{
   const navigate =useNavigate();
 
   return(
-    <button
+    <button 
           type="submit"
           className="submit_button"
           onClick={()=> {navigate(props.link, {state: {context: props.context}})}}
