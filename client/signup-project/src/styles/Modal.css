@@ -8,6 +8,10 @@
     right: 0;
     background: rgba(0, 0, 0, 0.4);
     z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
 }
 
 .modal_open {
@@ -29,7 +33,7 @@
     height: 650px;
     top: 240px;
     left: 735px;
-    
+
     opacity: 1;
     border-radius: 10px;
     padding: 20px;

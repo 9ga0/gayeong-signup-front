@@ -3,7 +3,7 @@ import SubmitButton from "../components/common/SubmitButton"
 import '../styles/Modal.css'
 import KakaoPostcodeEmbed from 'react-daum-postcode';
 
-export default function Modal() {
+export default function Modal({ openModal, setOpenModal }) {
     const handleComplete = (data) => {
         let fullAddress = data.address;
         let extraAddress = '';
@@ -20,12 +20,17 @@ export default function Modal() {
 
         console.log(fullAddress); // e.g. '서울 성동구 왕십리로2길 20 (성수동1가)'
     };
+    const openModalHandler = () => {
+        setOpenModal(!openModal);
+    };
     return (
         <div className="Overlay">
             <main id="card_box" class='modal_size'>
-                <KakaoPostcodeEmbed onComplete={handleComplete}/>
+                <KakaoPostcodeEmbed onComplete={handleComplete} />
 
-                <SubmitButton text="제출하기" />
+                <SubmitButton
+                    text="제출하기"
+                    onClick={openModalHandler} />
             </main>
         </div>
     )

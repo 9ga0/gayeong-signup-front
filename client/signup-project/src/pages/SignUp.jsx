@@ -11,7 +11,9 @@ import Modal from './AddressModal';
 
 export default function SignUp() {
   const [openModal, setOpenModal] = useState(false);
-
+  const openModalHandler = () => {
+    setOpenModal(!openModal);
+  };
   return (
     <div id="background_gradient">
       <main id="card_box">
@@ -39,12 +41,11 @@ export default function SignUp() {
               id="input2"
               className= "modal_open"
               type="address"
-              onclick={() => { setOpenModal(true) }}
+              onClick={openModalHandler}
             >
               클릭하여 주소 검색
             </button>
           </div>
-          <Modal />
           {openModal ? <Modal /> : null}
           <div class="input_container">
             <input id="input2" type="text" placeholder="상세주소" />
