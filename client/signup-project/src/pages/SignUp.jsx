@@ -19,34 +19,34 @@ export default function SignUp() {
       <main id="card_box">
         <CardTitle title="회원가입" />
 
-        <div id="input_box">
+        <div id="input_wrap">
           <EmailBox />
         </div>
 
-        <div id="input_box">
+        <div id="input_wrap">
           <PasswordBox />
         </div>
 
-        <div id="input_box">
+        <div id="input_wrap">
           <p>이름<br /> </p>
           <div class="input_container">
             <input id="input2" type="text" />
           </div>
         </div>
 
-        <div id="input_box">
+        <div id="input_wrap">
           <p>주소<br /> </p>
           <div class="input_container">
-            <button
+            <div
               id="input2"
-              className= "modal_open"
+              className="modal_open"
               type="address"
               onClick={openModalHandler}
             >
               클릭하여 주소 검색
-            </button>
+            </div>
           </div>
-          {openModal ? <Modal /> : null}
+          {openModal ? <Modal openModal={openModal} /> : null }
           <div class="input_container">
             <input id="input2" type="text" placeholder="상세주소" />
           </div>
@@ -55,6 +55,6 @@ export default function SignUp() {
         <SubmitButton text="제출하기" link='/success' context="회원가입 완료" />
       </main >
     </div >
-    
+
   );
 };

@@ -7,37 +7,46 @@ import Password from '/src/assets/Password.svg';
 import FindPassWord from "./FIndPassWord";
 import SubmitButton from "../components/common/SubmitButton";
 
-function LogIn(){
+function LogIn() {
 
   return (
     <>
-      <div id="background_gradient">  
-        <main id="signup_box"> 
-          <h1>En# SignUp!!</h1> 
+      <div id="background_gradient">
+        <main id="signup_box">
+          <h1>En# SignUp!!</h1>
 
           <form className="input_box">
             <div class="input_container">
-              <input id="input2" type="email" placeholder="E-mail"/>
+              <input id="input2" type="email" placeholder="E-mail" />
               <img src={Email} className="input_img"></img>
             </div>
 
             <div class="input_container">
-              <input id="input2" type="password" placeholder="Password"/>
+              <input id="input2" type="password" placeholder="Password" />
               <img src={Password} className="input_img"></img>
             </div>
 
             <div id="line_box">
-                <input id="checkbox" type="checkbox"/>아이디 저장
-                <Link id="" to="/find-password">비밀번호 찾기</Link>
+              <label>
+                <input id="checkbox" type="checkbox" />
+                <p>아이디 저장</p>
+              </label>
+              <Link id="find-password-link-text" to="/find-password">비밀번호 찾기</Link>
             </div>
 
           </form>
 
-            
-          <SubmitButton text="Login"/>
 
-          계정이 없으신가요?
-           <Link to="/sign-up">회원가입</Link>
+          <SubmitButton text="Login" />
+          <label>
+            계정이 없으신가요?
+            <Link
+              id="signup-link-text"
+              to="/sign-up"
+              style={{ color:'rgba(51, 51, 51, 1)' }}>
+              회원가입
+            </Link>
+          </label>
         </main>
       </div>
     </>

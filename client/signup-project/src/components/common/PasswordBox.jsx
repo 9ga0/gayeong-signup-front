@@ -31,7 +31,7 @@ export default function PasswordBox(props){
         // 하나 이상의 대문자, 하나 이상의 소문자, 하나이상의 숫자, 하나이상의 특수문자 가 8자~16자로 구성
         switch (name) {
             case 'pw':
-                if (!value) {
+                if (!value) { 
                     error = '비밀번호를 입력해주세요.'}
                 else if (!passwordRegex.test(value)) {
                     error = '8~16자의 영문 대/소문자, 숫자, 특수문자'

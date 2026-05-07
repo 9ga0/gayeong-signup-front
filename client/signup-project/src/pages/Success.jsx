@@ -15,7 +15,7 @@ export default function Success(){
       <main id="card_box" >
             <CardTitle title='안내' />
 
-            <div id="input_box" >
+            <div style={{ display: 'block', gap: '8px' }} >
               <img class='check_image' src={Check}/>
               <p style={{ textAlign: 'center' }}>{data.context}</p> {/*회원가입 완료 or 비밀번호 재설정 완료*/}
             </div>
