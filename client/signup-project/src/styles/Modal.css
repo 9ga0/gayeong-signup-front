@@ -14,7 +14,7 @@
 
 }
 
-.modal_open {
+.modal-open {
     width: 100%;
     font-family: Pretendard Variable;
     font-weight: 400;
@@ -28,7 +28,7 @@
     padding: 18px 0;
 }
 
-.modal_size {
+.modal-size {
     width: 450px;
     height: 650px;
     top: 240px;
