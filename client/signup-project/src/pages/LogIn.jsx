@@ -1,7 +1,7 @@
 //import reactLogo from './assets/react.svg' //이미지 불러오기
 import React from "react";
 import { useState } from "react";
-import '../styles/Login.css'; 
+import '../styles/Login.css';
 import { Link } from "react-router-dom";
 import Email from '/src/assets/Email.svg';
 import Password from '/src/assets/Password.svg';
@@ -44,26 +44,29 @@ function LogIn() {
             }
 
             <div className="line_box">
-              <label>
+              <div className="row-align">
                 <input className="checkbox" type="checkbox" />
-                <p>아이디 저장</p>
-              </label>
+                <div className="safe-id-text">아이디 저장</div>
+              </div>
               <Link className="find-password-link-text" to="/find-password">비밀번호 찾기</Link>
             </div>
 
           </form>
 
+          <div className="gap-16px column-align">
+            <SubmitButton text="Login" />
 
-          <SubmitButton text="Login" />
-          <label>
-            계정이 없으신가요?
-            <Link
-              className="signup-link-text"
-              to="/sign-up"
-              style={{ color: 'rgba(51, 51, 51, 1)' }}>
-              회원가입
-            </Link>
-          </label>
+            <div className="row-align">
+              <div className="quest-no-account">계정이 없으신가요?</div>
+            
+              <Link
+                className="signup-link-text"
+                to="/sign-up"
+                style={{ color: 'rgba(51, 51, 51, 1)' }}>
+                회원가입
+              </Link>
+            </div>
+          </div>
         </main>
       </div>
     </>

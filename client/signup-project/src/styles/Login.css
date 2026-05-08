@@ -1,4 +1,3 @@
-
 .email_input {
   width: 100%;
   height: 53px;
@@ -38,10 +37,9 @@
 }
 
 .checkbox {
-  width: 94px;
+  width: 20px;
   height: 20px;
   gap: 4px;
-  align-items: left;
 }
 
 .line_box {
@@ -63,9 +61,6 @@
 }
 
 .find-password-link-text {
-  width: 84;
-  height: 19;
-
   font-family: Pretendard Variable;
   font-weight: 500;
   font-style: Medium;
@@ -78,7 +73,42 @@
   text-decoration-thickness: 0%;
   text-decoration-skip-ink: auto;
   color: rgba(136, 136, 136, 1);
+}
 
+.quest-no-account {
+  font-family: Pretendard Variable;
+  font-weight: 500;
+  font-style: Medium;
+  font-size: 16px;
+  line-height: 100%;
+  letter-spacing: -4%;
+  text-align: center;
+  color:  rgba(119, 119, 119, 1);
+
+}
+
+.row-align {
+  display: flex;
+  flex-direction: row;
+}
+.column-align{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.gap-16px {
+  gap: 16px;
+}
+
+.safe-id-text {
+  font-family: Pretendard Variable;
+  font-weight: 500;
+  font-style: Medium;
+  font-size: 16px;
+  line-height: 100%;
+  letter-spacing: -4%;
+  color: rgba(34, 34, 34, 1);
 }
 
 .signup-link-text {
