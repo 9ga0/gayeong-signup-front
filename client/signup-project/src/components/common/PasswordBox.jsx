@@ -74,11 +74,11 @@ export default function PasswordBox() {
 
     return (
         <>
-            <p>비밀번호<br /> </p>
+            <div className="sub-title">비밀번호</div>
             <PasswordInput type="input" name='pw' value={registerParam.pw} setIsAccepted={handleChange} placeholder="8~16자의 영문 대/소문자, 숫자, 특수문자" />
             <PasswordInput  type="input" name='confirmPw' value={registerParam.confirmPw} setIsAccepted={handleChange} placeholder="비밀번호 확인" />
-            {errors.pw && <div class='error'>{errors.pw}</div>}
-            {errors.confirmPw && <div class='error'>{errors.confirmPw}</div>}
+            {errors.pw && <div className='error'>{errors.pw}</div>}
+            {errors.confirmPw && <div className='error'>{errors.confirmPw}</div>}
         </>
     )
 }

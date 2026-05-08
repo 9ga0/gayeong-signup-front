@@ -2,25 +2,24 @@
 import Check from "../assets/Check.svg"
 import React from 'react';
 import '../components/common/Common.css';
+import '../styles/Success.css'
 import CardTitle from "../components/common/CardTitle";
 import SubmitButton from "../components/common/SubmitButton";
 import { useLocation } from 'react-router-dom';
 
-export default function Success(){
-    const location = useLocation();
-    const data= {...location.state};
+export default function Success() {
+  const location = useLocation();
+  const data = { ...location.state };
 
   return (
-    <div id="background_gradient">
-      <main id="card_box" >
-            <CardTitle title='안내' />
-
-            <div style={{ display: 'block', gap: '8px' }} >
-              <img class='check_image' src={Check}/>
-              <p style={{ textAlign: 'center' }}>{data.context}</p> {/*회원가입 완료 or 비밀번호 재설정 완료*/}
-            </div>
-
-            <SubmitButton text="로그인 하기" link='/' />
+    <div className="background-gradient">
+      <main className="card-box2" >
+        <CardTitle title='안내' />
+        <div>
+          <img className='check-image' src={Check} />
+          <p className="success-context">{data.context}</p> {/*회원가입 완료 or 비밀번호 재설정 완료*/}
+        </div> 
+        <SubmitButton style={{fontSize:"20px"}} text="로그인 하기" link='/' />
       </main>
     </div>
   )

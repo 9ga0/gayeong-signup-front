@@ -1,12 +1,11 @@
 
 const CardTitle = (props) => {
   return (
-    <div>
-      <h1>{props.title}</h1>
-    </div>
+    <>
+      <header className="title-text">{props.title}</header>
+    </>
   ) 
 };
-// 내부함수인데 작은 애들 function vs const
 
 
 export default CardTitle

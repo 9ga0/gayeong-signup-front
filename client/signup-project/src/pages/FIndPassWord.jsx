@@ -3,25 +3,19 @@ import CardTitle from "../components/common/CardTitle"
 import EmailBox from "../components/common/EmailBox"
 import SubmitButton from "../components/common/SubmitButton"
 import '../components/common/Common.css';
-import { useState } from "react";
 
-
-function FindPassWord(){
+export default function FindPassword() {
   return (
-    <div id="background_gradient">
-      <main id="card_box" >
-            <CardTitle title="비밀번호 찾기" />
+    <div className="background-gradient">
+      <main className="card-box2">
+        <CardTitle title="비밀번호 찾기" />
 
-            <div id="input_box" >
-              <div id="input_wrap">
-                <EmailBox/> 
-              </div>
-            </div>
+        <EmailBox />
+        {/*찾기페이지에서 입력한 email가져와서 재설정페이지에 저장시도하다가 포기*/}
 
-            <SubmitButton text="제출하기" link='/change-password' />
+        <SubmitButton text="제출하기" link='/change-password' />
       </main>
     </div>
   )
 };
 
-export default FindPassWord

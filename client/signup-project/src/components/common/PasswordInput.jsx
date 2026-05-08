@@ -27,8 +27,8 @@ export default function PasswordInput(props) {
     }
 
     return (
-        <div class="input_container">
-            <input id="input2"
+        <div className="input-container">
+            <input className="input2"
                 name={props.name}
                 type={visible ? "text" : "password"}
                 placeholder={props.placeholder}
@@ -36,9 +36,8 @@ export default function PasswordInput(props) {
             //비밀번호 입력하면 isAccepted로 입력중임을 (PasswordBox/SignUp)에 전달
             /><br />
             <div >
-                <img className="visible_btn"
-                    class="input_img"
-                    onChange={handleClick} 
+                <img className="input-img"
+                    onClick={handleClick} 
                     //눈아이콘 누르면 아이콘 변경+visible변경
                     src={imageSrc}
                 />

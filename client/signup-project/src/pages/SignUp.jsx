@@ -15,40 +15,39 @@ export default function SignUp() {
     setOpenModal(!openModal);
   };
   return (
-    <div id="background_gradient">
-      <main id="card_box">
+    <div className="background-gradient">
+      <main className="card-box">
         <CardTitle title="회원가입" />
-
-        <div id="input_wrap">
+        <div className="gap-24px">
           <EmailBox />
-        </div>
 
-        <div id="input_wrap">
-          <PasswordBox />
-        </div>
-
-        <div id="input_wrap">
-          <p>이름<br /> </p>
-          <div class="input_container">
-            <input id="input2" type="text" />
+          <div className="input-wrap">
+            <PasswordBox />
           </div>
-        </div>
 
-        <div id="input_wrap">
-          <p>주소<br /> </p>
-          <div class="input_container">
-            <div
-              id="input2"
-              className="modal_open"
-              type="address"
-              onClick={openModalHandler}
-            >
-              클릭하여 주소 검색
+          <div className="input-wrap">
+            <div className="sub-title">이름 </div>
+            <div className="input-container">
+              <input className="input2" type="text" />
             </div>
           </div>
-          {openModal ? <Modal openModal={openModal} /> : null }
-          <div class="input_container">
-            <input id="input2" type="text" placeholder="상세주소" />
+
+          <div className="input-wrap">
+            <div className="sub-title">주소 </div>
+            <div className="input-container">
+              <div
+                className="input2"
+                className="modal-open"
+                type="address"
+                onClick={openModalHandler}
+              >
+                클릭하여 주소 검색
+              </div>
+            </div>
+            {openModal ? <Modal openModal={openModal} /> : null}
+            <div className="input-container">
+              <input className="input2" type="text" placeholder="상세주소" />
+            </div>
           </div>
         </div>
 

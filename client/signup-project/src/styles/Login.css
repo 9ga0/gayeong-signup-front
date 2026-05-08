@@ -1,65 +1,23 @@
-
-#email_input {
+.email-input {
   width: 100%;
   height: 53px;
   border: 1px solid rgba(137, 132, 132, 0.4);
   border-radius: 16px;
 }
 
-.input_container {
+.checkbox {
+  width: 20px;
+  height: 20px;
+}
+
+.line-box {
   width: 100%;
-  height: 53px;
-  border: 1px solid rgba(137, 132, 132, 0.4);
-  border-radius: 16px;
-  display: flex;
-  justify-content: center;
-}
-
-.input_box {
-  width: 414px;
-  gap: 16px;
-  display: flex;
-  flex-direction: column;
-}
-
-/* . #통일하기 */
-/* 단위별테스트 */
-#signup_box {
-  /* 하이픈. */
-  Top: 98px;
-  Left: 704px;
-  padding: 50px 40px;
-  /*top,Right과 botton,Left가 동일한경우*/
-  gap: 10px;
-  border: 1px;
-  border-radius: 15px;
-  border-color: rgba(137, 132, 132, 0.18);
-  background-color: rgba(255, 255, 255, 1);
-  box-shadow: 0 0 13px 1px rgba(0, 0, 0, 0.12);
-
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  /*gap사용*/
-  align-items: center;
-}
-
-#checkbox {
-  width: 94px;
-  height: 20px;
-  gap: 4px;
-  align-items: left;
-}
-
-#line_box {
-  width: 416px;
-  height: 20px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
 
-.input_img {
+.input-img {
   width: 24px;
   height: 24px;
   opacity: 1;
@@ -69,32 +27,55 @@
   margin-right: 15px;
 }
 
-#find-password-link-text {
-  width: 84;
-  height: 19;
-
+.find-password-link-text {
   font-family: Pretendard Variable;
   font-weight: 500;
-  font-style: Medium;
   font-size: 16px;
-  line-height: 100%;
-  letter-spacing: -4%;
+  line-height: 130%;
+  letter-spacing: -0.04em;
   text-align: right;
   text-decoration: underline;
   text-decoration-style: solid;
   text-decoration-thickness: 0%;
   text-decoration-skip-ink: auto;
   color: rgba(136, 136, 136, 1);
-
 }
 
-#signup-link-text {
+.quest-no-account {
+  font-family: Pretendard Variable;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 130%;
+  letter-spacing: -0.04em;
+  text-align: center;
+  color: rgba(119, 119, 119, 1);
+}
+
+.row-align {
+  display: flex;
+  flex-direction: row;
+}
+
+.column-align {
+  display: flex;
+  flex-direction: column;
+}
+
+.safe-id-text {
+  font-family: Pretendard Variable;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 130%;
+  letter-spacing: -0.04em;
+  color: rgba(34, 34, 34, 1);
+}
+
+.signup-link-text {
   font-family: Pretendard Variable;
   font-weight: 600;
-  font-style: SemiBold;
   font-size: 16px;
-  line-height: 100%;
-  letter-spacing: -4%;
+  line-height: 130%;
+  letter-spacing: -0.04em;
   text-align: center;
   text-decoration: underline;
   text-decoration-style: solid;
