@@ -1,7 +1,7 @@
 //import reactLogo from './assets/react.svg' //이미지 불러오기
 import React from "react";
 import { useState } from "react";
-import '../styles/Login.css'; //css 불러오기
+import '../styles/Login.css'; 
 import { Link } from "react-router-dom";
 import Email from '/src/assets/Email.svg';
 import Password from '/src/assets/Password.svg';

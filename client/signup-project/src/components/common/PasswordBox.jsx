@@ -9,7 +9,10 @@ export default function PasswordBox() {
         pw: '',
         confirmPw: ''
     }
+    const [input, setInput] = useState('');
+
     const [registerParam, setRegisterParam] = useState({ ...initState })
+    const [isAccepted, setIsAccepted] = useState(false)
     let error = '';
     const [errors, setErrors] = useState({
         pw: '',
@@ -41,6 +44,7 @@ export default function PasswordBox() {
 
     const handleChange = (e) => {
         const { name, value } = e.target
+        setInput(e.target.value);
 
         setRegisterParam({
             ...registerParam,
@@ -71,8 +75,8 @@ export default function PasswordBox() {
     return (
         <>
             <p>비밀번호<br /> </p>
-            <PasswordInput name='pw' value={registerParam.pw} onChange={handleChange} placeholder="8~16자의 영문 대/소문자, 숫자, 특수문자" />
-            <PasswordInput name='confirmPw' value={registerParam.confirmPw} onChange={handleChange} placeholder="비밀번호 확인" />
+            <PasswordInput type="input" name='pw' value={registerParam.pw} setIsAccepted={handleChange} placeholder="8~16자의 영문 대/소문자, 숫자, 특수문자" />
+            <PasswordInput  type="input" name='confirmPw' value={registerParam.confirmPw} setIsAccepted={handleChange} placeholder="비밀번호 확인" />
             {errors.pw && <div class='error'>{errors.pw}</div>}
             {errors.confirmPw && <div class='error'>{errors.confirmPw}</div>}
         </>
