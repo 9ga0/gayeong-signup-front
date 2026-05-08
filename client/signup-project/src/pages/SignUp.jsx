@@ -15,40 +15,39 @@ export default function SignUp() {
     setOpenModal(!openModal);
   };
   return (
-    <div className="background_gradient">
-      <main className="card_box">
+    <div className="background-gradient">
+      <main className="card-box">
         <CardTitle title="회원가입" />
-
-        <div className="input_wrap">
+        <div className="gap-24px">
           <EmailBox />
-        </div>
 
-        <div className="input_wrap">
-          <PasswordBox />
-        </div>
-
-        <div className="input_wrap">
-          <div className="sub-title">이름 </div>
-          <div className="input_container">
-            <input className="input2" type="text" />
+          <div className="input-wrap">
+            <PasswordBox />
           </div>
-        </div>
 
-        <div className="input_wrap">
-          <div className="sub-title">주소 </div>
-          <div className="input_container">
-            <div
-              className="input2"
-              className="modal_open"
-              type="address"
-              onClick={openModalHandler}
-            >
-              클릭하여 주소 검색
+          <div className="input-wrap">
+            <div className="sub-title">이름 </div>
+            <div className="input-container">
+              <input className="input2" type="text" />
             </div>
           </div>
-          {openModal ? <Modal openModal={openModal} /> : null }
-          <div className="input_container">
-            <input className="input2" type="text" placeholder="상세주소" />
+
+          <div className="input-wrap">
+            <div className="sub-title">주소 </div>
+            <div className="input-container">
+              <div
+                className="input2"
+                className="modal-open"
+                type="address"
+                onClick={openModalHandler}
+              >
+                클릭하여 주소 검색
+              </div>
+            </div>
+            {openModal ? <Modal openModal={openModal} /> : null}
+            <div className="input-container">
+              <input className="input2" type="text" placeholder="상세주소" />
+            </div>
           </div>
         </div>
 

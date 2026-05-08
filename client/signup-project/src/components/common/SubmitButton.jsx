@@ -7,10 +7,10 @@ const SubmitButton = (props) => {
   return (
     <button
       type="submit"
-      className="submit_button"
+      className="submit-button"
       onClick={() => { navigate(props.link, { state: { context: props.context, email: props.email } }) }}
     >
-      <p className='button_text'>{props.text}</p>
+      <p className='button-text'>{props.text}</p>
     </button>
   )
 }

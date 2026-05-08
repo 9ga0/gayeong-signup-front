@@ -5,9 +5,9 @@ import '../styles/Login.css';
 import { Link } from "react-router-dom";
 import Email from '/src/assets/Email.svg';
 import Password from '/src/assets/Password.svg';
-import FindPassWord from "./FIndPassWord";
 import SubmitButton from "../components/common/SubmitButton";
 import PasswordInput from "../components/common/PasswordInput";
+import CardTitle from "../components/common/CardTitle";
 
 export default function LogIn() {
   const [isWrited, setIsWrited] = useState(true);
@@ -24,26 +24,26 @@ export default function LogIn() {
 
   return (
     <>
-      <div className="background_gradient">
-        <main className="signup_box">
-          <h1>En# SignUp!!</h1>
+      <div className="background-gradient">
+        <main className="card-box">
+          <CardTitle title="En# SignUp!!" />
 
-          <form className="input_box">
-            <div className="input_container">
+          <form className="gap-16px">
+            <div className="input-container">
               <input className="input2" type="email" placeholder="E-mail" />
-              <img src={Email} className="input_img"></img>
+              <img src={Email} className="input-img"></img>
             </div>
 
             {isWrited ?
               <PasswordInput name='pw' onChange={handleChange} placeholder="Password" />
               :
-              <div className="input_container">
+              <div className="input-container">
                 <input className="input2" type="password" on placeholder="Password" />
-                <img src={Password} onChange={handleChange} className="input_img"></img>
+                <img src={Password} onChange={handleChange} className="input-img"></img>
               </div>
             }
 
-            <div className="line_box">
+            <div className="line-box">
               <div className="row-align">
                 <input className="checkbox" type="checkbox" />
                 <div className="safe-id-text">아이디 저장</div>
@@ -53,12 +53,12 @@ export default function LogIn() {
 
           </form>
 
-          <div className="gap-16px column-align">
+          <div className="gap-16px">
             <SubmitButton text="Login" />
 
             <div className="row-align">
               <div className="quest-no-account">계정이 없으신가요?</div>
-            
+
               <Link
                 className="signup-link-text"
                 to="/sign-up"

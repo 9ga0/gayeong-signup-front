@@ -42,32 +42,32 @@ export default function EmailBox() {
       [name]: error
     })
   }
-  
+
   return (
-    <>
+    <div className="input-wrap">
       <div className="sub-title">이메일</div>
-      <div className="line_box">
-        <div className="input_container">
-          <input 
-            className="input2" 
+      <div className="line-box">
+        <div className="input-container">
+          <input
+            className="input2"
             name="email"
             type={'text'}
-            placeholder="이메일" 
+            placeholder="이메일"
             value={registerParam.email}
             onChange={handleChange}
-            />
+          />
         </div>
         <button
           type="button"
-          className="email_button"
+          className="email-button"
         >
-          <p className='email_button_text'> 전송 </p>
+          <p className='email-button-text'> 전송 </p>
         </button>
       </div>
-      <div className="input_container">
+      <div className="input-container">
         <input className="input2" placeholder="인증번호" />
       </div>
       {errors.email && <div className='error'>{errors.email}</div>}
-    </>
+    </div>
   )
 };

@@ -33,14 +33,14 @@ export default function Modal({ openModal }) {
             {isClose ?
             null:
                 < div className="Overlay" >
-                    < main className="card_box modal_size" >
+                    < main className="card-box modal-size" >
                         <KakaoPostcodeEmbed onComplete={handleComplete} />
                         <button
                             type="submit"
-                            className="submit_button"
+                            className="submit-button"
                             onClick={closeModalHandler}
                         >
-                            <p className='button_text'>제출하기</p>
+                            <p className='button-text'>제출하기</p>
                         </button>
                     </main >
                 </div >

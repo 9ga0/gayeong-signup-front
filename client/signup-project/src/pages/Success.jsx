@@ -11,12 +11,12 @@ export default function Success(){
     const data= {...location.state};
 
   return (
-    <div className="background_gradient">
-      <main className="card_box" >
+    <div className="background-gradient">
+      <main className="card-box2" >
             <CardTitle title='안내' />
 
             <div style={{ display: 'block', gap: '8px' }} >
-              <img className='check_image' src={Check}/>
+              <img className='check-image' src={Check}/>
               <p style={{ textAlign: 'center' }}>{data.context}</p> {/*회원가입 완료 or 비밀번호 재설정 완료*/}
             </div>
 
