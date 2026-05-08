@@ -38,7 +38,7 @@ export default function PasswordInput(props) {
             <div >
                 <img className="visible_btn"
                     className="input_img"
-                    onChange={handleClick} 
+                    onClick={handleClick} 
                     //눈아이콘 누르면 아이콘 변경+visible변경
                     src={imageSrc}
                 />
