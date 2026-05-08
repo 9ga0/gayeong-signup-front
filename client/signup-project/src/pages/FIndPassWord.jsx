@@ -7,18 +7,20 @@ import { useState } from "react";
 
 
 function FindPassWord(){
+  const email='';
   return (
-    <div id="background_gradient">
-      <main id="card_box" >
+    <div className="background_gradient">
+      <main className="card_box" >
             <CardTitle title="비밀번호 찾기" />
 
-            <div id="input_box" >
-              <div id="input_wrap">
-                <EmailBox/> 
+            <div className="input_box" >
+              <div className="input_wrap">
+                <EmailBox email={email}/> 
+                {/*찾기페이지에서 입력한 email가져와서 재설정페이지에 저장시도하다가 포기*/}
               </div>
             </div>
 
-            <SubmitButton text="제출하기" link='/change-password' />
+            <SubmitButton text="제출하기" link='/change-password' email={email} />
       </main>
     </div>
   )

@@ -24,31 +24,31 @@ function LogIn() {
 
   return (
     <>
-      <div id="background_gradient">
-        <main id="signup_box">
+      <div className="background_gradient">
+        <main className="signup_box">
           <h1>En# SignUp!!</h1>
 
           <form className="input_box">
-            <div class="input_container">
-              <input id="input2" type="email" placeholder="E-mail" />
+            <div className="input_container">
+              <input className="input2" type="email" placeholder="E-mail" />
               <img src={Email} className="input_img"></img>
             </div>
 
             {isWrited ?
               <PasswordInput name='pw' onChange={handleChange} placeholder="Password" />
               :
-              <div class="input_container">
-                <input id="input2" type="password" on placeholder="Password" />
+              <div className="input_container">
+                <input className="input2" type="password" on placeholder="Password" />
                 <img src={Password} onChange={handleChange} className="input_img"></img>
               </div>
             }
 
-            <div id="line_box">
+            <div className="line_box">
               <label>
-                <input id="checkbox" type="checkbox" />
+                <input className="checkbox" type="checkbox" />
                 <p>아이디 저장</p>
               </label>
-              <Link id="find-password-link-text" to="/find-password">비밀번호 찾기</Link>
+              <Link className="find-password-link-text" to="/find-password">비밀번호 찾기</Link>
             </div>
 
           </form>
@@ -58,7 +58,7 @@ function LogIn() {
           <label>
             계정이 없으신가요?
             <Link
-              id="signup-link-text"
+              className="signup-link-text"
               to="/sign-up"
               style={{ color: 'rgba(51, 51, 51, 1)' }}>
               회원가입

@@ -7,17 +7,17 @@ import "../components/common/Common.css"
 
 export default function ChangePassWord(props){
     return(
-        <div id="background_gradient">
-              <main id="card_box">
+        <div className="background_gradient">
+              <main className="card_box">
                     <CardTitle title="비밀번호 재설정" />
-                    <div id="input_wrap">
+                    <div className="input_wrap">
                         <p>이메일<br/> </p>
                         <div class="input_container">
-                            <input id="input2" type="email" text={props.email}/>
+                            <input className="input2" type="email" value={props.email}/>
                         </div>
                     </div>
                     
-                    <div id="input_wrap">
+                    <div className="input_wrap">
                         <PasswordBox/>
                     </div>
                     

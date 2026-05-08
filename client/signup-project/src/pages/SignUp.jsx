@@ -15,30 +15,30 @@ export default function SignUp() {
     setOpenModal(!openModal);
   };
   return (
-    <div id="background_gradient">
-      <main id="card_box">
+    <div className="background_gradient">
+      <main className="card_box">
         <CardTitle title="회원가입" />
 
-        <div id="input_wrap">
+        <div className="input_wrap">
           <EmailBox />
         </div>
 
-        <div id="input_wrap">
+        <div className="input_wrap">
           <PasswordBox />
         </div>
 
-        <div id="input_wrap">
-          <p>이름<br /> </p>
-          <div class="input_container">
-            <input id="input2" type="text" />
+        <div className="input_wrap">
+          <div className="sub-title">이름 </div>
+          <div className="input_container">
+            <input className="input2" type="text" />
           </div>
         </div>
 
-        <div id="input_wrap">
-          <p>주소<br /> </p>
-          <div class="input_container">
+        <div className="input_wrap">
+          <div className="sub-title">주소 </div>
+          <div className="input_container">
             <div
-              id="input2"
+              className="input2"
               className="modal_open"
               type="address"
               onClick={openModalHandler}
@@ -47,8 +47,8 @@ export default function SignUp() {
             </div>
           </div>
           {openModal ? <Modal openModal={openModal} /> : null }
-          <div class="input_container">
-            <input id="input2" type="text" placeholder="상세주소" />
+          <div className="input_container">
+            <input className="input2" type="text" placeholder="상세주소" />
           </div>
         </div>
 

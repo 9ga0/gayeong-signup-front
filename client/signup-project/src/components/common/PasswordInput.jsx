@@ -27,8 +27,8 @@ export default function PasswordInput(props) {
     }
 
     return (
-        <div class="input_container">
-            <input id="input2"
+        <div className="input_container">
+            <input className="input2"
                 name={props.name}
                 type={visible ? "text" : "password"}
                 placeholder={props.placeholder}
@@ -37,7 +37,7 @@ export default function PasswordInput(props) {
             /><br />
             <div >
                 <img className="visible_btn"
-                    class="input_img"
+                    className="input_img"
                     onChange={handleClick} 
                     //눈아이콘 누르면 아이콘 변경+visible변경
                     src={imageSrc}

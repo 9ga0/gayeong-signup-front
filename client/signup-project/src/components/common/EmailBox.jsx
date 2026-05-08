@@ -45,11 +45,11 @@ export default function EmailBox() {
   
   return (
     <>
-      <p>이메일<br /> </p>
-      <div id="line_box">
-        <div class="input_container">
+      <div className="sub-title">이메일</div>
+      <div className="line_box">
+        <div className="input_container">
           <input 
-            id="input2" 
+            className="input2" 
             name="email"
             type={'text'}
             placeholder="이메일" 
@@ -61,13 +61,13 @@ export default function EmailBox() {
           type="button"
           className="email_button"
         >
-          <p class='email_button_text'> 전송 </p>
+          <p className='email_button_text'> 전송 </p>
         </button>
       </div>
-      <div class="input_container">
-        <input id="input2" placeholder="인증번호" />
+      <div className="input_container">
+        <input className="input2" placeholder="인증번호" />
       </div>
-      {errors.email && <div class='error'>{errors.email}</div>}
+      {errors.email && <div className='error'>{errors.email}</div>}
     </>
   )
 };
