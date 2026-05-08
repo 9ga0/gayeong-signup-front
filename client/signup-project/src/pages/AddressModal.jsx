@@ -7,7 +7,7 @@ import react, { useState } from "react"
 export default function Modal({ openModal }) {
     const [isClose, setIsClose] = useState(false);
     if (!openModal) return null;
-    const closeModalHandler =() =>{
+    const closeModalHandler = () => {
         setIsClose(!isClose);
     };
 
@@ -31,10 +31,11 @@ export default function Modal({ openModal }) {
     return (
         <>
             {isClose ?
-            null:
+                null :
                 < div className="Overlay" >
                     < main className="card-box modal-size" >
-                        <KakaoPostcodeEmbed onComplete={handleComplete} />
+                        <KakaoPostcodeEmbed onComplete={handleComplete}
+                            style={{ width: "410px", height: "392px"}} />
                         <button
                             type="submit"
                             className="submit-button"
