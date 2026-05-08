@@ -171,3 +171,7 @@ h1 {
   width: 72px;
   height: 72px;
 }
+
+::-ms-reveal {
+    display: none;
+}
