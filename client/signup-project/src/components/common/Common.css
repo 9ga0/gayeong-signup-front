@@ -40,7 +40,7 @@
 }
 .card-box2 {
   padding: 60px 60px;
-  /*top,Right과 botton,Left가 동일한경우*/
+  /*60 60만 다르고 card-box와 동일..*/
   gap: 30px ;
   border: 1px;
   border-radius: 15px;
@@ -58,7 +58,6 @@
   Height: 53px;
   border: 1px solid rgba(206, 222, 247, 1);
   gap: 10px;
-  Padding: 17px 174px;
   border-radius: 57px;
   background-color: rgba(231, 242, 255, 1);
 }
@@ -178,9 +177,6 @@ p {
   letter-spacing: -0.04em;
   text-align: center;
   color: rgba(0, 0, 0, 1);
-}
-.padding-60-60{
-  padding: 60px 60px;
 }
 
 .visible-btn {
