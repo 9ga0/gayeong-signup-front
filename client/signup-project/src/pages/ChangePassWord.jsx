@@ -2,7 +2,6 @@ import React from 'react';
 import CardTitle from "../components/common/CardTitle"
 import PasswordBox from "../components/common/PasswordBox"
 import SubmitButton from '../components/common/SubmitButton';
-import { useLocation } from "react-router-dom";
 import "../components/common/Common.css"
 
 export default function ChangePassword(props) {

@@ -3,8 +3,6 @@ import CardTitle from "../components/common/CardTitle"
 import EmailBox from "../components/common/EmailBox"
 import SubmitButton from "../components/common/SubmitButton"
 import '../components/common/Common.css';
-import { useState } from "react";
-
 
 export default function FindPassword() {
   return (

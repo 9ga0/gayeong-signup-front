@@ -3,8 +3,8 @@
       rgba(233, 244, 255, 1),
       rgba(248, 251, 255, 1),
       rgba(255, 255, 255, 1));
-  height: 1080px;
-  width: 1920px;
+  height: 100vh;
+  width: 100vh;
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
@@ -15,10 +15,9 @@
 .error {
   font-family: Pretendard Variable;
   font-weight: 400;
-  font-style: Regular;
   font-size: 13px;
-  line-height: 100%;
-  letter-spacing: -4%;
+  line-height: 130%;
+  letter-spacing: -0.04em;
   text-align: left;
   color: rgba(238, 67, 70, 1);
 }
@@ -55,7 +54,7 @@
 
 .submit-button {
   width: 416px;
-  Height: 53px;
+  height: 53px;
   border: 1px solid rgba(206, 222, 247, 1);
   gap: 10px;
   border-radius: 57px;
@@ -87,9 +86,8 @@
   width: 100%;
   font-family: Pretendard Variable;
   font-weight: 500;
-  font-style: Medium;
   font-size: 16px;
-  line-height: 100%;
+  line-height: 130%;
   letter-spacing: -0.04em;
   color: rgba(51, 51, 51, 1);
   margin-left: 18px;
@@ -105,15 +103,6 @@
   letter-spacing: -0.04em;
   color: rgba(34, 34, 34, 1);
   text-align: left;
-}
-
-p {
-  font-family: Pretendard Variable;
-  font-weight: 500;
-  font-size: 20px;
-  line-height: 130%;
-  letter-spacing: -0.04em;
-  color: rgba(34, 34, 34, 1);
 }
 
 .button-text {
@@ -177,19 +166,6 @@ p {
   letter-spacing: -0.04em;
   text-align: center;
   color: rgba(0, 0, 0, 1);
-}
-
-.visible-btn {
-  position: absolute;
-  top: 50%;
-  right: 24px;
-  /*인풋 박스 안 placeholder 좌우 여백 24px에 일치*/
-  transform: translateY(-50%);
-}
-
-.check-image {
-  width: 72px;
-  height: 72px;
 }
 
 ::-ms-reveal {

@@ -73,10 +73,9 @@
 .signup-link-text {
   font-family: Pretendard Variable;
   font-weight: 600;
-  font-style: SemiBold;
   font-size: 16px;
-  line-height: 100%;
-  letter-spacing: -4%;
+  line-height: 130%;
+  letter-spacing: -0.04em;
   text-align: center;
   text-decoration: underline;
   text-decoration-style: solid;
