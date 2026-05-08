@@ -10,14 +10,14 @@ export default function ChangePassWord(props){
         <div id="background_gradient">
               <main id="card_box">
                     <CardTitle title="비밀번호 재설정" />
-                    <div id="input_box">
+                    <div id="input_wrap">
                         <p>이메일<br/> </p>
                         <div class="input_container">
                             <input id="input2" type="email" text={props.email}/>
                         </div>
                     </div>
                     
-                    <div id="input_box">
+                    <div id="input_wrap">
                         <PasswordBox/>
                     </div>
                     

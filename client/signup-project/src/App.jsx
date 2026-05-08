@@ -6,6 +6,8 @@ import SignUp from './pages/SignUp';
 import FindPassWord from './pages/FindPassWord';
 import ChangePassWord from './pages/ChangePassWord';
 import Success from './pages/Success';
+import RegisterComponent from './pages/TestSignUp.jsx'
+
 
 function App() {
   return (
