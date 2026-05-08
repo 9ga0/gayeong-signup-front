@@ -2,9 +2,14 @@ import '../components/common/Common.css';
 import SubmitButton from "../components/common/SubmitButton"
 import '../styles/Modal.css'
 import KakaoPostcodeEmbed from 'react-daum-postcode';
+import react, { useState } from "react"
 
-export default function Modal({openModal }){
+export default function Modal({ openModal }) {
+    const [isClose, setIsClose] = useState(false);
     if (!openModal) return null;
+    const closeModalHandler =() =>{
+        setIsClose(!isClose);
+    };
 
     const handleComplete = (data) => {
         let fullAddress = data.address;
@@ -24,11 +29,22 @@ export default function Modal({openModal }){
     };
 
     return (
-        <div className="Overlay">
-            <main className="card_box modal_size">
-                <KakaoPostcodeEmbed onComplete={handleComplete} />
-                <SubmitButton text="제출하기" onClick={onclose} />
-            </main>
-        </div>
+        <>
+            {isClose ?
+            null:
+                < div className="Overlay" >
+                    < main className="card_box modal_size" >
+                        <KakaoPostcodeEmbed onComplete={handleComplete} />
+                        <button
+                            type="submit"
+                            className="submit_button"
+                            onClick={closeModalHandler}
+                        >
+                            <p className='button_text'>제출하기</p>
+                        </button>
+                    </main >
+                </div >
+            }
+        </>
     )
 }

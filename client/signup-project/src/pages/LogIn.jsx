@@ -9,10 +9,10 @@ import FindPassWord from "./FIndPassWord";
 import SubmitButton from "../components/common/SubmitButton";
 import PasswordInput from "../components/common/PasswordInput";
 
-function LogIn() {
+export default function LogIn() {
   const [isWrited, setIsWrited] = useState(true);
   // handleChange가 인식이 안돼서 자물쇠<->눈 입력박스 변경이 되지 않는다.
-  // 따라서 일단 기본 입력을 눈모양 보이는 걸로 설정.
+  // 따라서 일단 기본 입력을 눈모양 보이는 걸로 설정해 놓은 상태.
   const handleChange = (e) => {
     if (isWrited) {
       setIsWrited(false);
@@ -73,4 +73,3 @@ function LogIn() {
   )
 }
 
-export default LogIn

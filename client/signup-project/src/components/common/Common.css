@@ -82,6 +82,8 @@
   letter-spacing: -4%;
   color: rgba(51, 51, 51, 1);
   margin-left: 18px;
+  box-sizing: border-box;
+  outline: none;
 }
 
 .sub-title {
