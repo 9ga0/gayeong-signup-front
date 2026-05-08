@@ -11,26 +11,37 @@ export default function PasswordInput(props) {
         pw: '',
         confirmPw: ''
     }
-    
+
     const handleClick = () => {
         if (visible) {
             setImageSrc(EyeLock);
-            setVisible(false); // 초기 상태 false 일 땐 초기 상태 이미지 src
+            setVisible(false);
         } else {
             setImageSrc(EyeUnLock);
-            setVisible(true); // true일 땐 변경될 이미지 src
+            setVisible(true); 
         }
     };
+
+    const handleChange = (e) => {
+        props.setIsAccepted(true);
+    }
 
     return (
         <div class="input_container">
             <input id="input2"
                 name={props.name}
                 type={visible ? "text" : "password"}
-                placeholder={props.placeholder} /><br />
+                placeholder={props.placeholder}
+                onChange={handleChange}
+            //비밀번호 입력하면 isAccepted로 입력중임을 (PasswordBox/SignUp)에 전달
+            /><br />
             <div >
-                <img className="visible_btn" class="input_img"
-                    onClick={handleClick} src={imageSrc} />
+                <img className="visible_btn"
+                    class="input_img"
+                    onChange={handleClick} 
+                    //눈아이콘 누르면 아이콘 변경+visible변경
+                    src={imageSrc}
+                />
             </div>
         </div>
     )
