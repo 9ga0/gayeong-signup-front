@@ -9,7 +9,7 @@ import { useLocation } from 'react-router-dom';
 
 export default function Success() {
   const location = useLocation();
-  const data = { ...location.state };
+  const data = { ...location.state }; ///??{} 새로고침 버그 예방
 
   return (
     <div className="background-gradient">

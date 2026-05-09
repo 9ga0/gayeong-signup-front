@@ -10,6 +10,7 @@ import { useState } from "react";
 import Modal from './AddressModal';
 
 export default function SignUp() {
+  //props로 전달..
   const [openModal, setOpenModal] = useState(false);
   const openModalHandler = () => {
     setOpenModal(!openModal);
@@ -20,7 +21,7 @@ export default function SignUp() {
         <CardTitle title="회원가입" />
         <div className="gap-24px">
           <EmailBox />
-
+          
           <div className="input-wrap">
             <PasswordBox />
           </div>
@@ -36,8 +37,7 @@ export default function SignUp() {
             <div className="sub-title">주소 </div>
             <div className="input-container">
               <div
-                className="input2"
-                className="modal-open"
+                className="input2 modal-open"
                 type="address"
                 onClick={openModalHandler}
               >

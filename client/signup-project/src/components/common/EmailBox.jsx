@@ -14,6 +14,7 @@ export default function EmailBox() {
   })
   const validateField = (name, value, pwValue) => {
     let error = ''
+    //utill폴더 파서 중앙집중으로 유효검증모으기
     switch (name) {
       case 'email':
         if (!value) {

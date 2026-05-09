@@ -6,6 +6,7 @@ import react, { useState } from "react"
 
 export default function Modal({ openModal }) {
     const [isClose, setIsClose] = useState(false);
+    //isClose삭제
     if (!openModal) return null;
     const closeModalHandler = () => {
         setIsClose(!isClose);
@@ -26,6 +27,7 @@ export default function Modal({ openModal }) {
         }
 
         console.log(fullAddress); // e.g. '서울 성동구 왕십리로2길 20 (성수동1가)'
+        //signUp.jsx로 전달. 부모에서 함수만들어 props으로 전달해서 전달
     };
 
     return (

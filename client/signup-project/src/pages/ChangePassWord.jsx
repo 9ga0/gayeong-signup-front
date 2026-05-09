@@ -11,7 +11,7 @@ export default function ChangePassword(props) {
                 <CardTitle title="비밀번호 재설정" />
                 <div className="input-wrap">
                     <div className='sub-title'>이메일</div>
-                    <div class="input-container">
+                    <div className="input-container">
                         <input className="input2" type="email" value={props.email} />
                     </div>
                 </div>

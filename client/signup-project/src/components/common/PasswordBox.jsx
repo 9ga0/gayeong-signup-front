@@ -10,7 +10,7 @@ export default function PasswordBox() {
         confirmPw: ''
     }
     const [input, setInput] = useState('');
-
+    //ui담당인데 컨트롤까지. props 대신 자식은 on시리즈로 소통한다.
     const [registerParam, setRegisterParam] = useState({ ...initState })
     const [isAccepted, setIsAccepted] = useState(false)
     let error = '';

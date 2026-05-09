@@ -36,9 +36,11 @@ export default function LogIn() {
 
             {isWrited ?
               <PasswordInput name='pw' onChange={handleChange} placeholder="Password" />
+              //setIsAcco
+              
               :
               <div className="input-container">
-                <input className="input2" type="password" on placeholder="Password" />
+                <input className="input2" type="password" placeholder="Password" />
                 <img src={Password} onChange={handleChange} className="input-img"></img>
               </div>
             }
