@@ -23,14 +23,14 @@ export default function PasswordInput(props) {
     };
 
     const handleChange = (e) => {
-        props.setIsAccepted(true); //e전달
+        props.setIsAccepted(e);
     }
 
     return (
         <div className="input-container">
             <input className="input2"
                 name={props.name}
-                //value={props.value}
+                value={props.value}
                 type={visible ? "text" : "password"}
                 placeholder={props.placeholder}
                 onChange={handleChange}
