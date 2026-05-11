@@ -16,7 +16,6 @@ export default function LogIn() {
   let error = '';
   const [errors, setErrors] = useState({
     pw: '',
-    confirmPw: ''
   })
   function handleEmailChange(e) {
     setEmail(e.target.value);
@@ -35,13 +34,14 @@ export default function LogIn() {
               <input className="input2" value={email} onChange={handleEmailChange} type="email" placeholder="E-mail" />
               <img src={Email} className="input-img"></img>
             </div>
-
             <PasswordInput name='pw' value={password}
               onChange={handlePasswordChange}
               onSetErrors={setErrors}
               errors={errors}
+              borderLock={true}
               placeholder="Password" img={Password} />
-
+            {/* {errors.pw && <div className='error'>{errors.pw}</div>}  */}
+          {/* '이메일 주소가 정확한지 확인해 주세요.' 로그인 실패(이메일, 비밀번호 불일치) 시 문구 출력 */}
             <div className="line-box">
               <div className="row-align">
                 <input className="checkbox" type="checkbox" />

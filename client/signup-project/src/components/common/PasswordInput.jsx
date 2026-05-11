@@ -90,12 +90,13 @@ export default function PasswordInput(props) {
         }
 
         if(imageSrc!==EyeUnLock) setImageSrc(EyeLock);
+        props.borderLock? setBorderColor('#89848466'): null;
     }
 
 
     return (
         <div className="input-container"
-            style={{ border: `2px solid ${borderColor}` }}>
+             style={{ border: `2px solid ${borderColor}` }}>
             <input className="input2"
                 name={props.name}
                 type={visible ? "text" : "password"}
