@@ -7,7 +7,6 @@ import ChangePassword from './pages/ChangePassword.jsx';
 import Success from './pages/Success';
 import RegisterComponent from './pages/TestSignUp.jsx'
 
-
 function App() {
   return (
     <div>

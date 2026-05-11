@@ -8,12 +8,42 @@ import "../styles/Modal.css"
 import '../components/common/Common.css';
 import { useState } from "react";
 import Modal from './AddressModal';
+import  API  from '../utils/API';
 
 export default function SignUp() {
+  //props로 전달..
   const [openModal, setOpenModal] = useState(false);
   const openModalHandler = () => {
     setOpenModal(!openModal);
   };
+  const [profile, setProfile] = useState('');
+
+  const [info, setInfo] = useState({
+    email: '',
+    password: '',
+    name: '',
+    address: '',
+  });
+  const handleButton = () => {
+    /* 입력 값의 형태가 올바른지 판별 */
+    if (checkUserInfo(info.nickName, info.email, info.pw, setErrorMessage))
+      return;
+
+    /* 데이터 전송 */
+    API.post('/user/create', {
+      nickName: info.nickName,
+      email: info.email,
+      pw: info.pw,
+      profilePicture: profile
+    })
+      .then((response) => {
+        if (response.status === 200) {
+          const authEmail = { email: userData.email };
+        }
+      })
+      .catch((error) => console.log(error.response));
+  };
+
   return (
     <div className="background-gradient">
       <main className="card-box">
@@ -36,8 +66,7 @@ export default function SignUp() {
             <div className="sub-title">주소 </div>
             <div className="input-container">
               <div
-                className="input2"
-                className="modal-open"
+                className="input2 modal-open"
                 type="address"
                 onClick={openModalHandler}
               >
