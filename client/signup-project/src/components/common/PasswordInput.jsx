@@ -90,7 +90,7 @@ export default function PasswordInput(props) {
         }
 
         if(imageSrc!==EyeUnLock) setImageSrc(EyeLock);
-        props.borderLock? setBorderColor('#89848466'): null;
+        props.isLogin? setBorderColor('#89848466'): null;
     }
 
 
