@@ -27,7 +27,7 @@ export default function PasswordInput(props) {
         let error = ''
         const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,16}$/;
         // 하나 이상의 대문자, 하나 이상의 소문자, 하나이상의 숫자, 하나이상의 특수문자 가 8자~16자로 구성
-        switch (name) {
+        switch (name) { 
             case 'pw':
                 if (!value) {
                     error = '비밀번호를 입력해주세요.'
