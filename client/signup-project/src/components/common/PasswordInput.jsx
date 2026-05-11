@@ -37,7 +37,7 @@ export default function PasswordInput(props) {
                     error = '8~16자의 영문 대/소문자, 숫자, 특수문자'
                     setBorderColor('#EE4346A6');
                 }
-                else if(value && passwordRegex.test(value)){//통과
+                else if(passwordRegex.test(value)){//통과
                     setBorderColor('#435DEEA6');
                 }
                 else {
@@ -101,7 +101,7 @@ export default function PasswordInput(props) {
                 placeholder={props.placeholder}
                 onChange={handleChange}
             //비밀번호 입력하면 isAccepted로 입력중임을 (PasswordBox/SignUp)에 전달
-            /><br />
+            />
             <div >
                 <img className="input-img"
                     onClick={handleClick}

@@ -2,25 +2,41 @@ import React from 'react';
 import './Common.css';
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Check from "../../assets/Check.svg"
+import Fail from "../../assets/Fail.svg"
 
 export default function EmailBox() {
   const initState = {
     email: ''
   }
+  const [borderColor, setBorderColor] = useState('#89848466');
   const [registerParam, setRegisterParam] = useState({ ...initState })
-  const [isOpen, setIsOpen] = useState(false) // 주소찾기 모달 열기/닫기 상태
+  const [imageSrc, setImageSrc] = useState(null);
+
   const [errors, setErrors] = useState({
     email: ''
   })
   const validateField = (name, value, pwValue) => {
     let error = ''
     //utill폴더 파서 중앙집중으로 유효검증모으기
+    const emailRegex = /\S+@\S+\.\S+/;
     switch (name) {
       case 'email':
         if (!value) {
           error = '이메일을 입력해주세요.'
-        } else if (!/\S+@\S+\.\S+/.test(value)) {
+          setBorderColor('#EE4346A6');
+          setImageSrc(Fail);
+        } else if (!emailRegex.test(value)) {
           error = '유효하지 않은 메일입니다.'
+          setBorderColor('#EE4346A6');
+          setImageSrc(Fail);
+        }
+        else if (emailRegex.test(value)) {
+          setImageSrc(Check);
+          setBorderColor('#435DEEA6');
+        }
+        else {
+          setBorderColor('#89848466');
         }
         break
       default:
@@ -48,7 +64,7 @@ export default function EmailBox() {
     <div className="input-wrap">
       <div className="sub-title">이메일</div>
       <div className="line-box">
-        <div className="input-container">
+        <div className="input-container" style={{ border: `2px solid ${borderColor}` }} >
           <input
             className="input2"
             name="email"
@@ -57,6 +73,7 @@ export default function EmailBox() {
             value={registerParam.email}
             onChange={handleChange}
           />
+          {imageSrc===Check || imageSrc===Fail ? <img className="input-img" src={imageSrc} /> : null}
         </div>
         <button
           type="button"
