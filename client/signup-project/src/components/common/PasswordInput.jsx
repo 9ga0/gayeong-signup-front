@@ -9,7 +9,7 @@ export default function PasswordInput(props) {
         confirmPw: ''
     }
     const [visible, setVisible] = useState(false);
-    const [imageSrc, setImageSrc] = useState(EyeLock);
+    const [imageSrc, setImageSrc] = useState(props.img);
     const [registerParam, setRegisterParam] = useState({ ...initState })
     const handleClick = () => {
         if (visible) {
@@ -20,7 +20,6 @@ export default function PasswordInput(props) {
             setVisible(true);
         }
     };
-
     const [borderColor, setBorderColor] = useState('#89848466');
 
     const validateField = (name, value, pwValue) => {
@@ -89,18 +88,19 @@ export default function PasswordInput(props) {
                 confirmPw: confirmPwError
             }))
         }
+
+        if(imageSrc!==EyeUnLock) setImageSrc(EyeLock);
     }
 
 
     return (
         <div className="input-container"
-            style={{ border: `2px solid ${borderColor}` }} >
+            style={{ border: `2px solid ${borderColor}` }}>
             <input className="input2"
                 name={props.name}
                 type={visible ? "text" : "password"}
                 placeholder={props.placeholder}
                 onChange={handleChange}
-            //비밀번호 입력하면 isAccepted로 입력중임을 (PasswordBox/SignUp)에 전달
             />
             <div >
                 <img className="input-img"
