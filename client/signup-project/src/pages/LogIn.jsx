@@ -8,19 +8,20 @@ import Password from '/src/assets/Password.svg';
 import SubmitButton from "../components/common/SubmitButton";
 import PasswordInput from "../components/common/PasswordInput";
 import CardTitle from "../components/common/CardTitle";
+import  API  from '../utils/API';
 
 export default function LogIn() {
   const [isWrited, setIsWrited] = useState(true);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  function handleEmailChange(newValue){
+    setEmail(newValue);
+  }
+  function handlePasswordChange(newValue){
+    setPassword(newValue);
+  }
   // handleChange가 인식이 안돼서 자물쇠<->눈 입력박스 변경이 되지 않는다.
   // 따라서 일단 기본 입력을 눈모양 보이는 걸로 설정해 놓은 상태.
-  const handleChange = (e) => {
-    if (isWrited) {
-      setIsWrited(false);
-    }
-    else {
-      setIsWrited(true);
-    }
-  }
 
   return (
     <>
@@ -30,18 +31,18 @@ export default function LogIn() {
 
           <form className="gap-16px">
             <div className="input-container">
-              <input className="input2" type="email" placeholder="E-mail" />
+              <input className="input2" value={setEmail} onValueChange={handleEmailChange} type="email" placeholder="E-mail" />
               <img src={Email} className="input-img"></img>
             </div>
 
             {isWrited ?
-              <PasswordInput name='pw' onChange={handleChange} placeholder="Password" />
-              //setIsAcco
+              <PasswordInput name='pw' value={password} onValueChange={handlePasswordChange} placeholder="Password" />
+              //setIsAccount
               
-              :
+              : //아래 코드 사용되지 않음.
               <div className="input-container">
                 <input className="input2" type="password" placeholder="Password" />
-                <img src={Password} onChange={handleChange} className="input-img"></img>
+                <img src={Password} className="input-img"></img>
               </div>
             }
 
