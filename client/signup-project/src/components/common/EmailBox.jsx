@@ -1,9 +1,12 @@
 import React from 'react';
 import './Common.css';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Check from "../../assets/Check.svg"
 import Fail from "../../assets/Fail.svg"
+import axios from 'axios';
+import sendMail from '../../utils/API.jsx';
+
 
 export default function EmailBox() {
   const initState = {
@@ -59,11 +62,29 @@ export default function EmailBox() {
       [name]: error
     })
   }
+  const [data, setData] = useState(null);
+
+  const handlePost = async () => {
+    try {
+      const response = await axios.post('/api/v1/email-verification/request',
+        {
+          email: registerParam.email,
+          headers: {
+            'Content-Type': 'application/json',
+          }
+        });
+      console.log(response.data);
+      setData(response.data);
+      console.log ("메일 전송 성공!");
+    } catch (error) {
+      console.error('메일 전송 실패:', error);
+    }
+  }
 
   return (
     <div className="input-wrap">
       <div className="sub-title">이메일</div>
-      <div className="line-box">
+      <form className="line-box" onSubmit={handlePost}>
         <div className="input-container" style={{ border: `2px solid ${borderColor}` }} >
           <input
             className="input2"
@@ -73,15 +94,15 @@ export default function EmailBox() {
             value={registerParam.email}
             onChange={handleChange}
           />
-          {imageSrc===Check || imageSrc===Fail ? <img className="input-img" src={imageSrc} /> : null}
+          {imageSrc === Check || imageSrc === Fail ? <img className="input-img" src={imageSrc} /> : null}
         </div>
         <button
-          type="button"
+          type="submit"
           className="email-button"
         >
           <p className='email-button-text'> 전송 </p>
         </button>
-      </div>
+      </form>
       <div className="input-container">
         <input className="input2" placeholder="인증번호" />
       </div>

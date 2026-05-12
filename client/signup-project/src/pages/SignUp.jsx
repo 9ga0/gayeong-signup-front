@@ -1,6 +1,5 @@
 import React from 'react';
 import CardTitle from "../components/common/CardTitle"
-//import InputBox from "../components/common/Common"
 import EmailBox from "../components/common/EmailBox"
 import PasswordBox from "../components/common/PasswordBox"
 import SubmitButton from "../components/common/SubmitButton"
