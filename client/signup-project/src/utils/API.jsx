@@ -41,4 +41,4 @@ const sendMail = async () => {
   }
 }
 
-export default {API, sendMail};
+export default API

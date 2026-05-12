@@ -5,19 +5,21 @@ import { useNavigate } from "react-router-dom";
 import Check from "../../assets/Check.svg"
 import Fail from "../../assets/Fail.svg"
 import axios from 'axios';
-import sendMail from '../../utils/API.jsx';
-
+//import sendMail from '../../utils/API.jsx';
+import API from '../../utils/API.jsx';
 
 export default function EmailBox() {
   const initState = {
-    email: ''
+    email: '',
+    authentication:''
   }
   const [borderColor, setBorderColor] = useState('#89848466');
   const [registerParam, setRegisterParam] = useState({ ...initState })
   const [imageSrc, setImageSrc] = useState(null);
 
   const [errors, setErrors] = useState({
-    email: ''
+    email: '',
+    authentication:''
   })
   const validateField = (name, value, pwValue) => {
     let error = ''
@@ -61,23 +63,35 @@ export default function EmailBox() {
       ...errors,
       [name]: error
     })
+    if (name==='authentication') handleEqual(e);
   }
   const [data, setData] = useState(null);
 
-  const handlePost = async () => {
+  const handlePost = async (e) => {
+    e.preventDefault();
     try {
-      const response = await axios.post('/api/v1/email-verification/request',
-        {
-          email: registerParam.email,
-          headers: {
-            'Content-Type': 'application/json',
-          }
-        });
+      const response = await API.post(
+        '/api/v1/email-verification/request',
+        {email: registerParam.email});
+
       console.log(response.data);
       setData(response.data);
-      console.log ("메일 전송 성공!");
     } catch (error) {
-      console.error('메일 전송 실패:', error);
+      console.error('api 연결 실패:', error);
+    }
+  }
+
+  const handleEqual = async (e)=>{
+    e.preventDefault();
+    try {
+      const response = await API.post(
+        '/api/v1/email-verification/confirm',
+         {verificationCode: registerParam.authentication}
+      );
+      console.log('인증번호 일치: ',response.data);
+      
+    } catch (error) {
+      console.error('api 연결 실패:', error);
     }
   }
 
@@ -104,7 +118,12 @@ export default function EmailBox() {
         </button>
       </form>
       <div className="input-container">
-        <input className="input2" placeholder="인증번호" />
+        <input 
+        className="input2" 
+        name="authentication"
+        value={registerParam.authentication}
+        placeholder="인증번호" 
+        onChange={handleChange}/>
       </div>
       {errors.email && <div className='error'>{errors.email}</div>}
     </div>
