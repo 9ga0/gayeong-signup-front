@@ -6,7 +6,7 @@ import Check from "../../assets/Check.svg"
 import Fail from "../../assets/Fail.svg"
 import axios from 'axios';
 //import sendMail from '../../utils/API.jsx';
-import API from '../../utils/API.jsx';
+import API from '../../services/API.jsx';
 
 export default function EmailBox() {
   const initState = {
@@ -19,7 +19,7 @@ export default function EmailBox() {
 
   const [errors, setErrors] = useState({
     email: '',
-    authentication:''
+    verification:''
   })
   const validateField = (name, value, pwValue) => {
     let error = ''
@@ -44,6 +44,10 @@ export default function EmailBox() {
           setBorderColor('#89848466');
         }
         break
+      case 'verification':
+        if(!value){
+          error = ''
+        }
       default:
         break
     }
@@ -79,14 +83,14 @@ export default function EmailBox() {
     } catch (error) {
       console.error('api 연결 실패:', error);
     }
-  }
+  }//service폴더
 
   const handleEqual = async (e)=>{
     e.preventDefault();
     try {
       const response = await API.post(
         '/api/v1/email-verification/confirm',
-         {verificationCode: registerParam.authentication}
+         {verificationCode: registerParam.verification}
       );
       console.log('인증번호 일치: ',response.data);
       
@@ -121,7 +125,7 @@ export default function EmailBox() {
         <input 
         className="input2" 
         name="authentication"
-        value={registerParam.authentication}
+        value={registerParam.verification}
         placeholder="인증번호" 
         onChange={handleChange}/>
       </div>

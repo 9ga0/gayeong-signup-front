@@ -8,7 +8,7 @@ import Password from '/src/assets/Password.svg';
 import SubmitButton from "../components/common/SubmitButton";
 import PasswordInput from "../components/common/PasswordInput";
 import CardTitle from "../components/common/CardTitle";
-import API from '../utils/API';
+import API from '../services/API';
 
 export default function LogIn() {
   const [email, setEmail] = useState("");

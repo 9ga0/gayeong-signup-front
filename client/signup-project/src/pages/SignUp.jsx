@@ -7,7 +7,7 @@ import "../styles/Modal.css"
 import '../components/common/Common.css';
 import { useState } from "react";
 import Modal from './AddressModal';
-import  API  from '../utils/API';
+import  API  from '../services/API';
 
 export default function SignUp() {
   //props로 전달..
@@ -28,7 +28,7 @@ export default function SignUp() {
     if (checkUserInfo(info.nickName, info.email, info.pw, setErrorMessage))
       return;
 
-    /* 데이터 전송 */
+    /* 데이터 전송 */ 
     API.post('/user/create', {
       nickName: info.nickName,
       email: info.email,

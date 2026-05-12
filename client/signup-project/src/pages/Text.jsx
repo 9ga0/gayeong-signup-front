@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React,{ useState } from 'react';
-import API from '../utils/API';
+import API from '../services/API';
 
 export default function UserPostComponent() {
   const [data, setData] = useState(null);
