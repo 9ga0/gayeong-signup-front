@@ -6,6 +6,7 @@ import FindPassword from './pages/FindPassword.jsx';
 import ChangePassword from './pages/ChangePassword.jsx';
 import Success from './pages/Success';
 import RegisterComponent from './pages/TestSignUp.jsx'
+import UserPostComponent from './pages/Text.jsx';
 
 function App() {
   return (
@@ -18,7 +19,7 @@ function App() {
             <Route path ="/find-password" element = {<FindPassword />}/>
             <Route path ="/change-password" element = {<ChangePassword />}/>
             <Route path ="/success" element = {<Success />}/>
-
+            <Route path ="/text" element = {<UserPostComponent />}/>
             {/* <Route path="*" element={<NotFound />} /> */}
         </Routes>
       </BrowserRouter>
