@@ -15,6 +15,7 @@ export default function LogIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+
   return (
     <>
       <div className="background-gradient">
@@ -37,8 +38,9 @@ export default function LogIn() {
             {/* '이메일 주소가 정확한지 확인해 주세요.' 로그인 실패(이메일, 비밀번호 불일치) 시 문구 출력 */}
             <div className="line-box">
               <div className="row-align">
-                <input className="checkbox" onChange={() => { setSavedID(email) }} type="checkbox" />
-                <div className="safe-id-text">아이디 저장</div>
+                <input className="checkbox" type="checkbox" /> 
+                {/* checked={saveIDFlag} 아이디 저장 기능 추가예정. */}
+                <div className="safe-id-text">아이디 저장</div> 
               </div>
               <Link className="find-password-link-text" to="/find-password">비밀번호 찾기</Link>
             </div>
@@ -46,7 +48,8 @@ export default function LogIn() {
           </form>
 
           <div className="gap-16px">
-            <SubmitButton text="Login" />
+            <SubmitButton text="Login"  />  
+            {/* onClick해서 로그인 제출 구현. */}
 
             <div className="row-align">
               <div className="quest-no-account">계정이 없으신가요?</div>
