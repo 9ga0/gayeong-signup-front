@@ -2,6 +2,7 @@ import React from 'react';
 import { useState } from "react";
 import EyeLock from "../../assets/EyeLock.svg"
 import PasswordInput from './PasswordInput';
+import Common from './Common.css';
 
 export default function PasswordBox() {
     let error = '';
