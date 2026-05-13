@@ -11,18 +11,10 @@ import CardTitle from "../components/common/CardTitle";
 import API from '../services/API';
 
 export default function LogIn() {
+  const [savedID, setSavedID] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  let error = '';
-  const [errors, setErrors] = useState({
-    pw: '',
-  })
-  function handleEmailChange(e) {
-    setEmail(e.target.value);
-  }
-  function handlePasswordChange(e) {
-    setPassword(e.target.value);
-  }
+  const [error, setError] = useState("");
   return (
     <>
       <div className="background-gradient">
@@ -31,19 +23,21 @@ export default function LogIn() {
 
           <form className="gap-16px">
             <div className="input-container">
-              <input className="input2" value={email} onChange={handleEmailChange} type="email" placeholder="E-mail" />
+              <input className="input2" value={email} onChange={(e) => { setEmail(e.target.value) }} type="email" placeholder="E-mail" />
               <img src={Email} className="input-img"></img>
             </div>
             <PasswordInput name='pw' value={password}
-              onChange={handlePasswordChange}
-              onSetErrors={setErrors}
-              errors={errors}
+              onChange={(e) => { setPassword(e.target.value) }}
+              setError={setError}
+              error={error}
               isLogin={true}
               placeholder="Password" img={Password} />
+
+            {/* {errors && <div className='error'>{errors}</div>} //common.css 불러와야할수도*/}
             {/* '이메일 주소가 정확한지 확인해 주세요.' 로그인 실패(이메일, 비밀번호 불일치) 시 문구 출력 */}
             <div className="line-box">
               <div className="row-align">
-                <input className="checkbox" type="checkbox" />
+                <input className="checkbox" onChange={() => { setSavedID(email) }} type="checkbox" />
                 <div className="safe-id-text">아이디 저장</div>
               </div>
               <Link className="find-password-link-text" to="/find-password">비밀번호 찾기</Link>

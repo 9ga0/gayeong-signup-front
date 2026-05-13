@@ -40,7 +40,7 @@ export default function Modal( props ) {
                             className="submit-button"
                             onClick={()=>{props.setOpenModal(false)}}
                         >
-                            <p className='button-text'>제출하기</p>
+                            <p className='button-text'>닫기</p>
                         </button>
                     </main >
                 </div >

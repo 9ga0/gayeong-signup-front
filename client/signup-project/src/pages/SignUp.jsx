@@ -76,7 +76,7 @@ export default function SignUp() {
           </div>
         </div>
 
-        <SubmitButton text="닫기" link='/success' context="회원가입 완료" />
+        <SubmitButton text="제출하기" link='/success' context="회원가입 완료" />
       </main >
     </div >
 

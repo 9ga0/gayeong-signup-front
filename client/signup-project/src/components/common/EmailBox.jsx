@@ -66,7 +66,7 @@ export default function EmailBox() {
     return error
   }
 
-  //입력된 값 저장하고, 에러메시지 저장
+  //입력된 값 저장하고, 에러메시지 저장. 인증번호전송문구초기화
   const handleChange = (e) => {
     const { name, value } = e.target
 
@@ -82,6 +82,8 @@ export default function EmailBox() {
       [name]: error
     })
     if (name === 'authentication') handleEqual(e);
+
+    setSendText(null);
   }
 
   //메일로 인증번호 보내는 함수
