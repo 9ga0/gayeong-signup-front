@@ -15,6 +15,7 @@ export default function PasswordBox() {
         confirmPw: ''
     }
     const [registerParam, setRegisterParam] = useState({ ...initState })
+    const [correctTurn, setCorrectTurn] = useState(false);
 
 
     return (
@@ -26,6 +27,7 @@ export default function PasswordBox() {
                 errors={errors}
                 registerParam={registerParam}
                 setRegisterParam={setRegisterParam}
+                setCorrectTurn={setCorrectTurn}
                 img={EyeLock} />
             <PasswordInput type="input" name='confirmPw'
                 placeholder="비밀번호 확인"
@@ -33,6 +35,7 @@ export default function PasswordBox() {
                 errors={errors}
                 registerParam={registerParam}
                 setRegisterParam={setRegisterParam}
+                correctTurn={correctTurn}
                 img={EyeLock} />
             {errors.pw && <div className='error'>{errors.pw}</div>}
             {errors.confirmPw && <div className='error'>{errors.confirmPw}</div>}
