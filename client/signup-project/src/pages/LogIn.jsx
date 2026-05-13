@@ -40,7 +40,6 @@ export default function LogIn() {
               errors={errors}
               isLogin={true}
               placeholder="Password" img={Password} />
-            {/* {errors.pw && <div className='error'>{errors.pw}</div>}  */}
             {/* '이메일 주소가 정확한지 확인해 주세요.' 로그인 실패(이메일, 비밀번호 불일치) 시 문구 출력 */}
             <div className="line-box">
               <div className="row-align">

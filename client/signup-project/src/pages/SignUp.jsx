@@ -15,8 +15,7 @@ export default function SignUp() {
   const openModalHandler = () => {
     setOpenModal(!openModal);
   };
-  const [profile, setProfile] = useState('');
-
+  const [dataAddress,setDataAddress] =useState('');
   const [info, setInfo] = useState({
     email: '',
     password: '',
@@ -24,16 +23,14 @@ export default function SignUp() {
     address: '',
   });
   const handleButton = () => {
-    /* 입력 값의 형태가 올바른지 판별 */
+    // 입력 값의 형태가 올바른지 판별 
     if (checkUserInfo(info.nickName, info.email, info.pw, setErrorMessage))
       return;
 
-    /* 데이터 전송 */ 
-    API.post('/user/create', {
-      nickName: info.nickName,
+    // 데이터 전송  
+    API.post('/api/v1/auth/signup', {
       email: info.email,
       pw: info.pw,
-      profilePicture: profile
     })
       .then((response) => {
         if (response.status === 200) {
@@ -64,22 +61,22 @@ export default function SignUp() {
           <div className="input-wrap">
             <div className="sub-title">주소 </div>
             <div className="input-container">
-              <div
-                className="input2 modal-open"
-                type="address"
+              <input
+                className="input2"
+                type="text"
+                value={dataAddress} 
                 onClick={openModalHandler}
-              >
-                클릭하여 주소 검색
-              </div>
+                placeholder="클릭하여 주소 검색"
+              />
             </div>
-            {openModal ? <Modal openModal={openModal} /> : null}
+            {openModal ? <Modal openModal={openModal} setOpenModal={setOpenModal} setDataAddress={setDataAddress} /> : null}
             <div className="input-container">
               <input className="input2" type="text" placeholder="상세주소" />
             </div>
           </div>
         </div>
 
-        <SubmitButton text="제출하기" link='/success' context="회원가입 완료" />
+        <SubmitButton text="닫기" link='/success' context="회원가입 완료" />
       </main >
     </div >
 

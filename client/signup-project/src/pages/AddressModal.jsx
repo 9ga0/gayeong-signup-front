@@ -4,14 +4,9 @@ import '../styles/Modal.css'
 import KakaoPostcodeEmbed from 'react-daum-postcode';
 import react, { useState } from "react"
 
-export default function Modal({ openModal }) {
-    const [isClose, setIsClose] = useState(false);
-    //isClose삭제
-    if (!openModal) return null;
-    const closeModalHandler = () => {
-        setIsClose(!isClose);
-    };
+export default function Modal( props ) {
 
+    //임베드 방식으로 카카오우편검색api 가져옴.
     const handleComplete = (data) => {
         let fullAddress = data.address;
         let extraAddress = '';
@@ -26,22 +21,24 @@ export default function Modal({ openModal }) {
             fullAddress += extraAddress !== '' ? ` (${extraAddress})` : '';
         }
 
-        console.log(fullAddress); // e.g. '서울 성동구 왕십리로2길 20 (성수동1가)'
-        //signUp.jsx로 전달. 부모에서 함수만들어 props으로 전달해서 전달
+        console.log(fullAddress);
+        props.setDataAddress(fullAddress);
+        props.setOpenModal(false);
     };
 
     return (
         <>
-            {isClose ?
+            {!props.openModal ?
                 null :
                 < div className="Overlay" >
                     < main className="card-box modal-size" >
                         <KakaoPostcodeEmbed onComplete={handleComplete}
+                            
                             style={{ width: "410px", height: "392px"}} />
                         <button
                             type="submit"
                             className="submit-button"
-                            onClick={closeModalHandler}
+                            onClick={()=>{props.setOpenModal(false)}}
                         >
                             <p className='button-text'>제출하기</p>
                         </button>
