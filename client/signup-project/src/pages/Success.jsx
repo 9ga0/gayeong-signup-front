@@ -19,7 +19,7 @@ export default function Success() {
           <img className='check-image' src={Check} />
           <p className="success-context">{data.context}</p> {/*회원가입 완료 or 비밀번호 재설정 완료*/}
         </div> 
-        <SubmitButton style={{fontSize:"20px"}} text="로그인 하기" link='/' />
+        <SubmitButton style={{fontSize:"20px"}} isActive={true} text="로그인 하기" link='/' />
       </main>
     </div>
   )

@@ -1,18 +1,21 @@
 import React from 'react';
 import './Common.css';
 import { useNavigate } from "react-router-dom";
+import { getMyInfo } from '../../services/MyInfoApi';
 
 const SubmitButton = (props) => {
   const navigate = useNavigate();
   const moveToNextPage = () => {
-    if (props.link) { //link값이 입력되었으면 이동.
-      navigate(props.link, {
-        state: {
-          context: props.context, email: props.email
-        }
-      })
-    }else{
-      console.log('이동 불가');
+    if (props.isActive) {
+      if (props.link) { //link값이 입력되었으면 이동.
+        navigate(props.link, {
+          state: {
+            context: props.context, email: props.email
+          }
+        })
+      } else {
+        console.log('이동 불가');
+      }
     }
   }
   return (

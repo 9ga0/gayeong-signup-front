@@ -12,7 +12,7 @@ export default function MyPage(props) {
                 <p>로그인 성공!</p> 
                 {/* props로 값 전달받아 내정보 출력? 으로 변경 */}
 
-                <SubmitButton text="로그아웃" link='/' />
+                <SubmitButton text="로그아웃" link='/' isActive={true}/>
 
             </main>
         </div>

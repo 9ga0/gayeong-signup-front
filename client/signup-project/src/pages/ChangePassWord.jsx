@@ -11,7 +11,7 @@ export default function ChangePassword(props) {
     const data = { ...location.state }; ///??{} 새로고침 버그 예방
     const [isMatch, setIsMatch] = useState(false); //비밀번호 입력 및 통과했는지
     const [password, setPassword] = useState('');
-    //메일로 인증번호 보내는 함수. handleEmailCheck이메일중복 통과하면 실행
+    //비밀번호 변경시키는 api 호출.
     const changePw = async (e) => {
         e.preventDefault();
         console.log(data.email, ':', password);
@@ -46,14 +46,8 @@ export default function ChangePassword(props) {
                             onSetPassword={(e) => { setPassword(e.target.value) }}
                             setIsMatch={setIsMatch} />
                     </div>
-                    {isMatch ?
-                        <SubmitButton text="재설정" onSubmit={changePw}
-                            link='/success' context="비밀번호 재설정 완료" />
-                        :
-                        <SubmitButton text="재설정"  />
-                    }
-
-
+                    <SubmitButton text="재설정" onSubmit={changePw}
+                            link='/success' isActive={isMatch} context="비밀번호 재설정 완료" />
                 </main>
             </form>
         </div>
