@@ -145,6 +145,13 @@ export default function EmailBox(props) {
   //이메일 중복검사api. 전송버튼 누르면 작동
   const handleEmailCheck = async (e) => {
     e.preventDefault()
+
+    if (props.ignoreEmailCheck === true) { //비밀번호찾기페이지에서는 무시하기위해
+      console.log('이메일 중복 검사를 패스합니다.')
+      handlePost(e);
+      return;
+    }
+
     try {
       const response = await API.post(
         '/api/v1/auth/email-check', {

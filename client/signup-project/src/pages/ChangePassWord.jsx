@@ -12,7 +12,7 @@ export default function ChangePassword(props) {
                 <div className="input-wrap">
                     <div className='sub-title'>이메일</div>
                     <div className="input-container">
-                        <input className="input2" type="email" value={props.email} />
+                        <div className="input2" type="email" value={props.email} />
                     </div>
                 </div>
 
