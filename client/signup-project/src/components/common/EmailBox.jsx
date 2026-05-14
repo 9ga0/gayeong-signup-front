@@ -103,7 +103,13 @@ export default function EmailBox(props) {
 
       console.log(response.data); //인증 번호가 발송되었습니다
       console.log(response.status); //200
-      props.onSetEmail(registerParam.email);
+      props.onSetEmail({ //부모에게 이메일 객체 전달
+                      target: {
+                          name: 'email', 
+                          value: registerParam.email
+                      }
+                  });
+      
       //보내기 성공
       isSend ? setSendText('인증번호가 재전송되었습니다.') : setSendText('인증번호가 전송되었습니다.');
       setIsSend(true);
@@ -155,10 +161,10 @@ export default function EmailBox(props) {
           {imageSrc === Check || imageSrc === Fail ? <img className="input-img" src={imageSrc} /> : null}
         </div>
         {isActive ? //이메일 형식에 맞을 시 true
-          <button type="submit" className="email-button" onClick={handlePost} >
+          <button type="button" className="email-button" onClick={handlePost} >
             <p className='email-button-text'> {isSend ? '재전송' : '전송'} </p>
           </button>
-          :
+          : //버튼 비활성화
           <button className="email-button" style={{ backgroundColor: "#E3E3E3" }}>
             <p className='email-button-text'> 전송 </p>
           </button>

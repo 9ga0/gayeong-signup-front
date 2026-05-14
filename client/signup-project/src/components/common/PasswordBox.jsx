@@ -1,10 +1,10 @@
 import React from 'react';
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import EyeLock from "../../assets/EyeLock.svg"
 import PasswordInput from './PasswordInput';
 import './Common.css';
 
-export default function PasswordBox() {
+export default function PasswordBox(props) {
     let error = '';
     const [errors, setErrors] = useState({
         pw: '',
@@ -17,7 +17,17 @@ export default function PasswordBox() {
     const [registerParam, setRegisterParam] = useState({ ...initState })
     const [correctTurn, setCorrectTurn] = useState(false);
 
-
+    //password값이 바뀌면 부모에게 전달 실행
+    useEffect(() => {
+        if (props.onSetPassword) {
+            props.onSetPassword({
+                target: {
+                    name: 'password', 
+                    value: registerParam.pw
+                }
+            });
+        }
+    }, [registerParam.pw]); 
     return (
         <>
             <div className="sub-title">비밀번호</div>

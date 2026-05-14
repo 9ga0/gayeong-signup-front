@@ -48,7 +48,7 @@ export default function PasswordInput(props) {
                     error = '비밀번호가 일치하지 않습니다.'
                     setBorderColor('#EE4346A6');
                 }
-                else if (props.correctTurn &&value) { //비밀번호 일치
+                else if (props.correctTurn && value) { //비밀번호 일치
                     setBorderColor('#435DEEA6');
                 }
                 else {
@@ -81,7 +81,6 @@ export default function PasswordInput(props) {
             ...props.errors,
             [name]: error
         })
-
         // pw가 변경되었을 때도 confirmPw 필드의 값을 재검증하여 에러 상태 업데이트
         if (e.target.name === 'pw' && props.registerParam.confirmPw) {
             const confirmPwError = validateField('confirmPw', props.registerParam.confirmPw, value)

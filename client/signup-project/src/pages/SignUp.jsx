@@ -31,7 +31,22 @@ export default function SignUp() {
       ...prev,
       [name]: value
     }));
-    console.log(registerParam)
+    console.log(registerParam);
+    //함수가 끝나고 랜더링되므로 한박자 늦게 저장된것처럼 보임.
+  }
+  const setEmailHandler = (value) => {
+    setRegisterParam((prev) => ({
+      ...prev,
+      email: value
+    }));
+    console.log(registerParam);
+  }
+  const setPasswordHandler = (value) => {
+    setRegisterParam((prev) => ({
+      ...prev,
+      password: value
+    }));
+    console.log(registerParam);
   }
   const setAddressHandler = (address) => {
     setRegisterParam((prev) => ({
@@ -75,14 +90,15 @@ export default function SignUp() {
         detailAddress: registerParam.detailAddress,
       })
       //response.status === 200) 
-      console.log('info:', info);
-      console.log(response.data);
+      setAbleToSubmit(true);
+      console.log('올바른 입력으로 회원가입되었습니다.');
     }
     catch (error) {
-      if (error.response.status === 409) {
+      if (error.response && error.response.status === 409) {
         console.log(response.data);//이미 사용 중인 이메일입니다
         setErrors({ ...errors, ['email']: '이미 사용 중인 이메일입니다.' });
         setIsExistEmail(false)
+        setAbleToSubmit(false);
       }
       console.error('signupUser에서 api 연결 실패:', error.message);
     }
@@ -104,7 +120,7 @@ export default function SignUp() {
             <div className="input-wrap">
               <PasswordBox
                 name='password'
-                onChange={inputChange}
+                onSetPassword={inputChange}
                 value={registerParam.password} />
             </div>
 
@@ -141,8 +157,12 @@ export default function SignUp() {
               </div>
             </div>
           </div>
-          <SubmitButton text="제출하기" link='/success'
-            context="회원가입 완료" onSubmit={signupUser} />
+          {ableToSubmit ?
+            <SubmitButton text="제출하기" link='/success'
+              context="회원가입 완료" onSubmit={signupUser} />
+            :
+            <SubmitButton text="제출하기"
+              context="회원가입 완료" onSubmit={signupUser} />}
         </main >
       </form>
     </div >
