@@ -46,6 +46,7 @@ export default function PasswordBox(props) {
                 registerParam={registerParam}
                 setRegisterParam={setRegisterParam}
                 correctTurn={correctTurn}
+                setIsMatch={props.setIsMatch}
                 img={EyeLock} />
             {errors.pw && <div className='error'>{errors.pw}</div>}
             {errors.confirmPw && <div className='error'>{errors.confirmPw}</div>}

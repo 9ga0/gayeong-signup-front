@@ -15,6 +15,7 @@ export default function SignUp() {
   const openModalHandler = () => {
     setOpenModal(!openModal);
   };
+  const [isMatch, setIsMatch] = useState(false); //비밀번호 입력 및 통과했는지
   const [isCorrect, setIsCorrect] = useState(false);//인증번호 일치여부. 일치하면 제출버튼 가능
   const [ableToSubmit, setAbleToSubmit] = useState(false);
   const [isExistEmail, setIsExistEmail] = useState(false); //이미 존재하는 이메일인지 유무
@@ -41,7 +42,7 @@ export default function SignUp() {
       email: value
     }));
     console.log(registerParam);
-  }
+  } //((e 객체 반환으로 고치기))
   const setPasswordHandler = (value) => {
     setRegisterParam((prev) => ({
       ...prev,
@@ -57,14 +58,16 @@ export default function SignUp() {
   }
 
   //모든 입력값이 ''이 아니라 값으로 채워져있는지,
-  //이메일은 인증번호가 인증되었는지, 비밀번호는 일치하는지, 이름과 주소 다 입력되어있는지
+  //이메일은 인증번호가 인증되었는지, 비밀번호는 일치하는지, 이름과 주소 다 입력되어있는지 <-구현해야함
   //점검하는 함수
   const checkUserInfo = () => { ///더 디테일한 에러판단 적용 필요!!!
     if (registerParam.email
       && registerParam.password
       && registerParam.userName
       && registerParam.streetAddress
-      && registerParam.detailAddress) {
+      && registerParam.detailAddress
+      && isCorrect
+      && isMatch) { //+비밀번호 일치여부
       setAbleToSubmit(true);
       return true;
     }
@@ -89,7 +92,7 @@ export default function SignUp() {
         username: registerParam.userName,
         streetAddress: registerParam.streetAddress,
         detailAddress: registerParam.detailAddress,
-      })
+      });
       //response.status === 200) 
       setAbleToSubmit(true);
       console.log('올바른 입력으로 회원가입되었습니다.');
@@ -123,6 +126,7 @@ export default function SignUp() {
               <PasswordBox
                 name='password'
                 onSetPassword={inputChange}
+                setIsMatch={setIsMatch}
                 value={registerParam.password} />
             </div>
 

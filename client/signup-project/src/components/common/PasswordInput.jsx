@@ -47,9 +47,11 @@ export default function PasswordInput(props) {
                 if (props.correctTurn && value && value !== pwValue) {
                     error = '비밀번호가 일치하지 않습니다.'
                     setBorderColor('#EE4346A6');
+                    if(props.setIsMatch) props.setIsMatch(false);
                 }
                 else if (props.correctTurn && value) { //비밀번호 일치
                     setBorderColor('#435DEEA6');
+                    if(props.setIsMatch) props.setIsMatch(true);
                 }
                 else {
                     setBorderColor('#89848466');
