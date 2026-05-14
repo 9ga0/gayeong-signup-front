@@ -9,6 +9,7 @@ import SubmitButton from "../components/common/SubmitButton";
 import PasswordInput from "../components/common/PasswordInput";
 import CardTitle from "../components/common/CardTitle";
 import API from '../services/API';
+import '../components/common/Common.css';
 
 export default function LogIn() {
   const [savedID, setSavedID] = useState("");
@@ -16,13 +17,42 @@ export default function LogIn() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
+  //로그인 post api보내기. submitButton클릭시 동작
+  const loginUser = async (e) => {
+    e.preventDefault();
+
+    // 입력 값의 형태가 올바른지 판별 
+    if (!email|| !password) {
+      console.log('회원가입 실패: 이메일 또는 패스워드가 비어있음');
+      //'~을 입력하세요' 경고문구 출력.
+      setAbleToSubmit(false);
+      return; //새로고침? 값 초기화?
+    }
+    try {
+      API.post('/api/v1/auth/login', {
+        email: email,
+        password: password
+      })
+      setAbleToSubmit(true);
+      console.log('올바른 입력으로 로그인되었습니다.');
+    }catch (error) {
+      console.log(status);
+      if (error.response && error.response.status === 400) {
+        setErrors( '이메일 주소가 정확한지 확인해 주세요.');
+        setIsExistEmail(false)
+        setAbleToSubmit(false);
+      }
+      console.error('signupUser에서 api 연결 실패:', error.message);
+    }
+  }
+
   return (
     <>
       <div className="background-gradient">
         <main className="card-box">
           <CardTitle title="En# SignUp!!" />
 
-          <form className="gap-16px">
+          <form className="gap-16px" onSubmit={loginUser}>
             <div className="input-container">
               <input className="input2" value={email} onChange={(e) => { setEmail(e.target.value) }} type="email" placeholder="E-mail" />
               <img src={Email} className="input-img"></img>
@@ -34,7 +64,7 @@ export default function LogIn() {
               isLogin={true}
               placeholder="Password" img={Password} />
 
-            {/* {errors && <div className='error'>{errors}</div>} //common.css 불러와야할수도*/}
+            {error && <div className='error'>{error}</div>} 
             {/* '이메일 주소가 정확한지 확인해 주세요.' 로그인 실패(이메일, 비밀번호 불일치) 시 문구 출력 */}
             <div className="line-box">
               <div className="row-align">
@@ -48,7 +78,7 @@ export default function LogIn() {
           </form>
 
           <div className="gap-16px">
-            <SubmitButton text="Login"  />  
+            <SubmitButton text="Login" link='/my-page'/>  
             {/* onClick해서 로그인 제출 구현. */}
 
             <div className="row-align">

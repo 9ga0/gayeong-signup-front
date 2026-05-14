@@ -58,7 +58,7 @@ export default function SignUp() {
   //모든 입력값이 ''이 아니라 값으로 채워져있는지,
   //이메일은 인증번호가 인증되었는지, 비밀번호는 일치하는지, 이름과 주소 다 입력되어있는지
   //점검하는 함수
-  const checkUserInfo = () => {
+  const checkUserInfo = () => { ///더 디테일한 에러판단 적용 필요!!!
     if (registerParam.email
       && registerParam.password
       && registerParam.userName
