@@ -85,7 +85,7 @@ export default function SignUp() {
       API.post('/api/v1/auth/signup', {
         email: registerParam.email,
         password: registerParam.password,
-        userName: registerParam.userName,
+        username: registerParam.userName,
         streetAddress: registerParam.streetAddress,
         detailAddress: registerParam.detailAddress,
       })
