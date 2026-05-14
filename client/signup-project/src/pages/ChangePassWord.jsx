@@ -3,8 +3,12 @@ import CardTitle from "../components/common/CardTitle"
 import PasswordBox from "../components/common/PasswordBox"
 import SubmitButton from '../components/common/SubmitButton';
 import "../components/common/Common.css"
+import { useLocation } from 'react-router-dom';
 
-export default function ChangePassword(props) {
+export default function ChangePassword() {
+    const location = useLocation();
+    const data = { ...location.state }; ///??{} 새로고침 버그 예방
+
     return (
         <div className="background-gradient">
             <main className="card-box2">
@@ -12,7 +16,7 @@ export default function ChangePassword(props) {
                 <div className="input-wrap">
                     <div className='sub-title'>이메일</div>
                     <div className="input-container">
-                        <input className="input2" type="email" value={props.email} />
+                        <input className="input2" type='text' value={data.email} disabled/>
                     </div>
                 </div>
 
