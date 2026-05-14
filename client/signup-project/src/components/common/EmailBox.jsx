@@ -46,6 +46,12 @@ export default function EmailBox(props) {
           setImageSrc(Fail);
           setIsActive(false);
         }
+        else if (props.isExistEmail) {
+          error = '이미 존재하는 이메일입니다.'
+          setBorderColor('#EE4346A6');
+          setImageSrc(Fail);
+          setIsActive(false);
+        }
         else if (emailRegex.test(value)) { //통과.유효한이메일입력
           setImageSrc(Check);
           setIsActive(true);
@@ -97,6 +103,7 @@ export default function EmailBox(props) {
 
       console.log(response.data); //인증 번호가 발송되었습니다
       console.log(response.status); //200
+      props.onSetEmail(registerParam.email);
       //보내기 성공
       isSend ? setSendText('인증번호가 재전송되었습니다.') : setSendText('인증번호가 전송되었습니다.');
       setIsSend(true);
@@ -118,12 +125,12 @@ export default function EmailBox(props) {
       //response.status===200일때
       console.log(response.status);
       setIsCorrect(true);
-      setErrors({ ...errors, ['email']: ''});
+      setErrors({ ...errors, ['email']: '' });
       setSendText('올바른 인증번호입니다.');
-    
+
     } catch (error) {
-      console.log(error.response.data); //인증 번호가 일치하지 않습니다
       if (error.response && error.response.status === 400) {
+        console.log(error.response.data); //인증 번호가 일치하지 않습니다
         setIsCorrect(false);
         setErrors({ ...errors, ['email']: '올바르지 않은 인증번호입니다.' });
       }

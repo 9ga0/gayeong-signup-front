@@ -36,7 +36,7 @@ export default function Modal( props ) {
                             
                             style={{ width: "410px", height: "392px"}} />
                         <button
-                            type="submit"
+                            type="button"
                             className="submit-button"
                             onClick={()=>{props.setOpenModal(false)}}
                         >

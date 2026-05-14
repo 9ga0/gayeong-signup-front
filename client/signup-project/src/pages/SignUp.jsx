@@ -15,47 +15,77 @@ export default function SignUp() {
   const openModalHandler = () => {
     setOpenModal(!openModal);
   };
-  const [dataAddress, setDataAddress] = useState('');
-  const state = {
+  const [ableToSubmit, setAbleToSubmit] = useState(false);
+  const [isExistEmail, setIsExistEmail] = useState(false); //이미 존재하는 이메일인지 유무
+  const [registerParam, setRegisterParam] = useState({
     email: '',
     password: '',
-    name: '',
-    address: '',
+    userName: '',
+    streetAddress: '',
     detailAddress: '',
-  }
+  });
 
   const inputChange = (e) => {
-    setState({
-      [e.target.name]: e.target.value
-    })
+    const { name, value } = e.target;
+    setRegisterParam((prev) => ({
+      ...prev,
+      [name]: value
+    }));
+    console.log(registerParam)
+  }
+  const setAddressHandler = (address) => {
+    setRegisterParam((prev) => ({
+      ...prev,
+      streetAddress: address
+    }));
   }
 
-  //유저 회원가입하기. submitButton클릭시 동작
-  const signupUser = (e) => {
+  //모든 입력값이 ''이 아니라 값으로 채워져있는지,
+  //이메일은 인증번호가 인증되었는지, 비밀번호는 일치하는지, 이름과 주소 다 입력되어있는지
+  //점검하는 함수
+  const checkUserInfo = () => {
+    if (registerParam.email
+      && registerParam.password
+      && registerParam.userName
+      && registerParam.streetAddress
+      && registerParam.detailAddress) {
+      setAbleToSubmit(true);
+      return true;
+    }
+    return false;
+  }
+
+  //회원가입 정보 post api보내기. submitButton클릭시 동작
+  const signupUser = async (e) => {
     e.preventDefault();
-    //props.onCreate(state);
-    
-  }
-  const handleClick=() =>{
-    console.log(state)
-  }
 
-  const handleButton = () => { /////수정 후 사용...!!!
     // 입력 값의 형태가 올바른지 판별 
-    if (checkUserInfo(info.nickName, info.email, info.pw, setErrorMessage))
-      return;
-
-    // 데이터 전송  
-    API.post('/api/v1/auth/signup', {
-      email: info.email,
-      pw: info.pw,
-    })
-      .then((response) => {
-        if (response.status === 200) {
-          const authEmail = { email: userData.email };
-        }
+    if (!checkUserInfo()) {
+      console.log('회원가입 실패: 조건 충족 안 함');
+      //'~을 입력하세요' 경고문구 출력.
+      setAbleToSubmit(false);
+      return; //새로고침? 값 초기화?
+    }
+    try {
+      API.post('/api/v1/auth/signup', {
+        email: registerParam.email,
+        password: registerParam.password,
+        userName: registerParam.userName,
+        streetAddress: registerParam.streetAddress,
+        detailAddress: registerParam.detailAddress,
       })
-      .catch((error) => console.log(error.response));
+      //response.status === 200) 
+      console.log('info:', info);
+      console.log(response.data);
+    }
+    catch (error) {
+      if (error.response.status === 409) {
+        console.log(response.data);//이미 사용 중인 이메일입니다
+        setErrors({ ...errors, ['email']: '이미 사용 중인 이메일입니다.' });
+        setIsExistEmail(false)
+      }
+      console.error('signupUser에서 api 연결 실패:', error.message);
+    }
   };
 
   return (
@@ -67,14 +97,15 @@ export default function SignUp() {
           <div className="gap-24px">
             <EmailBox
               name='email'
-              onChange={inputChange}
-              value={state.email} />
+              value={registerParam.email}
+              onSetEmail={inputChange}
+              isExistEmail={isExistEmail} />
 
             <div className="input-wrap">
               <PasswordBox
                 name='password'
                 onChange={inputChange}
-                value={state.password} />
+                value={registerParam.password} />
             </div>
 
             <div className="input-wrap">
@@ -82,7 +113,7 @@ export default function SignUp() {
               <div className="input-container">
                 <input name='userName' className="input2"
                   type="text" onChange={inputChange}
-                  value={state.userName} />
+                  value={registerParam.userName} />
               </div>
             </div>
 
@@ -90,28 +121,28 @@ export default function SignUp() {
               <div className="sub-title">주소 </div>
               <div className="input-container">
                 <input
-                  name='detailAddress'
+                  name='streetAddress'
                   className="input2"
                   type="text"
-                  value={dataAddress}
                   onClick={openModalHandler}
                   placeholder="클릭하여 주소 검색"
                   onChange={inputChange}
-                  value={state.address}
+                  value={registerParam.streetAddress}
                 />
               </div>
-              {openModal ? <Modal openModal={openModal} setOpenModal={setOpenModal} setDataAddress={setDataAddress} /> : null}
+              {openModal ? <Modal openModal={openModal} setOpenModal={setOpenModal} setDataAddress={setAddressHandler} /> : null}
               <div className="input-container">
                 <input name='detailAddress'
-                  className="input2" type="text"
+                  className="input2"
+                  type="text"
                   placeholder="상세주소"
                   onChange={inputChange}
-                  value={state.detailAddress} />
+                  value={registerParam.detailAddress} />
               </div>
             </div>
           </div>
           <SubmitButton text="제출하기" link='/success'
-            context="회원가입 완료" onClick={handleClick}/>
+            context="회원가입 완료" onSubmit={signupUser} />
         </main >
       </form>
     </div >

@@ -82,7 +82,6 @@ export default function PasswordInput(props) {
             [name]: error
         })
 
-        console.log('pw:', props.registerParam.pw, 'confirmpw:', props.registerParam.confirmPw)
         // pw가 변경되었을 때도 confirmPw 필드의 값을 재검증하여 에러 상태 업데이트
         if (e.target.name === 'pw' && props.registerParam.confirmPw) {
             const confirmPwError = validateField('confirmPw', props.registerParam.confirmPw, value)
