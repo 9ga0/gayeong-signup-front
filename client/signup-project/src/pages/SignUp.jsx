@@ -15,6 +15,7 @@ export default function SignUp() {
   const openModalHandler = () => {
     setOpenModal(!openModal);
   };
+  const [isCorrect, setIsCorrect] = useState(false);//인증번호 일치여부. 일치하면 제출버튼 가능
   const [ableToSubmit, setAbleToSubmit] = useState(false);
   const [isExistEmail, setIsExistEmail] = useState(false); //이미 존재하는 이메일인지 유무
   const [registerParam, setRegisterParam] = useState({
@@ -115,6 +116,7 @@ export default function SignUp() {
               name='email'
               value={registerParam.email}
               onSetEmail={inputChange}
+              setIsCorrect={setIsCorrect}
               isExistEmail={isExistEmail} />
 
             <div className="input-wrap">

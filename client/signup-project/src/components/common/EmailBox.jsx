@@ -21,7 +21,6 @@ export default function EmailBox(props) {
   const [isActive, setIsActive] = useState(false);
   const [sendText, setSendText] = useState(null);
   const [isSend, setIsSend] = useState(false);
-  const [isCorrect, setIsCorrect] = useState(false);
 
   const [errors, setErrors] = useState({
     email: '',
@@ -129,14 +128,14 @@ export default function EmailBox(props) {
       });
       //response.status===200일때
       console.log(response.status);
-      setIsCorrect(true);
+      props.setIsCorrect(true);
       setErrors({ ...errors, ['email']: '' });
       setSendText('올바른 인증번호입니다.');
 
     } catch (error) {
       if (error.response && error.response.status === 400) {
         console.log(error.response.data); //인증 번호가 일치하지 않습니다
-        setIsCorrect(false);
+        props.setIsCorrect(false);
         setErrors({ ...errors, ['email']: '올바르지 않은 인증번호입니다.' });
       }
       console.error('handleEqual에서 api 연결 실패:', error.message);
@@ -162,7 +161,7 @@ export default function EmailBox(props) {
     } catch (error) {
       if (error.response && error.response.status === 409) {
         console.log(error.response.data); //이미 사용 중인 이메일입니다
-        setIsCorrect(false);
+        props.setIsCorrect(false);
         setErrors({ ...errors, ['email']: '이미 사용 중인 이메일입니다.' });
       }
       console.error('handleEmailCheck에서 api 연결 실패:', error.message);
