@@ -93,23 +93,22 @@ export default function EmailBox(props) {
     //props.value = registerParam.email; //email값을 부모에게 넘겨줌.
   }
 
-  //메일로 인증번호 보내는 함수
+  //메일로 인증번호 보내는 함수. handleEmailCheck이메일중복 통과하면 실행
   const handlePost = async (e) => {
     e.preventDefault()
     try {
       const response = await API.post(
         '/api/v1/email-verification/request',
         { email: registerParam.email });
-
       console.log(response.data); //인증 번호가 발송되었습니다
       console.log(response.status); //200
       props.onSetEmail({ //부모에게 이메일 객체 전달
-                      target: {
-                          name: 'email', 
-                          value: registerParam.email
-                      }
-                  });
-      
+        target: {
+          name: 'email',
+          value: registerParam.email
+        }
+      });
+
       //보내기 성공
       isSend ? setSendText('인증번호가 재전송되었습니다.') : setSendText('인증번호가 전송되었습니다.');
       setIsSend(true);
@@ -119,7 +118,7 @@ export default function EmailBox(props) {
     }
   }
 
-  //인증번호 일치 판단API 함수
+  //인증번호 일치 판단API 함수. 
   const handleEqual = async (e, number) => {
     e.preventDefault()
     try {
@@ -143,6 +142,25 @@ export default function EmailBox(props) {
       console.error('handleEqual에서 api 연결 실패:', error.message);
     }
   }
+  //이메일 중복검사api. 전송버튼 누르면 작동
+  const handleEmailCheck = async (e) => {
+    e.preventDefault()
+    try {
+      const response = await API.post(
+        '/api/v1/auth/email-check', {
+        email: registerParam.email,
+      })
+      console.log('사용 가능한 이메일입니다.');
+      handlePost(e);
+    } catch (error) {
+      if (error.response && error.response.status === 409) {
+        console.log(error.response.data); //이미 사용 중인 이메일입니다
+        setIsCorrect(false);
+        setErrors({ ...errors, ['email']: '이미 사용 중인 이메일입니다.' });
+      }
+      console.error('handleEmailCheck에서 api 연결 실패:', error.message);
+    }
+  }
 
   return (
     <div className="input-wrap">
@@ -161,7 +179,7 @@ export default function EmailBox(props) {
           {imageSrc === Check || imageSrc === Fail ? <img className="input-img" src={imageSrc} /> : null}
         </div>
         {isActive ? //이메일 형식에 맞을 시 true
-          <button type="button" className="email-button" onClick={handlePost} >
+          <button type="button" className="email-button" onClick={handleEmailCheck} >
             <p className='email-button-text'> {isSend ? '재전송' : '전송'} </p>
           </button>
           : //버튼 비활성화
