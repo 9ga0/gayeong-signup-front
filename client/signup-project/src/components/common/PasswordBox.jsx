@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import EyeLock from "../../assets/EyeLock.svg"
 import PasswordInput from './PasswordInput';
 import './Common.css';
@@ -22,12 +22,12 @@ export default function PasswordBox(props) {
         if (props.onSetPassword) {
             props.onSetPassword({
                 target: {
-                    name: 'password', 
+                    name: 'password',
                     value: registerParam.pw
                 }
             });
         }
-    }, [registerParam.pw]); 
+    }, [registerParam.pw]);
     return (
         <>
             <div className="sub-title">비밀번호</div>

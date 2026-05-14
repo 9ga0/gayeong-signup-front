@@ -6,7 +6,6 @@ import EyeUnLock from "../../assets/EyeUnLock.svg"
 export default function PasswordInput(props) {
     const [visible, setVisible] = useState(false);
     const [imageSrc, setImageSrc] = useState(props.img);
-    const [correctTurn, setCorrectTurn] = useState(false);
 
     const handleClick = () => {
         if (visible) {
@@ -28,16 +27,16 @@ export default function PasswordInput(props) {
                 if (!value) {
                     error = '비밀번호를 입력해주세요.'
                     setBorderColor('#EE4346A6');
-                    if (props.setCorrectTurn) { props.setCorrectTurn(false); }
+                    props.setCorrectTurn(false); 
                 }
                 else if (!passwordRegex.test(value)) {
                     error = '8~16자의 영문 대/소문자, 숫자, 특수문자'
                     setBorderColor('#EE4346A6');
-                    if (props.setCorrectTurn) { props.setCorrectTurn(false); }
+                    props.setCorrectTurn(false);
                 }
                 else if (passwordRegex.test(value)) {//통과. 유효한 비밀번호입력
                     setBorderColor('#435DEEA6');
-                    if (props.setCorrectTurn) { props.setCorrectTurn(true); }
+                    props.setCorrectTurn(true);
                 }
                 else {
                     setBorderColor('#89848466');
@@ -47,11 +46,11 @@ export default function PasswordInput(props) {
                 if (props.correctTurn && value && value !== pwValue) {
                     error = '비밀번호가 일치하지 않습니다.'
                     setBorderColor('#EE4346A6');
-                    if(props.setIsMatch) props.setIsMatch(false);
+                    props.setIsMatch(false);
                 }
                 else if (props.correctTurn && value) { //비밀번호 일치
                     setBorderColor('#435DEEA6');
-                    if(props.setIsMatch) props.setIsMatch(true);
+                    props.setIsMatch(true);
                 }
                 else {
                     setBorderColor('#89848466');
@@ -80,7 +79,7 @@ export default function PasswordInput(props) {
                 error = validateField(name, value, props.registerParam.pw)
             }
         } else { //confirm 필드가 비어있을 때는 에러 메시지를 표시하지 않음
-            if (props.registerParam) { //유효판단 안해도되는 로그인인풋에서 거르기 위함.
+            if (props.registerParam) { //로그인인풋인지? -유효판단 안해도되는 로그인인풋에서 거르기 위함.
                 error = validateField(name, value)
             }
         }
@@ -90,7 +89,7 @@ export default function PasswordInput(props) {
                 [name]: error
             })
         }
-        if (props.registerParam) {       // pw가 변경되었을 때도 confirmPw 필드의 값을 재검증하여 에러 상태 업데이트
+        if (props.registerParam) { // pw가 변경되었을 때도 confirmPw 필드의 값을 재검증하여 에러 상태 업데이트
             if (e.target.name === 'pw' && props.registerParam.confirmPw) {
                 const confirmPwError = validateField('confirmPw', props.registerParam.confirmPw, value)
                 props.onSetErrors(prev => ({
@@ -101,7 +100,7 @@ export default function PasswordInput(props) {
         }
 
         if (imageSrc !== EyeUnLock) setImageSrc(EyeLock);
-        props.isLogin ? setBorderColor('#89848466') : null;
+        if(!props.registerParam) setBorderColor('#89848466'); //로그인 인풋이면 그냥 검은색테두리
     }
 
 

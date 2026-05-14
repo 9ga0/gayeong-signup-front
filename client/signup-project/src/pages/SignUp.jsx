@@ -163,8 +163,12 @@ export default function SignUp() {
               </div>
             </div>
           </div>
-          <SubmitButton text="제출하기" link='/success'
-            context="회원가입 완료" isActive={ableToSubmit} onSubmit={signupUser} />
+          {ableToSubmit ?
+            <SubmitButton text="제출하기" link='/success'
+              context="회원가입 완료" isActive={ableToSubmit} onSubmit={signupUser} /> :
+            <SubmitButton text="제출하기" context="회원가입 완료" />
+          }
+
         </main >
       </form>
     </div >

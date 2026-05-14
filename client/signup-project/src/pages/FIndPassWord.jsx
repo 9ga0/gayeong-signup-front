@@ -17,8 +17,12 @@ export default function FindPassword() {
 
         <EmailBox ignoreEmailCheck={true} setIsCorrect={setIsCorrect} onSetEmail={(e) => { setEmail(e.target.value) }} />
 
-        <SubmitButton text="제출하기"
-          link='/change-password' isActive={isCorrect} email={email} />
+        {isCorrect ?
+          <SubmitButton text="제출하기"
+            link='/change-password' email={email} /> :
+          <SubmitButton text="제출하기" email={email} />
+        }
+
 
       </main>
     </div>

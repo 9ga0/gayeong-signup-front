@@ -77,7 +77,6 @@ export default function LogIn() {
                 setPassword={setPassword}
                 setError={setError}
                 error={error}
-                isLogin={true}
                 placeholder="Password" img={Password} />
 
               {error ? <p className='error' style={{ textAlign: 'left', width: '100%', maginLeft: 0 }}>{error}</p> : null}
@@ -94,7 +93,10 @@ export default function LogIn() {
             </div>
 
             <div className="gap-16px">
-              <SubmitButton text="Login" link='/my-page' isActive={isAbleToLogin} onSubmit={loginUser} />
+              {isAbleToLogin ?
+                <SubmitButton text="Login" link='/my-page' onSubmit={loginUser} /> :
+                <SubmitButton text="Login" />
+              }
               <div className="row-align">
                 <div className="quest-no-account">계정이 없으신가요?</div>
 
