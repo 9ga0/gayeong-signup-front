@@ -15,7 +15,6 @@ export default function PasswordBox(props) {
         confirmPw: ''
     }
     const [registerParam, setRegisterParam] = useState({ ...initState })
-    const [correctTurn, setCorrectTurn] = useState(false);
 
     //password값이 바뀌면 부모에게 전달 실행
     useEffect(() => {
@@ -37,7 +36,7 @@ export default function PasswordBox(props) {
                 errors={errors}
                 registerParam={registerParam}
                 setRegisterParam={setRegisterParam}
-                setCorrectTurn={setCorrectTurn}
+                setIsMatch={props.setIsMatch}
                 img={EyeLock} />
             <PasswordInput type="input" name='confirmPw'
                 placeholder="비밀번호 확인"
@@ -45,7 +44,6 @@ export default function PasswordBox(props) {
                 errors={errors}
                 registerParam={registerParam}
                 setRegisterParam={setRegisterParam}
-                correctTurn={correctTurn}
                 setIsMatch={props.setIsMatch}
                 img={EyeLock} />
             {errors.pw && <div className='error'>{errors.pw}</div>}
