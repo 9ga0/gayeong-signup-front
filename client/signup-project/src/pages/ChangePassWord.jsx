@@ -3,11 +3,12 @@ import CardTitle from "../components/common/CardTitle"
 import PasswordBox from "../components/common/PasswordBox"
 import SubmitButton from '../components/common/SubmitButton';
 import "../components/common/Common.css"
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import API from '../services/API';
 
 export default function ChangePassword(props) {
     const location = useLocation();
+    const navigate = useNavigate();
     const data = { ...location.state }; ///??{} 새로고침 버그 예방
     const [isMatch, setIsMatch] = useState(false); //비밀번호 입력 및 통과했는지
     const [password, setPassword] = useState('');
@@ -15,20 +16,22 @@ export default function ChangePassword(props) {
     const changePw = async (e) => {
         e.preventDefault();
         console.log(data.email, ':', password);
+        console.log("비밀번호 일치 여부:", isMatch);
         if (!isMatch || !password) {
             console.log('비밀번호를 확인하고 다시 입력해주세요.')
             return;
         }
-
         try {
             const response = await API.patch(
                 '/api/v1/auth/password', {
                 email: data.email,
                 password: password
             });
-            if (response.status === 200) {
-                console.log('비밀번호를 변경했습니다.');
-            }
+            console.log("API요청 보냄");
+            console.log('비밀번호를 변경했습니다.');
+            navigate('/success', {
+                state: { context: "비밀번호 재설정 완료" }
+            });
         } catch (error) {
             console.error('changePw에서 api 연결 실패:', error.message);
         }
@@ -53,11 +56,7 @@ export default function ChangePassword(props) {
                             onSetPassword={(e) => { setPassword(e.target.value) }}
                             setIsMatch={setIsMatch} />
                     </div>
-                    {isMatch ?
-                        <SubmitButton text="재설정" 
-                            link='/success' context="비밀번호 재설정 완료" /> :
-                        <SubmitButton text="재설정" context="비밀번호 재설정 완료" />
-                    }
+                    <SubmitButton text="재설정" />
 
                 </main>
             </form>

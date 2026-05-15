@@ -1,5 +1,5 @@
 //import reactLogo from './assets/react.svg' //이미지 불러오기
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import '../styles/Login.css';
 import { Link, useNavigate } from "react-router-dom";
@@ -13,7 +13,9 @@ import '../components/common/Common.css';
 import { getMyInfo } from "../services/MyInfoApi";
 
 export default function LogIn() {
-  const [savedID, setSavedID] = useState("");
+  const [saveIDFlag, setSaveIDFlag] = useState(false);
+  const LS_KEY_ID = "LS_KEY_ID";
+  const LS_KEY_SAVE_ID_FLAG = "LS_KEY_SAVE_ID_FLAG";
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -32,6 +34,9 @@ export default function LogIn() {
       setIsAbleToLogin(false);
       return;
     }
+    if (saveIDFlag) {
+      localStorage.setItem(LS_KEY_ID, email);
+    }
 
     console.log(email, ':', password);
     try {
@@ -49,9 +54,8 @@ export default function LogIn() {
       }
     } catch (error) {
       console.log(status);
-      if (error.response && error.response.status === 400) {
+      if (error.response && error.response.status === 401) {
         setError('아이디 또는 비밀번호가 올바르지 않습니다');
-        setIsExistEmail(false)
         setIsAbleToLogin(false);
       }
       console.error('signupUser에서 api 연결 실패:', error.message);
@@ -61,7 +65,37 @@ export default function LogIn() {
     setEmail(e.target.value);
     setError('');
     console.log(email, ":", password);
+    if (saveIDFlag) { localStorage.setItem(LS_KEY_ID, email); }
   }
+
+  // 아이디 저장 체크박스 활성화
+  const handleRememberId = () => {
+    localStorage.setItem(LS_KEY_SAVE_ID_FLAG, !saveIDFlag);
+    setSaveIDFlag(!saveIDFlag);
+    if (!saveIDFlag) {
+      localStorage.setItem(LS_KEY_ID, email);
+      console.log("check");
+    } else {
+      console.log('uncheck');
+    }
+  };
+
+  // 컴포넌트가 처음 마운트 될 때만 실행되도록 빈 배열을 두번째 인자로 넘김
+  useEffect(() => {
+    // 로컬스토리지에서 저장 활성화 버튼 여부
+    let idFlag = JSON.parse(localStorage.getItem(LS_KEY_SAVE_ID_FLAG));
+
+    if (idFlag !== null) setSaveIDFlag(idFlag);
+
+    // 저장이 안됨
+    if (idFlag === false) localStorage.setItem(LS_KEY_ID, "");
+
+    // storage 에서 꺼낸 값 id 값
+    let data = localStorage.getItem(LS_KEY_ID);
+
+    // 저장되어있는 값이 있음
+    if (data !== null) setEmail(data);
+  }, []);
 
   return (
     <>
@@ -87,8 +121,11 @@ export default function LogIn() {
               {/* '이메일 주소가 정확한지 확인해 주세요.' 로그인 실패(이메일, 비밀번호 불일치) 시 문구 출력 */}
               <div className="line-box">
                 <div className="row-align">
-                  <input className="checkbox" type="checkbox" />
-                  {/* checked={saveIDFlag} 아이디 저장 기능 추가예정. */}
+                  <input className="checkbox"
+                    type="checkbox"
+                    onChange={handleRememberId}
+                    checked={saveIDFlag}
+                  />
                   <div className="safe-id-text">아이디 저장</div>
                 </div>
                 <Link className="find-password-link-text" to="/find-password">비밀번호 찾기</Link>
@@ -97,11 +134,8 @@ export default function LogIn() {
             </div>
 
             <div className="gap-16px">
-              {isAbleToLogin ?
-                <SubmitButton text="Login" onSubmit={loginUser} />//getMyInfo에서 페이지 이동 호출
-                :
-                <SubmitButton text="Login" />
-              }
+              <SubmitButton text="Login" />
+
               <div className="row-align">
                 <div className="quest-no-account">계정이 없으신가요?</div>
 

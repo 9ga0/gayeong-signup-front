@@ -27,30 +27,25 @@ export default function PasswordInput(props) {
                 if (!value) {
                     error = '비밀번호를 입력해주세요.'
                     setBorderColor('#EE4346A6');
-                    props.setCorrectTurn(false); 
                 }
                 else if (!passwordRegex.test(value)) {
                     error = '8~16자의 영문 대/소문자, 숫자, 특수문자'
                     setBorderColor('#EE4346A6');
-                    props.setCorrectTurn(false);
                 }
                 else if (passwordRegex.test(value)) {//통과. 유효한 비밀번호입력
                     setBorderColor('#435DEEA6');
-                    props.setCorrectTurn(true);
                 }
                 else {
                     setBorderColor('#89848466');
                 }
                 break
             case 'confirmPw':
-                if (props.correctTurn && value && value !== pwValue) {
+                if (props.registerParam.pw && value && value !== pwValue) {
                     error = '비밀번호가 일치하지 않습니다.'
                     setBorderColor('#EE4346A6');
-                    props.setIsMatch(false);
                 }
-                else if (props.correctTurn && value) { //비밀번호 일치
+                else if (props.registerParam.pw && value) { //비밀번호 일치
                     setBorderColor('#435DEEA6');
-                    props.setIsMatch(true);
                 }
                 else {
                     setBorderColor('#89848466');
@@ -75,7 +70,7 @@ export default function PasswordInput(props) {
 
         let error
         if (e.target.name === 'confirmPw') { // confirmPw 필드에 입력할 때마다 현재 pw 필드의 값과 비교하여 에러 체크
-            if (props.correctTurn) {
+            if (props.registerParam.pw) {
                 error = validateField(name, value, props.registerParam.pw)
             }
         } else { //confirm 필드가 비어있을 때는 에러 메시지를 표시하지 않음
@@ -97,10 +92,10 @@ export default function PasswordInput(props) {
                     confirmPw: confirmPwError
                 }))
             }
-        }
-
+        }        
+        
         if (imageSrc !== EyeUnLock) setImageSrc(EyeLock);
-        if(!props.registerParam) setBorderColor('#89848466'); //로그인 인풋이면 그냥 검은색테두리
+        if (!props.registerParam) setBorderColor('#89848466'); //로그인 인풋이면 그냥 검은색테두리
     }
 
 
