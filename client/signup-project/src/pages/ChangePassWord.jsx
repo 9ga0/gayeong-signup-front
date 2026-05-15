@@ -54,7 +54,7 @@ export default function ChangePassword(props) {
                             setIsMatch={setIsMatch} />
                     </div>
                     {isMatch ?
-                        <SubmitButton text="재설정" onSubmit={changePw}
+                        <SubmitButton text="재설정" 
                             link='/success' context="비밀번호 재설정 완료" /> :
                         <SubmitButton text="재설정" context="비밀번호 재설정 완료" />
                     }

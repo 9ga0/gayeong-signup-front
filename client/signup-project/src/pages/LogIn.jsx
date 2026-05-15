@@ -2,7 +2,7 @@
 import React from "react";
 import { useState } from "react";
 import '../styles/Login.css';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Email from '/src/assets/Email.svg';
 import Password from '/src/assets/Password.svg';
 import SubmitButton from "../components/common/SubmitButton";
@@ -18,6 +18,7 @@ export default function LogIn() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [isAbleToLogin, setIsAbleToLogin] = useState(false);
+  const navigate = useNavigate();
 
   //로그인 post api보내기. submitButton클릭시 동작
   const loginUser = async (e) => {
@@ -41,7 +42,10 @@ export default function LogIn() {
       if (response.status === 200) {
         setIsAbleToLogin(true);
         console.log('올바른 입력으로 로그인되었습니다.');
-        getMyInfo(e, email);
+        const userInfo = await getMyInfo(email); //유저정보 api 연결
+        navigate('/my-page', {
+          state: { userInfo }
+        });
       }
     } catch (error) {
       console.log(status);
@@ -94,7 +98,8 @@ export default function LogIn() {
 
             <div className="gap-16px">
               {isAbleToLogin ?
-                <SubmitButton text="Login" link='/my-page' onSubmit={loginUser} /> :
+                <SubmitButton text="Login" onSubmit={loginUser} />//getMyInfo에서 페이지 이동 호출
+                :
                 <SubmitButton text="Login" />
               }
               <div className="row-align">

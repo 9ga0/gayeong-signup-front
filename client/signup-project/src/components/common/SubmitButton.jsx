@@ -1,7 +1,6 @@
 import React from 'react';
 import './Common.css';
 import { useNavigate } from "react-router-dom";
-import { getMyInfo } from '../../services/MyInfoApi';
 
 const SubmitButton = (props) => {
   const navigate = useNavigate();
@@ -9,7 +8,9 @@ const SubmitButton = (props) => {
     if (props.link) { //link값이 입력되었으면 이동.
       navigate(props.link, {
         state: {
-          context: props.context, email: props.email
+          context: props.context, 
+          email: props.email,
+          userInfo: props.userInfo
         }
       })
     } else {
