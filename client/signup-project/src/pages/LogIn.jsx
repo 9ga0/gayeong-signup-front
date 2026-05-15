@@ -134,11 +134,8 @@ export default function LogIn() {
             </div>
 
             <div className="gap-16px">
-              {isAbleToLogin ?
-                <SubmitButton text="Login" onSubmit={loginUser} />//getMyInfo에서 페이지 이동 호출
-                :
-                <SubmitButton text="Login" />
-              }
+              <SubmitButton text="Login" />
+
               <div className="row-align">
                 <div className="quest-no-account">계정이 없으신가요?</div>
 

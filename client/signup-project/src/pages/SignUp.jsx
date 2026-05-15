@@ -8,13 +8,15 @@ import '../components/common/Common.css';
 import { useState } from "react";
 import Modal from './AddressModal';
 import API from '../services/API';
+import { useNavigate } from 'react-router-dom';
 
 export default function SignUp() {
-  //props로 전달..
+  const navigate = useNavigate();
   const [openModal, setOpenModal] = useState(false);
   const openModalHandler = () => {
     setOpenModal(!openModal);
   };
+  const [error, setError] = useState(false); //미입력 에러메시지
   const [isMatch, setIsMatch] = useState(false); //비밀번호 입력 및 통과했는지
   const [isCorrect, setIsCorrect] = useState(false);//인증번호 일치여부. 일치하면 제출버튼 가능
   const [ableToSubmit, setAbleToSubmit] = useState(false);
@@ -58,19 +60,19 @@ export default function SignUp() {
   }
 
   //모든 입력값이 ''이 아니라 값으로 채워져있는지,
-  //이메일은 인증번호가 인증되었는지, 비밀번호는 일치하는지, 이름과 주소 다 입력되어있는지 <-구현해야함
+  //이메일은 인증번호가 인증되었는지, 비밀번호는 일치하는지, 이름과 주소 다 입력되어있는지
   //점검하는 함수
   const checkUserInfo = () => { ///더 디테일한 에러판단 적용 필요!!!
-    if (registerParam.email
-      && registerParam.password
-      && registerParam.userName
-      && registerParam.streetAddress
-      && registerParam.detailAddress
-      && isCorrect
-      && isMatch) { //+비밀번호 일치여부
-      setAbleToSubmit(true);
-      return true;
+    if (registerParam.email && registerParam.password &&
+      registerParam.userName && registerParam.detailAddress && //빈값유무 확인
+      registerParam.streetAddress && isCorrect && isMatch) {//인증번호 인증 & 비밀번호 일치여부
+      setAbleToSubmit(true); return true;
     }
+    if (!registerParam.detailAddress) setError('상세주소를 입력해주세요.')
+    if (!registerParam.streetAddress) setError('주소를 입력해주세요.')
+    if (!registerParam.userName) setError('이름을 입력해주세요.')
+    if (!registerParam.password) setError('비밀번호를 입력해주세요.')
+    if (!registerParam.email) setError('이메일을 입력해주세요.');
     return false;
   }
 
@@ -96,6 +98,9 @@ export default function SignUp() {
       //response.status === 200) 
       setAbleToSubmit(true);
       console.log('올바른 입력으로 회원가입되었습니다.');
+      navigate('/success', {
+        state: { context: "회원가입 완료" }
+      });
     }
     catch (error) {
       if (error.response && error.response.status === 409) {
@@ -161,14 +166,10 @@ export default function SignUp() {
                   onChange={inputChange}
                   value={registerParam.detailAddress} />
               </div>
+              {error && <div className='error'>{error}</div>}
             </div>
           </div>
-          {ableToSubmit ?
-            <SubmitButton text="제출하기" link='/success'
-              context="회원가입 완료" isActive={ableToSubmit} onSubmit={signupUser} /> :
-            <SubmitButton text="제출하기" context="회원가입 완료" />
-          }
-
+          <SubmitButton text="제출하기" />
         </main >
       </form>
     </div >
