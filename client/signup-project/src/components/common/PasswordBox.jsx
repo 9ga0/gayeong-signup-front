@@ -27,6 +27,18 @@ export default function PasswordBox(props) {
             });
         }
     }, [registerParam.pw]);
+
+    //비밀번호 일치여부 부모들에게 전달하기. 둘중 한 값이라도 바뀌면 match판단 후 부모전달.
+    useEffect(() => {
+        console.log(registerParam.pw, ':', registerParam.confirmPw)
+        
+        if (props.setIsMatch) {
+            if (registerParam.pw === registerParam.confirmPw) {
+                props.setIsMatch(true);
+            } else { props.setIsMatch(false); }
+        }
+    }, [registerParam.pw,registerParam.confirmPw]);
+
     return (
         <>
             <div className="sub-title">비밀번호</div>

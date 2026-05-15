@@ -22,18 +22,16 @@ export default function ChangePassword(props) {
             return;
         }
         try {
-            console.log("API요청 보냄");
             const response = await API.patch(
                 '/api/v1/auth/password', {
                 email: data.email,
                 password: password
             });
-            if (response.status === 200) {
-                console.log('비밀번호를 변경했습니다.');
-                // navigate('/success', {
-                //     state: { context: "비밀번호 재설정 완료" }
-                // });
-            }
+            console.log("API요청 보냄");
+            console.log('비밀번호를 변경했습니다.');
+            navigate('/success', {
+                state: { context: "비밀번호 재설정 완료" }
+            });
         } catch (error) {
             console.error('changePw에서 api 연결 실패:', error.message);
         }
@@ -58,7 +56,7 @@ export default function ChangePassword(props) {
                             onSetPassword={(e) => { setPassword(e.target.value) }}
                             setIsMatch={setIsMatch} />
                     </div>
-                    <SubmitButton text="재설정" context="비밀번호 재설정 완료" link="/success"/>
+                    <SubmitButton text="재설정" />
 
                 </main>
             </form>

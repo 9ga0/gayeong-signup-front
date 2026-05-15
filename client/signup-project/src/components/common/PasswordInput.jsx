@@ -92,13 +92,8 @@ export default function PasswordInput(props) {
                     confirmPw: confirmPwError
                 }))
             }
-        }
-        console.log(props.registerParam.pw,':',props.registerParam.confirmPw)
-        if (props.registerParam.pw === props.registerParam.confirmPw) {
-            props.setIsMatch(true);
-        } else {
-            props.setIsMatch(false);
-        }
+        }        
+        
         if (imageSrc !== EyeUnLock) setImageSrc(EyeLock);
         if (!props.registerParam) setBorderColor('#89848466'); //로그인 인풋이면 그냥 검은색테두리
     }
