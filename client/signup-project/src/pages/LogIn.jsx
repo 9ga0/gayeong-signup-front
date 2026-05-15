@@ -2,7 +2,7 @@
 import React from "react";
 import { useState } from "react";
 import '../styles/Login.css';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Email from '/src/assets/Email.svg';
 import Password from '/src/assets/Password.svg';
 import SubmitButton from "../components/common/SubmitButton";
@@ -10,6 +10,7 @@ import PasswordInput from "../components/common/PasswordInput";
 import CardTitle from "../components/common/CardTitle";
 import API from '../services/API';
 import '../components/common/Common.css';
+import { getMyInfo } from "../services/MyInfoApi";
 
 export default function LogIn() {
   const [savedID, setSavedID] = useState("");
@@ -17,6 +18,7 @@ export default function LogIn() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [isAbleToLogin, setIsAbleToLogin] = useState(false);
+  const navigate = useNavigate();
 
   //로그인 post api보내기. submitButton클릭시 동작
   const loginUser = async (e) => {
@@ -40,6 +42,10 @@ export default function LogIn() {
       if (response.status === 200) {
         setIsAbleToLogin(true);
         console.log('올바른 입력으로 로그인되었습니다.');
+        const userInfo = await getMyInfo(email); //유저정보 api 연결
+        navigate('/my-page', {
+          state: { userInfo }
+        });
       }
     } catch (error) {
       console.log(status);
@@ -75,43 +81,43 @@ export default function LogIn() {
                 setPassword={setPassword}
                 setError={setError}
                 error={error}
-                isLogin={true}
                 placeholder="Password" img={Password} />
 
-              {error ? <p className='error' style={{ textAlign: 'left',width: '100%', maginLeft: 0 }}>{error}</p> :null}
-                {/* '이메일 주소가 정확한지 확인해 주세요.' 로그인 실패(이메일, 비밀번호 불일치) 시 문구 출력 */}
-                <div className="line-box">
-                  <div className="row-align">
-                    <input className="checkbox" type="checkbox" />
-                    {/* checked={saveIDFlag} 아이디 저장 기능 추가예정. */}
-                    <div className="safe-id-text">아이디 저장</div>
-                  </div>
-                  <Link className="find-password-link-text" to="/find-password">비밀번호 찾기</Link>
+              {error ? <p className='error' style={{ textAlign: 'left', width: '100%', maginLeft: 0 }}>{error}</p> : null}
+              {/* '이메일 주소가 정확한지 확인해 주세요.' 로그인 실패(이메일, 비밀번호 불일치) 시 문구 출력 */}
+              <div className="line-box">
+                <div className="row-align">
+                  <input className="checkbox" type="checkbox" />
+                  {/* checked={saveIDFlag} 아이디 저장 기능 추가예정. */}
+                  <div className="safe-id-text">아이디 저장</div>
                 </div>
-
+                <Link className="find-password-link-text" to="/find-password">비밀번호 찾기</Link>
               </div>
 
-                <div className="gap-16px">
-                  {isAbleToLogin ?
-                    <SubmitButton text="Login" link='/my-page' onSubmit={loginUser} /> :
-                    <SubmitButton text="Login" onSubmit={loginUser} />
-                  }
-                  <div className="row-align">
-                    <div className="quest-no-account">계정이 없으신가요?</div>
+            </div>
 
-                    <Link
-                      className="signup-link-text"
-                      to="/sign-up"
-                      style={{ color: 'rgba(51, 51, 51, 1)' }}>
-                      회원가입
-                    </Link>
-                  </div>
-                </div>
+            <div className="gap-16px">
+              {isAbleToLogin ?
+                <SubmitButton text="Login" onSubmit={loginUser} />//getMyInfo에서 페이지 이동 호출
+                :
+                <SubmitButton text="Login" />
+              }
+              <div className="row-align">
+                <div className="quest-no-account">계정이 없으신가요?</div>
 
-              </main>
+                <Link
+                  className="signup-link-text"
+                  to="/sign-up"
+                  style={{ color: 'rgba(51, 51, 51, 1)' }}>
+                  회원가입
+                </Link>
+              </div>
+            </div>
+
+          </main>
         </form>
-          </div>
-        </>
-        )
+      </div>
+    </>
+  )
 }
 

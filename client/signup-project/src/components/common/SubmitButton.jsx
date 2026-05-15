@@ -8,12 +8,15 @@ const SubmitButton = (props) => {
     if (props.link) { //link값이 입력되었으면 이동.
       navigate(props.link, {
         state: {
-          context: props.context, email: props.email
+          context: props.context, 
+          email: props.email,
+          userInfo: props.userInfo
         }
       })
-    }else{
+    } else {
       console.log('이동 불가');
     }
+
   }
   return (
     <button

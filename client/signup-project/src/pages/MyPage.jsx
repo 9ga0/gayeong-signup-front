@@ -1,18 +1,24 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import CardTitle from "../components/common/CardTitle"
 import PasswordBox from "../components/common/PasswordBox"
 import SubmitButton from '../components/common/SubmitButton';
 import '../components/common/Common.css'
-export default function MyPage(props) {
+import { useLocation } from 'react-router-dom';
+
+export default function MyPage() {
+    const location = useLocation();
+    const userInfo = location.state?.userInfo;
     return (
         <div className="background-gradient">
-            <main className="card-box2">
+            <main className="card-box2" >
                 <CardTitle title="내정보" />
-                
-                <p>로그인 성공!</p> 
-                {/* props로 값 전달받아 내정보 출력? 으로 변경 */}
-
-                <SubmitButton text="로그아웃" link='/' />
+                <div >
+                    <p className='sub-title'>이름: {userInfo.username}</p>
+                    <p className='sub-title'>이메일: {userInfo.email}</p>
+                    <p className='sub-title'>주소: {userInfo.streetAddress}</p>
+                    <p className='sub-title'>상세주소: {userInfo.detailAddress}</p>
+                </div>
+                <SubmitButton text="로그아웃" link='/' isActive={true} />
 
             </main>
         </div>
