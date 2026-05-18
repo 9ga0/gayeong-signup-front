@@ -16,7 +16,7 @@ export default function SignUp() {
   const openModalHandler = () => {
     setOpenModal(!openModal);
   };
-  const [error, setError] = useState(false); //미입력 에러메시지
+  const [error, setError] = useState(''); //미입력 에러메시지
   const [isMatch, setIsMatch] = useState(false); //비밀번호 입력 및 통과했는지
   const [isCorrect, setIsCorrect] = useState(false);//인증번호 일치여부. 일치하면 제출버튼 가능
   const [ableToSubmit, setAbleToSubmit] = useState(false);
