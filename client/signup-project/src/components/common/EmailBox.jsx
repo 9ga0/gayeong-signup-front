@@ -111,7 +111,6 @@ export default function EmailBox(props) {
       //보내기 성공
       isSend ? setSendText('인증번호가 재전송되었습니다.') : setSendText('인증번호가 전송되었습니다.');
       setIsSend(true);
-      handleEqual(e, e.target.value);
     } catch (error) {
       console.error('handlePost에서 api 연결 실패:', error);
     }
