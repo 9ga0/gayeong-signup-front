@@ -64,7 +64,7 @@ export default function LogIn() {
   const changeHandler = (e) => {
     setEmail(e.target.value);
     setError('');
-    console.log(email, ":", password);
+    //console.log(email, ":", password); 
     if (saveIDFlag) { localStorage.setItem(LS_KEY_ID, email); }
   }
 
