@@ -188,7 +188,7 @@ export default function EmailBox(props) {
             <p className='email-button-text'> {isSend ? '재전송' : '전송'} </p>
           </button>
           : //버튼 비활성화
-          <button className="email-button" style={{ backgroundColor: "#E3E3E3" }}>
+          <button type="button" className="email-button" style={{ backgroundColor: "#E3E3E3" }} disabled>
             <p className='email-button-text'> 전송 </p>
           </button>
         }
