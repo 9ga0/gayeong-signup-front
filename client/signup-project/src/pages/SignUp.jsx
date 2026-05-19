@@ -104,9 +104,8 @@ export default function SignUp() {
     }
     catch (error) {
       if (error.response && error.response.status === 409) {
-        console.log(response.data);//이미 사용 중인 이메일입니다
-        setErrors({ ...errors, ['email']: '이미 사용 중인 이메일입니다.' });
-        setIsExistEmail(false)
+        console.log(error.response.data);//이미 사용 중인 이메일입니다
+        setIsExistEmail(true)
         setAbleToSubmit(false);
       }
       console.error('signupUser에서 api 연결 실패:', error.message);
