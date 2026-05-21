@@ -1,12 +1,11 @@
-package com.ensharp.gayeongsignup.entity;
+package com.ensharp.gayeongsignup.signup;
 
-import com.ensharp.gayeongsignup.dto.MemberDTO;
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "MEMBER")
 public class Member {
-    //    @Id
+//    @Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
 //    private Long id;
     @Id
@@ -51,31 +50,31 @@ public class Member {
             return new Member(this);
         }
     }
-
-    public Member email(String email) {
-        this.email = email;
-        return this;
-    }
-
-    public Member password(String password) {
-        this.password = password;
-        return this;
-    }
-
-    public Member username(String username) {
-        this.username = username;
-        return this;
-    }
-
-    public Member streetAddress(String streetAddress) {
-        this.streetAddress = streetAddress;
-        return this;
-    }
-
-    public Member detailAddress(String detailAddress) {
-        this.detailAddress = detailAddress;
-        return this;
-    }
+//
+//    public Member email(String email) {
+//        this.email = email;
+//        return this;
+//    }
+//
+//    public Member password(String password) {
+//        this.password = password;
+//        return this;
+//    }
+//
+//    public Member username(String username) {
+//        this.username = username;
+//        return this;
+//    }
+//
+//    public Member streetAddress(String streetAddress) {
+//        this.streetAddress = streetAddress;
+//        return this;
+//    }
+//
+//    public Member detailAddress(String detailAddress) {
+//        this.detailAddress = detailAddress;
+//        return this;
+//    }
 
     public MemberDTO toDto() {
         return new MemberDTO(this);
@@ -104,11 +103,11 @@ public class Member {
     @Override
     public String toString() {
         return "MemberDTO{" +
-                "email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", username='" + username + '\'' +
-                ", streetAddress='" + streetAddress + '\'' +
-                ", detailAddress='" + detailAddress + '\'' +
+                "'email'='" + email + '\'' +
+                ", 'password'='" + password + '\'' +
+                ", 'username'='" + username + '\'' +
+                ", 'streetAddress'='" + streetAddress + '\'' +
+                ", 'detailAddress'='" + detailAddress + '\'' +
                 "}";
     }
 

@@ -1,14 +1,11 @@
 package com.ensharp.gayeongsignup.memberrepository;
 
-import com.ensharp.gayeongsignup.dto.MemberDTO;
-import com.ensharp.gayeongsignup.entity.Member;
-import com.ensharp.gayeongsignup.repository.MemberRepository;
+import com.ensharp.gayeongsignup.signup.MemberDTO;
+import com.ensharp.gayeongsignup.signup.MemberRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import java.security.Principal;
 
 @SpringBootTest
 public class MemberRepositoryTest {

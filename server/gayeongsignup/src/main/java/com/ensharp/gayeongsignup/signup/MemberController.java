@@ -1,24 +1,18 @@
-package com.ensharp.gayeongsignup.controller;
+package com.ensharp.gayeongsignup.signup;
 
-import com.ensharp.gayeongsignup.dto.MemberDTO;
-import com.ensharp.gayeongsignup.service.MemberService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
+import java.util.logging.Logger;
 
 @RestController
 @RequestMapping("/api/v1/post-api")
 @CrossOrigin(origins = "")
 public class MemberController {
-    //    private final MemberRepository repository;
-    private final MemberService memberService;
-
-    //    //@RequiredArgsConstructor 역할
-    @Autowired
-    public MemberController(MemberService memberService) {
-        this.memberService = memberService;
+    private final MemberServiceimpl memberServiceimpl;
+    public MemberController(MemberServiceimpl memberServiceimpl) {
+        this.memberServiceimpl = memberServiceimpl;
     }
 
     @PostMapping(value = "/default")
@@ -35,17 +29,17 @@ public class MemberController {
         });
         return sb.toString();
     }
-
     //위랑 같은 결과?
     @PostMapping(value = "/member2")
     public String postMemberDto(@RequestBody @Valid MemberDTO memberDTO) {
         return memberDTO.toString();
     }
 
+    //회원가입
     @PostMapping("/join")
-    public String join(@RequestBody MemberDTO memberDTO) {
-        String result = memberService.join(memberDTO);
-        //result.equalsIgnoreCase("success") 대신
+    public String join(@RequestBody @Valid MemberDTO memberDTO) {
+        String result = memberServiceimpl.join(memberDTO);
+
         if ("success".equalsIgnoreCase(result)) { //nullException발생 방지
             return "회원가입 success";
         } else {
