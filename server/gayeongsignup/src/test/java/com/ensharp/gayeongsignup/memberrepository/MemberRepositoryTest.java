@@ -1,6 +1,5 @@
 package com.ensharp.gayeongsignup.memberrepository;
 
-import com.ensharp.gayeongsignup.signup.MemberDTO;
 import com.ensharp.gayeongsignup.signup.MemberRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -29,7 +28,7 @@ public class MemberRepositoryTest {
     @Test
     public void crudTest() {
         //given
-        MemberDTO memberDTO = new MemberDTO("koo@naver.com","1234","구가","000","999");
+        //MemberDTO memberDTO = new MemberDTO("koo@naver.com","12345678","구가","000","999");
         //Principal principal = () -> "member1@test.com";
 
         //when
