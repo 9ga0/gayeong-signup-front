@@ -42,5 +42,17 @@ public class MemberServiceimpl implements MemberService {
         return memberRepository.existsByEmail(email);
     }
 
+    //비밀번호 변경 시에 성공/실패 점검 및 반환
+    @Transactional
+    public String changePassword(String email, String newPassword){
+        Member foundMember = memberRepository.findByEmail(email);
+        if (foundMember==null) {
+            System.out.println("회원 못찾음");
+            return "fail";
+        }//비밀번호 유효성검사도 프론트에 되어있지만 추가해야함
+        foundMember.updatePassword(newPassword); //데베도 수정됨
+        System.out.println("비밀번호 변경 완료");
+        return "success";
+    }
 
 }

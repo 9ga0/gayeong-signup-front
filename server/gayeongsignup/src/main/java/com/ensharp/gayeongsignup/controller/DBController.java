@@ -77,7 +77,12 @@ public class DBController {
     //Post 이메일 중복 검사
 
     //Patch 비밀번호 변경
-    
+    @PatchMapping("/auth/password")
+    public String changePassword(@RequestBody @Valid LoginDto loginDto){
+        System.out.println("비밀번호 변경 요청이 들어옴 : "+loginDto.email());
+        return memberServiceimpl.changePassword(loginDto.email(), loginDto.password());
+    }
+
 }
 /// @exceptionhandler, @controlleradvice 참고해서 추가하기
 
