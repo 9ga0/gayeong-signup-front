@@ -5,7 +5,7 @@ public class MailTxtSend {
     private String subject;
     private String content;
 
-    public MailTxtSend() {}
+    public MailTxtSend(){}
 
     public String getEmailAddr() {
         return emailAddr;
