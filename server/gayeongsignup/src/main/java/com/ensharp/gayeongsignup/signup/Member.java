@@ -1,6 +1,5 @@
-package com.ensharp.gayeongsignup.entity;
+package com.ensharp.gayeongsignup.signup;
 
-import com.ensharp.gayeongsignup.dto.MemberDTO;
 import jakarta.persistence.*;
 
 @Entity
@@ -21,6 +20,9 @@ public class Member {
     @Column(nullable = false)
     private String detailAddress;
 
+    private Member() {
+    }
+
     private Member(MemberBuilder builder) { //Member 생성자
         this.email = builder.email;
         this.password = builder.password;
@@ -36,49 +38,24 @@ public class Member {
         private final String streetAddress;
         private final String detailAddress;
 
-        public MemberBuilder(MemberDTO memberDTO) { //필수 값을 dto로 전달
-            this.email = memberDTO.email();
-            this.password = memberDTO.password();
-            this.username = memberDTO.username();
-            this.streetAddress = memberDTO.streetAddress();
-            this.detailAddress = memberDTO.detailAddress();
+        public MemberBuilder(SignupRequestDto signupRequestDto) { //필수 값을 dto로 전달
+            this.email = signupRequestDto.email();
+            this.password = signupRequestDto.password();
+            this.username = signupRequestDto.username();
+            this.streetAddress = signupRequestDto.streetAddress();
+            this.detailAddress = signupRequestDto.detailAddress();
         }
 
         public Member build() { //DTO -> Entity
-            if (username==null ||email==null ||password==null||streetAddress==null||detailAddress==null){
+            if (username == null || email == null || password == null || streetAddress == null || detailAddress == null) {
                 throw new IllegalStateException("필수값을 적어주세요.");
             }
             return new Member(this);
         }
     }
 
-    public Member email(String email) {
-        this.email = email;
-        return this;
-    }
-
-    public Member password(String password) {
-        this.password = password;
-        return this;
-    }
-
-    public Member username(String username) {
-        this.username = username;
-        return this;
-    }
-
-    public Member streetAddress(String streetAddress) {
-        this.streetAddress = streetAddress;
-        return this;
-    }
-
-    public Member detailAddress(String detailAddress) {
-        this.detailAddress = detailAddress;
-        return this;
-    }
-
-    public MemberDTO toDto() {
-        return new MemberDTO(this);
+    public SignupRequestDto toDto() {
+        return new SignupRequestDto(this);
     }
 
     public String getEmail() {
@@ -101,14 +78,18 @@ public class Member {
         return detailAddress;
     }
 
+    public void updatePassword(String newPassword) {
+        password = newPassword;
+    }
+
     @Override
     public String toString() {
         return "MemberDTO{" +
-                "email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", username='" + username + '\'' +
-                ", streetAddress='" + streetAddress + '\'' +
-                ", detailAddress='" + detailAddress + '\'' +
+                "'email'='" + email + '\'' +
+                ", 'password'='" + password + '\'' +
+                ", 'username'='" + username + '\'' +
+                ", 'streetAddress'='" + streetAddress + '\'' +
+                ", 'detailAddress'='" + detailAddress + '\'' +
                 "}";
     }
 
