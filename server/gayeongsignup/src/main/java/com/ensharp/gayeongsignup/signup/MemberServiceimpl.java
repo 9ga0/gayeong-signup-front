@@ -29,8 +29,12 @@ public class MemberServiceimpl implements MemberService {
     @Override
     public String login(String email, String password){
         SignupRequestDto foundMember = memberRepository.findByEmailAndPassword(email,password).toDto();
-        if (foundMember!=null) return "success";
-        return "fail";
+        if (foundMember!=null) {
+            System.out.println("로그인 성공!");
+            return foundMember.username();
+        }
+        System.out.println("비밀번호 틀림");
+        return "비밀번호가 옳지 않습니다.";
     }
 
     //회원가입할때 이메일 중복됐는지 체크해서 반환

@@ -4,6 +4,7 @@ import com.ensharp.gayeongsignup.emailsend.EmailRequestDto;
 import com.ensharp.gayeongsignup.emailsend.EmailVarifyDto;
 import com.ensharp.gayeongsignup.emailsend.MailService;
 import com.ensharp.gayeongsignup.emailsend.MailServiceImpl;
+import com.ensharp.gayeongsignup.signup.LoginDto;
 import com.ensharp.gayeongsignup.signup.MemberServiceimpl;
 import com.ensharp.gayeongsignup.signup.SignupRequestDto;
 import jakarta.validation.Valid;
@@ -68,11 +69,15 @@ public class DBController {
 
     //로그인
     @PostMapping("/auth/login")
-    public String login(@RequestBody @Valid String email, String password){ //loginDto사용으로 변경 필요
-
-        return memberServiceimpl.login(email, password);
+    public String login(@RequestBody @Valid LoginDto loginDto){ //loginDto사용으로 변경 필요
+        System.out.println("로그인 요청이 들어옴 : "+loginDto.email());
+        return memberServiceimpl.login(loginDto.email(), loginDto.password());
     }
+    
+    //Post 이메일 중복 검사
 
+    //Patch 비밀번호 변경
+    
 }
 /// @exceptionhandler, @controlleradvice 참고해서 추가하기
 
