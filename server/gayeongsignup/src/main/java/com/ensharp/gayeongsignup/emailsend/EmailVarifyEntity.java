@@ -17,6 +17,11 @@ public class EmailVarifyEntity {
     private EmailVarifyEntity() {
     }
 
+    public EmailVarifyEntity(String email, String verificationCode) {
+        this.email=email;
+        this.verificationCode=verificationCode;
+    }
+
     private EmailVarifyEntity(Builder builder) { //Member 생성자
         this.email = builder.email;
         this.verificationCode = builder.verificationCode;
