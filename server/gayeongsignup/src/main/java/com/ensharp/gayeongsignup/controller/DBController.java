@@ -4,14 +4,21 @@ import com.ensharp.gayeongsignup.emailsend.EmailRequestDto;
 import com.ensharp.gayeongsignup.emailsend.EmailVarifyDto;
 import com.ensharp.gayeongsignup.emailsend.MailService;
 import com.ensharp.gayeongsignup.emailsend.MailServiceImpl;
+import com.ensharp.gayeongsignup.exception.CustomException;
+import com.ensharp.gayeongsignup.exception.ErrorCode;
+import com.ensharp.gayeongsignup.exception.ErrorDto;
+import com.ensharp.gayeongsignup.exception.ResponseDto;
 import com.ensharp.gayeongsignup.signup.LoginDto;
 import com.ensharp.gayeongsignup.signup.MemberServiceimpl;
 import com.ensharp.gayeongsignup.signup.SignupRequestDto;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.HandlerExceptionResolver;
 
 import java.io.UnsupportedEncodingException;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -26,21 +33,7 @@ public class DBController {
         this.mailServiceimpl = mailServiceimpl;
     }
 
-    @PostMapping(value = "/default")
-    public String postMethod() {
-        return "안녕하세요!";
-    }
-
-    @PostMapping("/member")
-    public String postMember(@RequestBody @Valid Map<String, String> postData) {
-        StringBuilder sb = new StringBuilder();
-
-        postData.entrySet().forEach(map -> {
-            sb.append(map.getKey() + " : " + map.getValue() + "\n");
-        });
-        return sb.toString();
-    }
-    //위랑 같은 결과?
+    //테스트용
     @PostMapping(value = "/member2")
     public String postMemberDto(@RequestBody @Valid SignupRequestDto signupRequestDto) {
         return signupRequestDto.toString();
@@ -48,46 +41,56 @@ public class DBController {
 
     //회원가입
     @PostMapping("/auth/signup")
-    public String join(@RequestBody @Valid SignupRequestDto signupRequestDto) {
-        System.out.println("회원가입 요청이 들어옴 : "+ signupRequestDto.email());
-        return memberServiceimpl.join(signupRequestDto); //리턴값은 바디로 출력됨
+    public ResponseEntity join(@RequestBody @Valid SignupRequestDto signupRequestDto) throws Exception {
+        System.out.println("회원가입 요청이 들어옴 : " + signupRequestDto.email());
+        String result = memberServiceimpl.join(signupRequestDto); //리턴값은 바디로 출력됨
+
+        //if("success".equals(result)){
+        //회원가입 성공시에만 동작. 그 전에 service에서 예외 던져짐
+        return ResponseEntity.ok(result);
     }
 
     //이메일인증번호 전송
     @PostMapping("/email-verification/request")
-    public String sendMessage(@RequestBody @Valid EmailRequestDto emailRequestDto) throws UnsupportedEncodingException {
-        System.out.println("이메일 인증번호 전송 요청이 들어옴 : "+emailRequestDto.email());
-        return mailServiceimpl.sendTxtEmail(emailRequestDto.email());
+    public ResponseEntity sendMessage(@RequestBody @Valid EmailRequestDto emailRequestDto) throws UnsupportedEncodingException {
+        System.out.println("이메일 인증번호 전송 요청이 들어옴 : " + emailRequestDto.email());
+        String result= mailServiceimpl.sendTxtEmail(emailRequestDto.email());
+        return ResponseEntity.ok(result);
     }
 
     //이메일 인증
     @PostMapping("/email-verification/confirm")
-    public String sendMessage(@RequestBody @Valid EmailVarifyDto emailVarifyDto) {
-        System.out.println("이메일 인증번호 검증 : "+ emailVarifyDto.email());
-        return mailServiceimpl.confirmVerificationCode(emailVarifyDto.email(),emailVarifyDto.verificationCode());
+    public ResponseEntity sendMessage(@RequestBody @Valid EmailVarifyDto emailVarifyDto) {
+        System.out.println("이메일 인증번호 검증 : " + emailVarifyDto.email());
+        String result= mailServiceimpl.confirmVerificationCode(emailVarifyDto.email(), emailVarifyDto.verificationCode());
+        return ResponseEntity.ok(result);
     }
 
     //로그인
     @PostMapping("/auth/login")
-    public String login(@RequestBody @Valid LoginDto loginDto){ //loginDto사용으로 변경 필요
-        System.out.println("로그인 요청이 들어옴 : "+loginDto.email());
-        return memberServiceimpl.login(loginDto.email(), loginDto.password());
+    public ResponseEntity login(@RequestBody @Valid LoginDto loginDto) { //loginDto사용으로 변경 필요
+        System.out.println("로그인 요청이 들어옴 : " + loginDto.email());
+        String result= memberServiceimpl.login(loginDto.email(), loginDto.password());
+        return ResponseEntity.ok(result);
     }
-    
+
     //Post 이메일 중복 검사
     @PostMapping("/auth/email-check")
-    public String checkEmail(@RequestBody @Valid EmailRequestDto emailRequestDto){ //loginDto사용으로 변경 필요
-        System.out.println("이메일 중복 확인 요청이 들어옴 : "+emailRequestDto.email());
-        return mailServiceimpl.checkEmail(emailRequestDto.email());
+    public ResponseEntity checkEmail(@RequestBody @Valid EmailRequestDto emailRequestDto) { //loginDto사용으로 변경 필요
+        System.out.println("이메일 중복 확인 요청이 들어옴 : " + emailRequestDto.email());
+        String result= mailServiceimpl.checkEmail(emailRequestDto.email());
+        return ResponseEntity.ok(result);
     }
 
     //Patch 비밀번호 변경
     @PatchMapping("/auth/password")
-    public String changePassword(@RequestBody @Valid LoginDto loginDto){
-        System.out.println("비밀번호 변경 요청이 들어옴 : "+loginDto.email());
-        return memberServiceimpl.changePassword(loginDto.email(), loginDto.password());
+    public ResponseEntity changePassword(@RequestBody @Valid LoginDto loginDto) {
+        System.out.println("비밀번호 변경 요청이 들어옴 : " + loginDto.email());
+        String result= memberServiceimpl.changePassword(loginDto.email(), loginDto.password());
+        return ResponseEntity.ok(result);
     }
 
+    //Get 특정 유저 정보
+    //@GetMapping('/auth/me')
 }
-/// @exceptionhandler, @controlleradvice 참고해서 추가하기
 

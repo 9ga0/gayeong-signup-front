@@ -1,5 +1,7 @@
 package com.ensharp.gayeongsignup.signup;
 
+import com.ensharp.gayeongsignup.exception.CustomException;
+import com.ensharp.gayeongsignup.exception.ErrorCode;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +20,8 @@ public class MemberServiceimpl implements MemberService {
     public String join(SignupRequestDto signupRequestDto) {
         if(memberRepository.existsByEmail(signupRequestDto.email())){
             System.out.println("이미 있는 이메일 ->success"); //status:409
-            return "이미 사용 중인 이메일입니다.";
+            //return "이미 사용 중인 이메일입니다.";
+            throw new CustomException(ErrorCode.HAS_EMAIL);
         }
         Member member = new Member.MemberBuilder(signupRequestDto).build();
         memberRepository.save(member);
@@ -34,12 +37,8 @@ public class MemberServiceimpl implements MemberService {
             return foundMember.username();
         }
         System.out.println("비밀번호 틀림");
-        return "비밀번호가 옳지 않습니다.";
-    }
-
-    //회원가입할때 이메일 중복됐는지 체크해서 반환
-    public boolean checkLoginIdDuplicate(String email) {
-        return memberRepository.existsByEmail(email);
+        throw new CustomException(ErrorCode.INVALID_PASSWORD);
+        //return "비밀번호가 옳지 않습니다.";
     }
 
     //비밀번호 변경 시에 성공/실패 점검 및 반환
@@ -48,7 +47,8 @@ public class MemberServiceimpl implements MemberService {
         Member foundMember = memberRepository.findByEmail(email);
         if (foundMember==null) {
             System.out.println("회원 못찾음");
-            return "fail";
+            throw new CustomException(ErrorCode.USER_NOT_FOUND);
+            //return "fail";
         }//비밀번호 유효성검사도 프론트에 되어있지만 추가해야함
         foundMember.updatePassword(newPassword); //데베도 수정됨
         System.out.println("비밀번호 변경 완료");
