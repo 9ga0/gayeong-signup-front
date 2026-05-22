@@ -10,4 +10,6 @@ public interface MailService {
     String sendTxtEmail(String email) throws UnsupportedEncodingException;
 
     String confirmVerificationCode(String email, String verificationCode);
+
+    String checkEmail(String email);
 }

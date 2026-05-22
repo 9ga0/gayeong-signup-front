@@ -1,10 +1,6 @@
 package com.ensharp.gayeongsignup.emailsend;
 
-import com.ensharp.gayeongsignup.signup.Member;
-import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
-import org.springframework.mail.MailException;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -75,6 +71,13 @@ public class MailServiceImpl implements MailService {
             return "fail";
         }
     }
-
-
+    @Override
+    public String checkEmail(String email){
+        if (emailRepository.existsByEmail(email)) { //이미 이메일있으면 그 데이터 지우고 새로 넣기위함.
+            System.out.println("사용 불가한 이메일");
+            return "이미 사용 중인 이메일입니다"; //409
+        }
+        System.out.println("이메일 중복 검사 통과");
+        return "사용 가능한 이메일입니다"; //200
+    }
 }

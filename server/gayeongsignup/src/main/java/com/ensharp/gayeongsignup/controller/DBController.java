@@ -16,7 +16,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/v1")
 @ControllerAdvice
-@CrossOrigin(origins = "")
+@CrossOrigin //(origins = "")? 모든 도메인, 요청방식에 대해 허용
 public class DBController {
     private final MemberServiceimpl memberServiceimpl;
     private final MailServiceImpl mailServiceimpl;
@@ -75,6 +75,11 @@ public class DBController {
     }
     
     //Post 이메일 중복 검사
+    @PostMapping("/auth/email-check")
+    public String checkEmail(@RequestBody @Valid EmailRequestDto emailRequestDto){ //loginDto사용으로 변경 필요
+        System.out.println("이메일 중복 확인 요청이 들어옴 : "+emailRequestDto.email());
+        return mailServiceimpl.checkEmail(emailRequestDto.email());
+    }
 
     //Patch 비밀번호 변경
     @PatchMapping("/auth/password")
