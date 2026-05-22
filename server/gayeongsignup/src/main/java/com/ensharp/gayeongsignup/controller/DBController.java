@@ -2,7 +2,8 @@ package com.ensharp.gayeongsignup.controller;
 
 import com.ensharp.gayeongsignup.emailsend.MailSendService;
 import com.ensharp.gayeongsignup.emailsend.MailTxtSendDto;
-import com.ensharp.gayeongsignup.signup.MemberDTO;
+import com.ensharp.gayeongsignup.signup.MemberServiceimpl;
+import com.ensharp.gayeongsignup.signup.SignupRequestDto;
 import com.ensharp.gayeongsignup.signup.MemberService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
@@ -14,11 +15,11 @@ import java.util.Map;
 @RequestMapping("/api/v1/post-api")
 @CrossOrigin(origins = "")
 public class DBController {
-    private final MemberService memberService;
+    private final MemberServiceimpl memberServiceimpl;
     private final MailSendService mailSendService;
 
-    public DBController(MemberService memberService, MailSendService mailSendService) {
-        this.memberService = memberService;
+    public DBController(MemberServiceimpl memberServiceimpl, MailSendService mailSendService) {
+        this.memberServiceimpl = memberServiceimpl;
         this.mailSendService = mailSendService;
     }
 
@@ -38,15 +39,15 @@ public class DBController {
     }
     //위랑 같은 결과?
     @PostMapping(value = "/member2")
-    public String postMemberDto(@RequestBody @Valid MemberDTO memberDTO) {
-        return memberDTO.toString();
+    public String postMemberDto(@RequestBody @Valid SignupRequestDto signupRequestDto) {
+        return signupRequestDto.toString();
     }
 
     //회원가입
     @PostMapping("/join")
-    public String join(@RequestBody @Valid MemberDTO memberDTO) {
-        System.out.println("회원가입 요청이 들어옴 : "+memberDTO.email());
-        return memberService.join(memberDTO);
+    public String join(@RequestBody @Valid SignupRequestDto signupRequestDto) {
+        System.out.println("회원가입 요청이 들어옴 : "+ signupRequestDto.email());
+        return memberServiceimpl.join(signupRequestDto); //리턴값은 바디로 출력됨
     }
 
     //이메일인증
@@ -56,7 +57,12 @@ public class DBController {
         return mailSendService.sendTxtEmail(mailTxtSendDto);
     }
 
-    //
+    //로그인
+    @PostMapping("/login")
+    public String login(@RequestBody @Valid String email, String password){ //loginDto사용으로 변경 필요
+
+        return memberServiceimpl.login(email, password);
+    }
 
 }
 /// @exceptionhandler, @controlleradvice 참고해서 추가하기

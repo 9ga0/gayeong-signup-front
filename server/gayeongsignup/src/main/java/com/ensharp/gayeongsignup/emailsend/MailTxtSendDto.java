@@ -17,7 +17,8 @@ public record MailTxtSendDto(
         String emailAddr,
         @NotBlank(message = "제목은 필수 입력 사항입니다.") String subject,
         @NotBlank(message = "내용은 필수 입력 사항입니다.") String content
-        ) {
+) {
+
     public MailTxtSendDto(MailTxtSend entity) { //생성자
         this(
                 entity.getEmailAddr(),

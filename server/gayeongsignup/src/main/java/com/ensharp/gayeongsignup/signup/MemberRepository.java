@@ -3,11 +3,11 @@ package com.ensharp.gayeongsignup.signup;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface MemberRepository extends JpaRepository<Member, String> {
-    public Member findByUsernameAndPassword(String username, String password);
+    //findById는 이미 존재.
 
-//    @Modifying
-//    @Transactional
-//    @Query("update Member m set m.memo=memo where m.username=:username")
-//    public int saveMemoByUsername(String memo, String username);
+    public Member findByEmailAndPassword(String email,String password);
 
+
+
+    boolean existsByEmail(String email);
 }

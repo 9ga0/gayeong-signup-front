@@ -8,8 +8,7 @@ public class Member {
 //    @Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
 //    private Long id;
-    @Id
-    @Column(nullable = false) //필수 정보들. 비어있을 수 없다
+    @Id @Column(nullable = false) //필수 정보들. 비어있을 수 없다
     private String email;
     @Column(nullable = false)
     private String password;
@@ -19,6 +18,8 @@ public class Member {
     private String streetAddress;
     @Column(nullable = false)
     private String detailAddress;
+
+    private Member(){}
 
     private Member(MemberBuilder builder) { //Member 생성자
         this.email = builder.email;
@@ -35,12 +36,12 @@ public class Member {
         private final String streetAddress;
         private final String detailAddress;
 
-        public MemberBuilder(MemberDTO memberDTO) { //필수 값을 dto로 전달
-            this.email = memberDTO.email();
-            this.password = memberDTO.password();
-            this.username = memberDTO.username();
-            this.streetAddress = memberDTO.streetAddress();
-            this.detailAddress = memberDTO.detailAddress();
+        public MemberBuilder(SignupRequestDto signupRequestDto) { //필수 값을 dto로 전달
+            this.email = signupRequestDto.email();
+            this.password = signupRequestDto.password();
+            this.username = signupRequestDto.username();
+            this.streetAddress = signupRequestDto.streetAddress();
+            this.detailAddress = signupRequestDto.detailAddress();
         }
 
         public Member build() { //DTO -> Entity
@@ -50,34 +51,9 @@ public class Member {
             return new Member(this);
         }
     }
-//
-//    public Member email(String email) {
-//        this.email = email;
-//        return this;
-//    }
-//
-//    public Member password(String password) {
-//        this.password = password;
-//        return this;
-//    }
-//
-//    public Member username(String username) {
-//        this.username = username;
-//        return this;
-//    }
-//
-//    public Member streetAddress(String streetAddress) {
-//        this.streetAddress = streetAddress;
-//        return this;
-//    }
-//
-//    public Member detailAddress(String detailAddress) {
-//        this.detailAddress = detailAddress;
-//        return this;
-//    }
 
-    public MemberDTO toDto() {
-        return new MemberDTO(this);
+    public SignupRequestDto toDto() {
+        return new SignupRequestDto(this);
     }
 
     public String getEmail() {

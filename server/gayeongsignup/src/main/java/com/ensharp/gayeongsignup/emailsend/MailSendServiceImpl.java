@@ -20,12 +20,8 @@ public class MailSendServiceImpl implements MailSendService{
     public String sendTxtEmail(MailTxtSendDto mailTxtSendDto) throws UnsupportedEncodingException {
         SimpleMailMessage simpleMailMessage= new SimpleMailMessage();
         simpleMailMessage.setTo(mailTxtSendDto.emailAddr());
-        //simpleMailMessage.setSubject(mailTxtSendDto.subject());
-        //simpleMailMessage.setText(mailTxtSendDto.content());
-        String encodedSubject = MimeUtility.encodeText(mailTxtSendDto.subject(),"UTF-8","B");
-        simpleMailMessage.setSubject(encodedSubject);
-        String encodedText = MimeUtility.encodeText(mailTxtSendDto.content(),"UTF-8","B");
-        simpleMailMessage.setText(encodedText);
+        simpleMailMessage.setSubject(mailTxtSendDto.subject());
+        simpleMailMessage.setText(mailTxtSendDto.content());
 
         try{
             mailSender.send(simpleMailMessage);
