@@ -111,7 +111,6 @@ export default function EmailBox(props) {
       //보내기 성공
       isSend ? setSendText('인증번호가 재전송되었습니다.') : setSendText('인증번호가 전송되었습니다.');
       setIsSend(true);
-      handleEqual(e, e.target.value);
     } catch (error) {
       console.error('handlePost에서 api 연결 실패:', error);
     }
@@ -189,7 +188,7 @@ export default function EmailBox(props) {
             <p className='email-button-text'> {isSend ? '재전송' : '전송'} </p>
           </button>
           : //버튼 비활성화
-          <button className="email-button" style={{ backgroundColor: "#E3E3E3" }}>
+          <button type="button" className="email-button" style={{ backgroundColor: "#E3E3E3" }} disabled>
             <p className='email-button-text'> 전송 </p>
           </button>
         }

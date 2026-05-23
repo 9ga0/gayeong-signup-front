@@ -62,10 +62,10 @@ export default function LogIn() {
     }
   }
   const changeHandler = (e) => {
-    setEmail(e.target.value);
+    setEmail(e.target.value); //업데이트 예약-아직반영안된것이다
     setError('');
-    console.log(email, ":", password);
-    if (saveIDFlag) { localStorage.setItem(LS_KEY_ID, email); }
+    //console.log(email, ":", password); 
+    if (saveIDFlag) { localStorage.setItem(LS_KEY_ID, e.target.value); }
   }
 
   // 아이디 저장 체크박스 활성화

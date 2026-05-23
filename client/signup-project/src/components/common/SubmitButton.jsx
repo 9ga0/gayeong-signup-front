@@ -20,7 +20,7 @@ const SubmitButton = (props) => {
   }
   return (
     <button
-      type="submit"
+      type={props.link? "button":"submit"}
       className="submit-button"
       style={props.style}
       onClick={moveToNextPage}
