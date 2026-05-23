@@ -5,10 +5,11 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "MEMBER")
 public class Member {
-//    @Id
+    //    @Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
 //    private Long id;
-    @Id @Column(nullable = false) //필수 정보들. 비어있을 수 없다
+    @Id
+    @Column(nullable = false) //필수 정보들. 비어있을 수 없다
     private String email;
     @Column(nullable = false)
     private String password;
@@ -19,7 +20,8 @@ public class Member {
     @Column(nullable = false)
     private String detailAddress;
 
-    private Member(){}
+    private Member() {
+    }
 
     private Member(MemberBuilder builder) { //Member 생성자
         this.email = builder.email;
@@ -45,7 +47,7 @@ public class Member {
         }
 
         public Member build() { //DTO -> Entity
-            if (username==null ||email==null ||password==null||streetAddress==null||detailAddress==null){
+            if (username == null || email == null || password == null || streetAddress == null || detailAddress == null) {
                 throw new IllegalStateException("필수값을 적어주세요.");
             }
             return new Member(this);
@@ -76,14 +78,18 @@ public class Member {
         return detailAddress;
     }
 
+    public void updatePassword(String newPassword) {
+        password = newPassword;
+    }
+
     @Override
     public String toString() {
-        return "MemberDTO{" +
-                "'email'='" + email + '\'' +
-                ", 'password'='" + password + '\'' +
-                ", 'username'='" + username + '\'' +
-                ", 'streetAddress'='" + streetAddress + '\'' +
-                ", 'detailAddress'='" + detailAddress + '\'' +
+        return "Member{" +
+                "email='" + email + '\'' +
+                ", password=" + password + '\'' +
+                ", username=" + username + '\'' +
+                ", streetAddress=" + streetAddress + '\'' +
+                ", detailAddress=" + detailAddress + '\'' +
                 "}";
     }
 

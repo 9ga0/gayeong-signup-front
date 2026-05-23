@@ -1,10 +1,9 @@
 package com.ensharp.gayeongsignup.emailsend;
 
-import com.ensharp.gayeongsignup.signup.Member;
-import jakarta.mail.MessagingException;
+import com.ensharp.gayeongsignup.exception.CustomException;
+import com.ensharp.gayeongsignup.exception.ErrorCode;
 import jakarta.mail.internet.MimeMessage;
-import org.springframework.mail.MailException;
-import org.springframework.mail.SimpleMailMessage;
+import jakarta.transaction.Transactional;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -33,6 +32,7 @@ public class MailServiceImpl implements MailService {
         authNumber = str.toString();
     }
 
+    @Transactional
     @Override
     public String sendTxtEmail(String email) throws UnsupportedEncodingException {
         try {
@@ -56,7 +56,8 @@ public class MailServiceImpl implements MailService {
             return "success";
         } catch (Exception e) {
             System.out.println("이메일 전송 중에 오류 발생." + e.getMessage());
-            return "fail";
+            throw new CustomException(ErrorCode.INTERNAL_SERVER_ERROR);
+            //return "fail";
         }
     }
 
@@ -65,16 +66,26 @@ public class MailServiceImpl implements MailService {
         EmailVarifyEntity emailVarify = emailRepository.findByEmail(email);
         if (emailVarify == null) {
             System.out.println("해당 이메일로 보낸적이 없다");
-            return "fail";
+            throw new CustomException(ErrorCode.MAIL_NOT_FOUND);
+            //return "fail";
         }
         if (emailVarify.getVerificationCode().equals(verificationCode)) {
             System.out.println("인증번호 일치");
             return "success";
         } else {
             System.out.println("인증번호 불일치");
-            return "fail";
+            throw new CustomException(ErrorCode.INCORRECT_AUTH_NUMBER);
+            //return "fail";
         }
     }
-
-
+    @Override
+    public String checkEmail(String email){
+        if (emailRepository.existsByEmail(email)) { //이미 이메일있으면 그 데이터 지우고 새로 넣기위함.
+            System.out.println("이미 사용 중인 이메일");
+            throw new CustomException(ErrorCode.HAS_EMAIL);
+            //return "이미 사용 중인 이메일입니다"; //409
+        }
+        System.out.println("이메일 중복 검사 통과");
+        return "사용 가능한 이메일입니다"; //200
+    }
 }

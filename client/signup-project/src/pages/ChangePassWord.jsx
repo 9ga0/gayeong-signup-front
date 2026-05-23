@@ -33,6 +33,10 @@ export default function ChangePassword(props) {
                 state: { context: "비밀번호 재설정 완료" }
             });
         } catch (error) {
+            if (error.response.status==401){
+                alert('존재하지 않는 계정입니다. 로그인화면으로 돌아갑니다.')
+                navigate('/');
+            }
             console.error('changePw에서 api 연결 실패:', error.message);
         }
     }

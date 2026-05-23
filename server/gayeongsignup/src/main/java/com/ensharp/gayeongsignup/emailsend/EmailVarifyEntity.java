@@ -35,7 +35,6 @@ public class EmailVarifyEntity {
             this.email = emailVarifyDto.email();
             this.verificationCode = emailVarifyDto.verificationCode();
         }
-
     }
 
     public String getEmail() {
