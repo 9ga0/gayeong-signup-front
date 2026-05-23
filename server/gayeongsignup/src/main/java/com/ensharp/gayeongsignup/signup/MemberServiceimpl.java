@@ -55,4 +55,13 @@ public class MemberServiceimpl implements MemberService {
         return "success";
     }
 
+    public SignupRequestDto getUserInfo(String email) {
+        Member foundMember = memberRepository.findByEmail(email);
+        if(foundMember==null){
+            System.out.println("회원 못찾음");
+            throw new CustomException(ErrorCode.USER_NOT_FOUND);
+        }
+        System.out.println("회원 정보 전달");
+        return foundMember.toDto();
+    }
 }

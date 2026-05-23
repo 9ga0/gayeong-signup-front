@@ -81,7 +81,7 @@ public class MailServiceImpl implements MailService {
     @Override
     public String checkEmail(String email){
         if (emailRepository.existsByEmail(email)) { //이미 이메일있으면 그 데이터 지우고 새로 넣기위함.
-            System.out.println("사용 불가한 이메일");
+            System.out.println("이미 사용 중인 이메일");
             throw new CustomException(ErrorCode.HAS_EMAIL);
             //return "이미 사용 중인 이메일입니다"; //409
         }

@@ -84,12 +84,12 @@ public class Member {
 
     @Override
     public String toString() {
-        return "MemberDTO{" +
-                "'email'='" + email + '\'' +
-                ", 'password'='" + password + '\'' +
-                ", 'username'='" + username + '\'' +
-                ", 'streetAddress'='" + streetAddress + '\'' +
-                ", 'detailAddress'='" + detailAddress + '\'' +
+        return "Member{" +
+                "email='" + email + '\'' +
+                ", password=" + password + '\'' +
+                ", username=" + username + '\'' +
+                ", streetAddress=" + streetAddress + '\'' +
+                ", detailAddress=" + detailAddress + '\'' +
                 "}";
     }
 
