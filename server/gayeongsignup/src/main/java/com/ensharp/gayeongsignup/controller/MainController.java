@@ -53,7 +53,7 @@ public class MainController {
 
     //이메일 인증
     @PostMapping("/email-verification/confirm")
-    public ResponseEntity<String> sendMessage(@RequestBody @Valid EmailVarifyDto emailVarifyDto) {
+    public ResponseEntity<String> confirmVerificationCode(@RequestBody @Valid EmailVarifyDto emailVarifyDto) {
         System.out.println("이메일 인증번호 검증 : " + emailVarifyDto.email());
         String result= mailServiceimpl.confirmVerificationCode(emailVarifyDto.email(), emailVarifyDto.verificationCode());
         return ResponseEntity.ok(result);
