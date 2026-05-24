@@ -1,4 +1,4 @@
-package com.ensharp.gayeongsignup.signup;
+package com.ensharp.gayeongsignup.member;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

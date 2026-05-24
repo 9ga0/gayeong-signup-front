@@ -1,9 +1,10 @@
-package com.ensharp.gayeongsignup.signup;
+package com.ensharp.gayeongsignup.member;
 
 import jakarta.persistence.*;
 
+/// 엔티티가 디티오를 알고있지 못하도록
 @Entity
-@Table(name = "MEMBER")
+@Table(name = "members")///members 또는 users
 public class Member {
     //    @Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,7 +18,7 @@ public class Member {
     private String username;
     @Column(nullable = false)
     private String streetAddress;
-    @Column(nullable = false)
+     ///상세주소 입력안해도 넘어갈수있어야
     private String detailAddress;
 
     private Member() {

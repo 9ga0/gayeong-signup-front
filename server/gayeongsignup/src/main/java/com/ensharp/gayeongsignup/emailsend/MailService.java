@@ -7,7 +7,7 @@ import java.io.UnsupportedEncodingException;
 @Service
 public interface MailService {
 
-    String sendTxtEmail(String email) throws UnsupportedEncodingException;
+    String sendTextEmail(String email) throws UnsupportedEncodingException;
 
     String confirmVerificationCode(String email, String verificationCode);
 

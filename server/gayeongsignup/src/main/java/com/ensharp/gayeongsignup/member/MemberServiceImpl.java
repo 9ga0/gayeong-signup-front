@@ -1,4 +1,4 @@
-package com.ensharp.gayeongsignup.signup;
+package com.ensharp.gayeongsignup.member;
 
 import com.ensharp.gayeongsignup.exception.CustomException;
 import com.ensharp.gayeongsignup.exception.ErrorCode;
@@ -6,12 +6,12 @@ import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 @Service
-public class MemberServiceimpl implements MemberService {
+public class MemberServiceImpl implements MemberService {
 
     private final MemberRepository memberRepository;
 
 
-    public MemberServiceimpl(MemberRepository memberRepository) {
+    public MemberServiceImpl(MemberRepository memberRepository) {
         this.memberRepository = memberRepository;
     }
 
@@ -42,7 +42,7 @@ public class MemberServiceimpl implements MemberService {
     }
 
     //비밀번호 변경 시에 성공/실패 점검 및 반환
-    @Transactional
+    @Transactional ///하다가 오류나도 되돌릴수있게 해줌. db조회에도 필요할수있다.
     public String changePassword(String email, String newPassword){
         Member foundMember = memberRepository.findByEmail(email);
         if (foundMember==null) {
