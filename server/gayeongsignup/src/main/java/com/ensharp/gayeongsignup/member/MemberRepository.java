@@ -1,5 +1,7 @@
 package com.ensharp.gayeongsignup.member;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface MemberRepository extends JpaRepository<Member, String> {
@@ -9,5 +11,7 @@ public interface MemberRepository extends JpaRepository<Member, String> {
 
     public boolean existsByEmail(String email);
 
-    Member findByEmail(String email);
+    public Member findByEmail(String email);
+
+    public void deleteByEmail(String email);
 }
