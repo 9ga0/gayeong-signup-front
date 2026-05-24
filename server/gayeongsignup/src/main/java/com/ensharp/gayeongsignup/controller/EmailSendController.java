@@ -4,6 +4,9 @@ import com.ensharp.gayeongsignup.emailsend.EmailRequestDto;
 import com.ensharp.gayeongsignup.emailsend.EmailVarificationDto;
 import com.ensharp.gayeongsignup.emailsend.MailServiceImpl;
 import com.ensharp.gayeongsignup.member.MemberServiceImpl;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +25,12 @@ public class EmailSendController {
     }
 
     //이메일인증번호 전송
+    @Operation(summary = "이메일 인증 검사 요청",
+            description = "해당 이메일과 인증번호가 일치하면 통과합니다.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200",description = "Success"), //인증 번호가 발송되었습니다.
+            @ApiResponse(responseCode = "400", description = "Error 400") //유효한 이메일 형식을 입력하세요.
+    })
     @PostMapping("/request")
     public ResponseEntity<String> sendMessage(@RequestBody @Valid EmailRequestDto emailRequestDto) throws UnsupportedEncodingException {
         System.out.println("이메일 인증번호 전송 요청이 들어옴 : " + emailRequestDto.email());
@@ -30,6 +39,12 @@ public class EmailSendController {
     }
 
     //이메일 인증
+    @Operation(summary = "이메일 인증 검사 요청",
+            description = "해당 이메일과 인증번호가 일치하면 통과합니다.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200",description = "Success"), //인증 번호가 확인되었습니다.
+            @ApiResponse(responseCode = "404", description = "Error 404") //해당 메일로 인증 코드가 전송된 기록이 없습니다
+    })
     @PostMapping("/confirm")
     public ResponseEntity<String> confirmVerificationCode(@RequestBody @Valid EmailVarificationDto emailVarificationDto) {
         System.out.println("이메일 인증번호 검증 : " + emailVarificationDto.email());

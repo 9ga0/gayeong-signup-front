@@ -55,6 +55,12 @@ public class AuthController {
     }
 
     //로그인
+    @Operation(summary = "로그인 요청",
+            description = "회원가입되어있는 계정이면 로그인에 성공합니다.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200",description = "Success"), //{username}
+            @ApiResponse(responseCode = "401", description = "Error 401") //"비밀번호가 옳지 않습니다"
+    })
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody @Valid LoginDto loginDto) { //loginDto사용으로 변경 필요
         System.out.println("로그인 요청이 들어옴 : " + loginDto.email());
@@ -63,6 +69,12 @@ public class AuthController {
     }
 
     //Post 이메일 중복 검사
+    @Operation(summary = "이메일 중복 검사 요청",
+            description = "이미 가입된 이메일이 아니면 통과합니다.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200",description = "Success"), //사용 가능한 이메일입니다
+            @ApiResponse(responseCode = "409", description = "Error 409") //이미 사용 중인 이메일입니다
+    })
     @PostMapping("/email-check")
     public ResponseEntity<String> checkEmail(@RequestBody @Valid EmailRequestDto emailRequestDto) { //loginDto사용으로 변경 필요
         System.out.println("이메일 중복 확인 요청이 들어옴 : " + emailRequestDto.email());
@@ -71,6 +83,11 @@ public class AuthController {
     }
 
     //Patch 비밀번호 변경
+    @Operation(summary = "비밀번호 변경 요청",
+            description = "이메일과 비밀번호를 전달받아 해당 이메일의 비밀번호를 변경합니다.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "204",description = "Success"), //
+    })
     @PatchMapping("/password")
     public ResponseEntity<String> changePassword(@RequestBody @Valid LoginDto loginDto) {
         System.out.println("비밀번호 변경 요청이 들어옴 : " + loginDto.email());
@@ -79,6 +96,12 @@ public class AuthController {
     }
 
     //Get 특정 유저 정보
+    @Operation(summary = "특정 유저 정보 검색 요청",
+            description = "입력받은 이메일의 유저 정보를 전달합니다.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200",description = "Success"), //{userInfo}
+            @ApiResponse(responseCode = "409", description = "Error 409") //? //존재하지 않는 이메일입니다
+    })
     @GetMapping("/me")
     public ResponseEntity<SignupRequestDto> getUserInfo(@RequestParam String email) {
         System.out.println("특정 유저 정보 확인 요청이 들어옴: " + email);
