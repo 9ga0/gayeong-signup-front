@@ -5,10 +5,17 @@ import com.ensharp.gayeongsignup.emailsend.MailServiceImpl;
 import com.ensharp.gayeongsignup.member.LoginDto;
 import com.ensharp.gayeongsignup.member.MemberServiceImpl;
 import com.ensharp.gayeongsignup.member.SignupRequestDto;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@Tag(name = "사용자 관리", description = "Auth")
 @RestController
 @RequestMapping("/api/v1/auth")
 @ControllerAdvice
@@ -26,6 +33,17 @@ public class AuthController {
     /// 컨트롤러를 auth, email-verification등으로 분류하기
 
     //회원가입
+    @Operation(summary = "회원가입 요청",
+            description = "회원목록에 등록되지 않은 이메일이면 회원가입에 성공합니다.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200",
+                    description = "Success"
+//                    content = @Content(mediaType = "application/json",
+//                            schema = @Schema(implementation = SignupRequestDto.class)
+//                    )
+            ),
+            @ApiResponse(responseCode = "409", description = "Error 409")
+    })
     @PostMapping("/signup")
     public ResponseEntity<String> join(@RequestBody @Valid SignupRequestDto signupRequestDto) throws Exception {
         System.out.println("회원가입 요청이 들어옴 : " + signupRequestDto.email());
@@ -40,7 +58,7 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody @Valid LoginDto loginDto) { //loginDto사용으로 변경 필요
         System.out.println("로그인 요청이 들어옴 : " + loginDto.email());
-        String result= memberServiceImpl.login(loginDto.email(), loginDto.password());
+        String result = memberServiceImpl.login(loginDto.email(), loginDto.password());
         return ResponseEntity.ok(result);
     }
 
@@ -48,7 +66,7 @@ public class AuthController {
     @PostMapping("/email-check")
     public ResponseEntity<String> checkEmail(@RequestBody @Valid EmailRequestDto emailRequestDto) { //loginDto사용으로 변경 필요
         System.out.println("이메일 중복 확인 요청이 들어옴 : " + emailRequestDto.email());
-        String result= mailServiceImpl.checkEmail(emailRequestDto.email());
+        String result = mailServiceImpl.checkEmail(emailRequestDto.email());
         return ResponseEntity.ok(result);
     }
 
@@ -56,15 +74,15 @@ public class AuthController {
     @PatchMapping("/password")
     public ResponseEntity<String> changePassword(@RequestBody @Valid LoginDto loginDto) {
         System.out.println("비밀번호 변경 요청이 들어옴 : " + loginDto.email());
-        String result= memberServiceImpl.changePassword(loginDto.email(), loginDto.password());
+        String result = memberServiceImpl.changePassword(loginDto.email(), loginDto.password());
         return ResponseEntity.ok(result);
     }
 
     //Get 특정 유저 정보
     @GetMapping("/me")
-    public ResponseEntity<SignupRequestDto> getUserInfo(@RequestParam String email){
-        System.out.println("특정 유저 정보 확인 요청이 들어옴: "+  email);
-        SignupRequestDto result= memberServiceImpl.getUserInfo(email);
+    public ResponseEntity<SignupRequestDto> getUserInfo(@RequestParam String email) {
+        System.out.println("특정 유저 정보 확인 요청이 들어옴: " + email);
+        SignupRequestDto result = memberServiceImpl.getUserInfo(email);
         return ResponseEntity.ok(result); //매핑된 유저 데이터 전달해야함
     }
 }

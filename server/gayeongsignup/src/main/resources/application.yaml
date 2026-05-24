@@ -41,5 +41,15 @@ spring:
           ###띄어쓰기 있으면 안됨.
     auth-code-expiration-millis: 1800000  # 30 * 60 * 1000 == 30분 이메일 인증 코드의 만료 시간(Millisecond)
 
+  springdoc:
+    packages-to-scan: com.ensharp.gayeongsignup #문서화할 패키지
+    default-consumes-media-type: application/json;charset=UTF-8 #API가 소비하고 반환할 기본 미디어 타입 지정
+    default-produces-media-type: application/json;charset=UTF-8
+    swagger-ui:
+      path: / #Swagger UI에 접근할 경로설정
+      disable-swagger-default-url: true
+      display-request-duration: true
+      operations-sorter: alpha
+      
 kind: Application
 #server.port : 9090
