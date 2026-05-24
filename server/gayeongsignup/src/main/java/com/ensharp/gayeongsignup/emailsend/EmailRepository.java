@@ -3,8 +3,10 @@ package com.ensharp.gayeongsignup.emailsend;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 
+import java.util.Optional;
+
 public interface EmailRepository extends JpaRepository<EmailVerification,String> {
-    public EmailVerification findByEmail(String email); //Optional
+    public Optional<EmailVerification> findByEmail(String email); ///Optional 사용하기
     public boolean existsByEmail(String email);
 
     //@Modifying

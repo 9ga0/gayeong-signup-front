@@ -2,24 +2,30 @@ package com.ensharp.gayeongsignup.emailsend;
 
 import com.ensharp.gayeongsignup.exception.CustomException;
 import com.ensharp.gayeongsignup.exception.ErrorCode;
+import com.ensharp.gayeongsignup.member.MemberRepository;
+import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
-import jakarta.transaction.Transactional;
+import org.springframework.mail.MailSendException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.UnexpectedRollbackException;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.io.UnsupportedEncodingException;
+import java.util.Optional;
 import java.util.Random;
 
 @Service
 public class MailServiceImpl implements MailService {
     private final JavaMailSender mailSender;
     private String authNumber;
-    private EmailRepository emailRepository;
+    private final EmailRepository emailRepository;
+    private final MemberRepository memberRepository;
 
-    public MailServiceImpl(JavaMailSender mailSender, EmailRepository emailRepository) {
+    public MailServiceImpl(JavaMailSender mailSender, EmailRepository emailRepository, MemberRepository memberRepository) {
         this.emailRepository = emailRepository;
         this.mailSender = mailSender;
+        this.memberRepository = memberRepository;
     }
 
     //6자리 양수 랜덤 반환
@@ -33,12 +39,21 @@ public class MailServiceImpl implements MailService {
     }
 
     @Transactional
+    public void deleteEmailSendHistoryIfExists(String email) {
+        if (emailRepository.existsByEmail(email)) {
+            emailRepository.deleteByEmail(email);
+        }
+    }
+    @Transactional
+    public void saveSendEmail(String email, String authNumber) {
+        EmailVerification emailEntity = new EmailVerification(email, authNumber);
+        emailRepository.save(emailEntity);
+        System.out.println("이메일과 인증번호를 데이터베이스에도 저장");
+    }
+
     @Override
-    public String sendTextEmail(String email) throws UnsupportedEncodingException {
+    public String sendTextEmail(String email) {
         try {
-            if (emailRepository.existsByEmail(email)) { //이미 이메일있으면 그 데이터 지우고 새로 넣기위함.
-                emailRepository.deleteByEmail(email);
-            }
             MimeMessage mimeMessage = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "UTF-8");
 
@@ -51,11 +66,12 @@ public class MailServiceImpl implements MailService {
             mailSender.send(mimeMessage);
             System.out.println("이메일 전송 성공!");
             EmailVerification emailEntity = new EmailVerification(email, authNumber);
-            emailRepository.save(emailEntity);
-            System.out.println("이메일과 인증번호를 데이터베이스에도 저장");
+
+            saveSendEmail(email, authNumber);
+
             return "success";
         } catch (Exception e) {
-            System.out.println("이메일 전송 중에 오류 발생." + e.getMessage());
+            System.out.println("500 서버 오류 발생: " + e.getMessage());
             throw new CustomException(ErrorCode.INTERNAL_SERVER_ERROR);
             //return "fail";
         }
@@ -63,13 +79,10 @@ public class MailServiceImpl implements MailService {
 
     @Override
     public String confirmVerificationCode(String email, String verificationCode) {
-        EmailVerification emailVarify = emailRepository.findByEmail(email);
-        if (emailVarify == null) {
-            System.out.println("해당 이메일로 보낸적이 없다");
-            throw new CustomException(ErrorCode.MAIL_NOT_FOUND);
-            //return "fail";
-        }
-        if (emailVarify.getVerificationCode().equals(verificationCode)) {
+        EmailVerification emailVerification = emailRepository.findByEmail(email)
+                .orElseThrow(()->new CustomException(ErrorCode.MAIL_NOT_FOUND));//"해당 이메일로 보낸적이 없다"
+
+        if (emailVerification.getVerificationCode().equals(verificationCode)) {
             System.out.println("인증번호 일치");
             return "success";
         } else {
@@ -78,9 +91,10 @@ public class MailServiceImpl implements MailService {
             //return "fail";
         }
     }
+
     @Override
-    public String checkEmail(String email){
-        if (emailRepository.existsByEmail(email)) {
+    public String checkEmail(String email) {
+        if (memberRepository.existsByEmail(email)) {
             System.out.println("이미 사용 중인 이메일");
             throw new CustomException(ErrorCode.HAS_EMAIL);
             //return "이미 사용 중인 이메일입니다"; //409
