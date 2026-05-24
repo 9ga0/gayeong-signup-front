@@ -22,7 +22,7 @@ public class SwaggerConfig {
         Info info = new Info()
                 .title("Gayeong Signup Swagger API") // API 문서 제목
                 .version("1.0.0") // API 문서 버전
-                .description("Swagger API Description"); // API 문서 설명
+                .description("En# 구가영 Signup 스터디용 Swagger API 문서입니다"); // API 문서 설명
 
         return new OpenAPI()
                 .info(info)
