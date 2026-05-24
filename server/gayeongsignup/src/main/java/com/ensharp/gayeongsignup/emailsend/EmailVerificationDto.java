@@ -6,7 +6,7 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
 
-public record EmailVarificationDto(
+public record EmailVerificationDto(
         @Id
         @Email
         @Schema(description = "이메일", example = "koo050803@naver.com")
@@ -16,7 +16,7 @@ public record EmailVarificationDto(
         @NotBlank(message = "인증 번호를 입력해 주세요")
         String verificationCode
 ) {
-    public EmailVarificationDto(EmailVerification entity) { //생성자
+    public EmailVerificationDto(EmailVerification entity) { //생성자
         this(
                 entity.getEmail(),
                 entity.getVerificationCode()

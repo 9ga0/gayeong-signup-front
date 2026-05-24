@@ -1,7 +1,7 @@
 package com.ensharp.gayeongsignup.controller;
 
 import com.ensharp.gayeongsignup.emailsend.EmailRequestDto;
-import com.ensharp.gayeongsignup.emailsend.EmailVarificationDto;
+import com.ensharp.gayeongsignup.emailsend.EmailVerificationDto;
 import com.ensharp.gayeongsignup.emailsend.MailServiceImpl;
 import com.ensharp.gayeongsignup.member.MemberServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
@@ -47,9 +47,9 @@ public class EmailSendController {
             @ApiResponse(responseCode = "404", description = "Error 404") //해당 메일로 인증 코드가 전송된 기록이 없습니다
     })
     @PostMapping("/confirm")
-    public ResponseEntity<String> confirmVerificationCode(@RequestBody @Valid EmailVarificationDto emailVarificationDto) {
-        System.out.println("이메일 인증번호 검증 : " + emailVarificationDto.email());
-        String result = mailServiceImpl.confirmVerificationCode(emailVarificationDto.email(), emailVarificationDto.verificationCode());
+    public ResponseEntity<String> confirmVerificationCode(@RequestBody @Valid EmailVerificationDto emailVerificationDto) {
+        System.out.println("이메일 인증번호 검증 : " + emailVerificationDto.email());
+        String result = mailServiceImpl.confirmVerificationCode(emailVerificationDto.email(), emailVerificationDto.verificationCode());
         return ResponseEntity.ok(result);
     }
 }

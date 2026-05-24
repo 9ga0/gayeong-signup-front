@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.UnexpectedRollbackException;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
 import java.util.Random;
 
 @Service
@@ -78,13 +79,10 @@ public class MailServiceImpl implements MailService {
 
     @Override
     public String confirmVerificationCode(String email, String verificationCode) {
-        EmailVerification emailVarify = emailRepository.findByEmail(email);
-        if (emailVarify == null) {
-            System.out.println("해당 이메일로 보낸적이 없다");
-            throw new CustomException(ErrorCode.MAIL_NOT_FOUND);
-            //return "fail";
-        }
-        if (emailVarify.getVerificationCode().equals(verificationCode)) {
+        EmailVerification emailVerification = emailRepository.findByEmail(email)
+                .orElseThrow(()->new CustomException(ErrorCode.MAIL_NOT_FOUND));//"해당 이메일로 보낸적이 없다"
+
+        if (emailVerification.getVerificationCode().equals(verificationCode)) {
             System.out.println("인증번호 일치");
             return "success";
         } else {

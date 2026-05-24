@@ -31,9 +31,9 @@ public class EmailVerification {
         private final String email;
         private final String verificationCode;
 
-        public Builder(EmailVarificationDto emailVarificationDto) { //필수 값을 dto로 전달
-            this.email = emailVarificationDto.email();
-            this.verificationCode = emailVarificationDto.verificationCode();
+        public Builder(EmailVerificationDto emailVerificationDto) { //필수 값을 dto로 전달
+            this.email = emailVerificationDto.email();
+            this.verificationCode = emailVerificationDto.verificationCode();
         }
     }
 
