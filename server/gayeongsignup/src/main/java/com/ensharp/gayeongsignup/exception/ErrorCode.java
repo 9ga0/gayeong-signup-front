@@ -9,25 +9,20 @@ public enum ErrorCode {
     INVALID_EMAIL(400, "유효한 이메일 형식을 입력하세요"),
 
     //500 INTERNAL SERVER ERROR
-    INTERNAL_SERVER_ERROR(500,"서버 에러입니다. 서버 팀에 연락주세요!");
+    INTERNAL_SERVER_ERROR(500,"서버 에러입니다. 서버 팀에 연락주세요!"); /// 고치기
 
-    private final int status;    // HttpStatus
-    //private final String code;                // ACCOUNT-001
-    private final String message;            // 설명
+    /// 예외처리. 익셉션 공부하고 사용하기.
+    private final int status;
+    private final String message;
 
     ErrorCode(int status,  String message) {
         this.status = status;
-        //this.code = code;
         this.message = message;
     }
 
     public int getStatus() {
         return status;
     }
-
-//    public String getCode() {
-//        return code;
-//    }
 
     public String getMessage() {
         return message;

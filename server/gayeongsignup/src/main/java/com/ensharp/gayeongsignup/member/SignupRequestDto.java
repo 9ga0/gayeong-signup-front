@@ -1,4 +1,4 @@
-package com.ensharp.gayeongsignup.signup;
+package com.ensharp.gayeongsignup.member;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

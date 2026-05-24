@@ -2,11 +2,14 @@ package com.ensharp.gayeongsignup.emailsend;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
 import java.util.Properties;
 
+///어노테이션 빠짐. 블로그 그대로 가져오지말기.. 야몰파일또는 이 파일이 작동함
+@Configuration
 public class EmailConfig {
     @Value("${spring.mail.host}")
     private String host;

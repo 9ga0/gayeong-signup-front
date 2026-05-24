@@ -34,7 +34,7 @@ public class MailServiceImpl implements MailService {
 
     @Transactional
     @Override
-    public String sendTxtEmail(String email) throws UnsupportedEncodingException {
+    public String sendTextEmail(String email) throws UnsupportedEncodingException {
         try {
             if (emailRepository.existsByEmail(email)) { //이미 이메일있으면 그 데이터 지우고 새로 넣기위함.
                 emailRepository.deleteByEmail(email);
@@ -50,7 +50,7 @@ public class MailServiceImpl implements MailService {
 
             mailSender.send(mimeMessage);
             System.out.println("이메일 전송 성공!");
-            EmailVarifyEntity emailEntity = new EmailVarifyEntity(email, authNumber);
+            EmailVerification emailEntity = new EmailVerification(email, authNumber);
             emailRepository.save(emailEntity);
             System.out.println("이메일과 인증번호를 데이터베이스에도 저장");
             return "success";
@@ -63,7 +63,7 @@ public class MailServiceImpl implements MailService {
 
     @Override
     public String confirmVerificationCode(String email, String verificationCode) {
-        EmailVarifyEntity emailVarify = emailRepository.findByEmail(email);
+        EmailVerification emailVarify = emailRepository.findByEmail(email);
         if (emailVarify == null) {
             System.out.println("해당 이메일로 보낸적이 없다");
             throw new CustomException(ErrorCode.MAIL_NOT_FOUND);
@@ -80,7 +80,7 @@ public class MailServiceImpl implements MailService {
     }
     @Override
     public String checkEmail(String email){
-        if (emailRepository.existsByEmail(email)) { //이미 이메일있으면 그 데이터 지우고 새로 넣기위함.
+        if (emailRepository.existsByEmail(email)) {
             System.out.println("이미 사용 중인 이메일");
             throw new CustomException(ErrorCode.HAS_EMAIL);
             //return "이미 사용 중인 이메일입니다"; //409

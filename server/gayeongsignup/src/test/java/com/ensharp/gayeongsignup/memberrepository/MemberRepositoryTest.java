@@ -1,6 +1,6 @@
 package com.ensharp.gayeongsignup.memberrepository;
 
-import com.ensharp.gayeongsignup.signup.MemberRepository;
+import com.ensharp.gayeongsignup.member.MemberRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

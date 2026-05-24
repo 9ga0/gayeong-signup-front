@@ -7,8 +7,8 @@ public record EmailRequestDto(
         @Email @NotBlank(message = "이메일을 입력해 주세요")
         String email
 ) {
-public EmailRequestDto(String email){
-        this.email=email;
-    }
+    public EmailRequestDto(String email) {
+        this.email = email;
+    } ///들여쓰기 가독성 신경쓰기..
 
 }
