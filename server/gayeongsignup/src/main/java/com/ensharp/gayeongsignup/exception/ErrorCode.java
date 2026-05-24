@@ -9,7 +9,7 @@ public enum ErrorCode {
     INVALID_EMAIL(400, "유효한 이메일 형식을 입력하세요"),
 
     //500 INTERNAL SERVER ERROR
-    INTERNAL_SERVER_ERROR(500,"서버 에러입니다. 서버 팀에 연락주세요!"); /// 고치기
+    INTERNAL_SERVER_ERROR(500,"서버 에러입니다."); /// 고치기
 
     /// 예외처리. 익셉션 공부하고 사용하기.
     private final int status;

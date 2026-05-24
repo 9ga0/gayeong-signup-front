@@ -2,6 +2,7 @@ package com.ensharp.gayeongsignup.emailsend;
 
 import com.ensharp.gayeongsignup.exception.CustomException;
 import com.ensharp.gayeongsignup.exception.ErrorCode;
+import com.ensharp.gayeongsignup.member.MemberRepository;
 import jakarta.mail.internet.MimeMessage;
 import jakarta.transaction.Transactional;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -15,11 +16,13 @@ import java.util.Random;
 public class MailServiceImpl implements MailService {
     private final JavaMailSender mailSender;
     private String authNumber;
-    private EmailRepository emailRepository;
+    private final EmailRepository emailRepository;
+    private final MemberRepository memberRepository;
 
-    public MailServiceImpl(JavaMailSender mailSender, EmailRepository emailRepository) {
+    public MailServiceImpl(JavaMailSender mailSender, EmailRepository emailRepository, MemberRepository memberRepository) {
         this.emailRepository = emailRepository;
         this.mailSender = mailSender;
+        this.memberRepository = memberRepository;
     }
 
     //6자리 양수 랜덤 반환
@@ -80,7 +83,7 @@ public class MailServiceImpl implements MailService {
     }
     @Override
     public String checkEmail(String email){
-        if (emailRepository.existsByEmail(email)) {
+        if (memberRepository.existsByEmail(email)) {
             System.out.println("이미 사용 중인 이메일");
             throw new CustomException(ErrorCode.HAS_EMAIL);
             //return "이미 사용 중인 이메일입니다"; //409
