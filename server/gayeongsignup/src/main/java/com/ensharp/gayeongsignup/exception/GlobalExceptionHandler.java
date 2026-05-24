@@ -19,16 +19,22 @@ public class GlobalExceptionHandler {
                 .status(e.getErrorCode().getStatus())
                 .body(e.getErrorCode().getMessage());
     }
+
     //Valid 검증 실패시 발생하는 예외 처리
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity handleValidationException(MethodArgumentNotValidException e) {
-        System.out.println("@Valid 검증 실패 잡음: " + e.getMessage());
+        //dto에 태그된 메시지 그대로 가져와서 에러코드 반환
+        String errorMessage = e.getBindingResult().getAllErrors().get(0).getDefaultMessage();
+
+        System.out.println("@Valid 검증 실패 잡음: " + e.getStatusCode().value()+", "+ e.getMessage());
+
         return ResponseEntity
-                .status(ErrorCode.INVALID_EMAIL.getStatus())
-                .body(ErrorCode.INVALID_EMAIL.getMessage());
-    }
-    @ExceptionHandler({Exception.class})
-    protected ResponseEntity handleServerException(Exception ex){
-        return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
-    }
+                .status(e.getStatusCode().value())
+                .body(errorMessage);
+}
+
+@ExceptionHandler({Exception.class})
+protected ResponseEntity handleServerException(Exception ex) {
+    return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+}
 }

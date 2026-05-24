@@ -5,11 +5,17 @@ import com.ensharp.gayeongsignup.emailsend.EmailVerificationDto;
 import com.ensharp.gayeongsignup.emailsend.MailServiceImpl;
 import com.ensharp.gayeongsignup.member.MemberServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+@Tag(name = "이메일 인증 모드", description = "email-verification")
 
 @RestController
 @RequestMapping("/api/v1/email-verification")
@@ -26,8 +32,20 @@ public class EmailSendController {
     @Operation(summary = "이메일 인증 검사 요청",
             description = "해당 이메일과 인증번호가 일치하면 통과합니다.")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Success"), //인증 번호가 발송되었습니다.
-            @ApiResponse(responseCode = "400", description = "Error 400") //유효한 이메일 형식을 입력하세요.
+            @ApiResponse(responseCode = "200", description = "Success",
+                    content =
+                    @Content(
+                            mediaType = "text/success-message",
+                            schema = @Schema(implementation = String.class),
+                            examples = @ExampleObject(value = "인증 번호가 발송되었습니다")
+                    )), //인증 번호가 발송되었습니다.
+            @ApiResponse(responseCode = "400", description = "Error 400",
+                    content =
+                    @Content(
+                            mediaType = "text/error-message",
+                            schema = @Schema(implementation = String.class),
+                            examples = @ExampleObject(value = "유효한 이메일 형식을 입력하세요")
+                    )) //유효한 이메일 형식을 입력하세요.
     })
     @PostMapping("/request")
     public ResponseEntity<String> sendMessage(@RequestBody @Valid EmailRequestDto emailRequestDto) {
@@ -43,8 +61,20 @@ public class EmailSendController {
     @Operation(summary = "이메일 인증 검사 요청",
             description = "해당 이메일과 인증번호가 일치하면 통과합니다.")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Success"), //인증 번호가 확인되었습니다.
-            @ApiResponse(responseCode = "404", description = "Error 404") //해당 메일로 인증 코드가 전송된 기록이 없습니다
+            @ApiResponse(responseCode = "200", description = "Success",
+                    content =
+                    @Content(
+                            mediaType = "text/success-message",
+                            schema = @Schema(implementation = String.class),
+                            examples = @ExampleObject(value = "인증 번호가 확인되었습니다")
+                    )), //인증 번호가 확인되었습니다.
+            @ApiResponse(responseCode = "404", description = "Error 404",
+                    content =
+                    @Content(
+                            mediaType = "text/error-message",
+                            schema = @Schema(implementation = String.class),
+                            examples = @ExampleObject(value = "해당 메일로 인증 코드가 전송된 기록이 없습니다")
+                    )) //해당 메일로 인증 코드가 전송된 기록이 없습니다
     })
     @PostMapping("/confirm")
     public ResponseEntity<String> confirmVerificationCode(@RequestBody @Valid EmailVerificationDto emailVerificationDto) {
