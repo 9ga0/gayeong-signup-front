@@ -1,14 +1,14 @@
 spring:
   h2:
     console:
-      enabled:true
+      enabled: true
 
   application:
     name: gayeongsignup
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: ${CONNECTION_URL}?serverTimezone=UTC
+    url: ${CONNECTION_URL}?useSSL=false&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true
     username: ${CONNECTION_USERNAME}
     password: ${CONNECTION_PASSWORD}
 
@@ -46,7 +46,7 @@ spring:
     default-consumes-media-type: application/json;charset=UTF-8 #API가 소비하고 반환할 기본 미디어 타입 지정
     default-produces-media-type: application/json;charset=UTF-8
     swagger-ui:
-      path: / #Swagger UI에 접근할 경로설정
+      path: /swagger-ui.html #Swagger UI에 접근할 경로설정
       disable-swagger-default-url: true
       display-request-duration: true
       operations-sorter: alpha
