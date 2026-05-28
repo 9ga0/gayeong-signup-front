@@ -15,20 +15,24 @@ import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@Tag(name = "이메일 인증 모드", description = "email-verification")
+/*
+Post - / - 이메일 인증 요청 생성, 인증번호 메일 전송 -전체
+Patch - / - 이메일 인증 상태 변경, 인증번호 검증 - 전체
+ */
 
+@Tag(name = "이메일 인증 모드", description = "email-verification")
 @RestController
-@RequestMapping("/api/v1/email-verification")
+@RequestMapping("/api/v1/email-verifications")
 @ControllerAdvice
 @CrossOrigin
-public class EmailSendController {
+public class EmailVerificaitonController {
     private final MailServiceImpl mailServiceImpl;
 
-    public EmailSendController(MemberServiceImpl memberServiceImpl, MailServiceImpl mailServiceImpl) {
+    public EmailVerificaitonController(MemberServiceImpl memberServiceImpl, MailServiceImpl mailServiceImpl) {
         this.mailServiceImpl = mailServiceImpl;
     }
 
-    //이메일인증번호 전송
+    //Post - / - 이메일 인증 요청 생성, 인증번호 메일 전송 -전체
     @Operation(summary = "이메일 인증 검사 요청",
             description = "해당 이메일과 인증번호가 일치하면 통과합니다.")
     @ApiResponses({
@@ -47,7 +51,7 @@ public class EmailSendController {
                             examples = @ExampleObject(value = "유효한 이메일 형식을 입력하세요")
                     )) //유효한 이메일 형식을 입력하세요.
     })
-    @PostMapping("/request")
+    @PostMapping("/")
     public ResponseEntity<String> sendMessage(@RequestBody @Valid EmailRequestDto emailRequestDto) {
         System.out.println("이메일 인증번호 전송 요청이 들어옴 : " + emailRequestDto.email());
         mailServiceImpl.deleteEmailSendHistoryIfExists(emailRequestDto.email());
@@ -57,7 +61,7 @@ public class EmailSendController {
         return ResponseEntity.ok(result);
     }
 
-    //이메일 인증
+    //Patch - / - 이메일 인증 상태 변경, 인증번호 검증 - 전체
     @Operation(summary = "이메일 인증 검사 요청",
             description = "해당 이메일과 인증번호가 일치하면 통과합니다.")
     @ApiResponses({
@@ -76,7 +80,7 @@ public class EmailSendController {
                             examples = @ExampleObject(value = "해당 메일로 인증 코드가 전송된 기록이 없습니다")
                     )) //해당 메일로 인증 코드가 전송된 기록이 없습니다
     })
-    @PostMapping("/confirm")
+    @PatchMapping("/") //Patch 변경됨. 이메일 dto에 인증 상태 추가하여, 인증 상태를 업데이트할 수 있도록 수정 필요?
     public ResponseEntity<String> confirmVerificationCode(@RequestBody @Valid EmailVerificationDto emailVerificationDto) {
         System.out.println("이메일 인증번호 검증 : " + emailVerificationDto.email());
         String result = mailServiceImpl.confirmVerificationCode(emailVerificationDto.email(), emailVerificationDto.verificationCode());
