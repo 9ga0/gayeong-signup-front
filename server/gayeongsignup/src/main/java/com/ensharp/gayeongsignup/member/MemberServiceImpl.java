@@ -15,7 +15,7 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     //@Transactional //조회만 할 경우 필요하지 않고, 삽입할 때에 필요?
-    public String join(SignupRequestDto signupRequestDto) {
+    public SignupRequestDto join(SignupRequestDto signupRequestDto) {
         if (memberRepository.existsByEmail(signupRequestDto.email())) {
             System.out.println("이미 있는 이메일 ->success"); //status:409
             //return "이미 사용 중인 이메일입니다.";
@@ -24,7 +24,7 @@ public class MemberServiceImpl implements MemberService {
         Member member = new Member.MemberBuilder(signupRequestDto).build();
         memberRepository.save(member);
         System.out.println("회원가입 정보 저장");
-        return "success";
+        return signupRequestDto;
     }
 
     @Override
