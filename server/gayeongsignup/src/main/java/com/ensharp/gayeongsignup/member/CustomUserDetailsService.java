@@ -1,0 +1,25 @@
+package com.ensharp.gayeongsignup.member;
+
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
+
+// UserDetails는 사용자 1명의 정보 (권한,비밀번호,계정상태 등)을 담음
+// USerDetailsService는 로그인 시 DB에서 유저를 찾는 역할을 함.
+
+@Service
+public class CustomUserDetailsService implements UserDetailsService {
+    private final MemberRepository memberRepository;
+
+    public CustomUserDetailsService(MemberRepository memberRepository) {
+        this.memberRepository = memberRepository;
+    }
+
+    @Override
+    public Member loadUserByUsername(String username) throws UsernameNotFoundException {
+        Member user = memberRepository.findByUsername(username)
+                .orElseThrow(()->new UsernameNotFoundException("사용자 없음"));
+        return user;
+    }
+
+}
