@@ -8,6 +8,9 @@ import Success from './pages/Success';
 import RegisterComponent from './pages/TestSignUp.jsx'
 import UserPostComponent from './pages/Test.jsx';
 import MyPage from './pages/MyPage.jsx';
+import AdminPage from './pages/AdminPage.jsx';
+import NotFound from './pages/NotFound.jsx';
+NotFound
 
 function App() {
   return (
@@ -15,15 +18,16 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={< LogIn />} />
-          {/* <Route path ="/log-in" element = {< LogIn/>}/> */}
+          <Route path ="/login" element = {< LogIn/>}/>
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/find-password" element={<FindPassword />} />
           <Route path="/change-password" element={<ChangePassword />} />
           <Route path="/success" element={<Success />} />
           <Route path="/test" element={<UserPostComponent />} />
           <Route path="/my-page" element={<MyPage />} />
+          <Route path="/admin-page" element={<AdminPage />} />
 
-          {/* <Route path="*" element={<NotFound />} /> */}
+          {<Route path="*" element={<NotFound />} />}
         </Routes>
       </BrowserRouter>
     </div>

@@ -5,18 +5,18 @@ import SubmitButton from '../components/common/SubmitButton';
 import '../components/common/Common.css'
 import { useLocation } from 'react-router-dom';
 
-export default function MyPage() {
+//'/admin-page'
+export default function AdminPage() {
     const location = useLocation();
-    const userInfo = location.state?.userInfo;
     return (
         <div className="background-gradient">
             <main className="card-box2" >
-                <CardTitle title="내정보" />
-                <div >
-                    <p className='sub-title'>이름: {userInfo.username}</p>
-                    <p className='sub-title'>이메일: {userInfo.email}</p>
-                    <p className='sub-title'>주소: {userInfo.streetAddress}</p>
-                    <p className='sub-title'>상세주소: {userInfo.detailAddress}</p>
+                <CardTitle title="관리자 페이지" />
+                <div className='gap-16px'>
+                    {/* 현재 링크페이지 notFound라고 뜸 */}
+                    <SubmitButton text="전체 유저 조회" link='/inquiry-all-user' isActive={true} />
+                    <SubmitButton text="특정 유저 삭제" link='/delete-user' isActive={true} />
+                    <SubmitButton text="이메일 인증 기록 전체 삭제" link='/delete-email-verification-history' isActive={true} />
                 </div>
                 <SubmitButton text="로그아웃" link='/login' isActive={true} />
 
