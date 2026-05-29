@@ -14,7 +14,7 @@ public class SwaggerConfig {
     @Bean
     public OpenAPI openAPI() {
         Server devServer = new Server();
-        devServer.setUrl("/http://43.201.165.33/"); // API 서버 설정
+        devServer.setUrl("/http://http://43.201.165.33:8080//"); // API 서버 설정
 
         Server prodServer = new Server();
         prodServer.setUrl("운영 URL"); // 운영서버에 따로 띄우기 위한 서버 추가 가능

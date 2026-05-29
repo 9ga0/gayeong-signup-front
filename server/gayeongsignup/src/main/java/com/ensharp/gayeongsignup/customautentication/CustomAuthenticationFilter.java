@@ -22,7 +22,7 @@ public class CustomAuthenticationFilter extends AbstractAuthenticationProcessing
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        LoginDto loginDto = objectMapper.readValue(request.getReader(), LoginDto.class);
+        LoginDto loginDto = objectMapper.readValue(request.getInputStream(), LoginDto.class);
 
 //        Member foundMember = memberRepository.findByEmailAndPassword(loginDto.email(), loginDto.password())
 //                .orElseThrow(() -> new CustomException(ErrorCode.INVALID_PASSWORD));

@@ -87,11 +87,11 @@ public class UserController {
                             examples = @ExampleObject(value = "이미 사용 중인 이메일입니다")
                     )) //이미 사용 중인 이메일입니다
     })
-    @PostMapping("/email-check")
-    public ResponseEntity<String> checkEmail(@RequestBody @Valid EmailRequestDto emailRequestDto) { //loginDto사용으로 변경 필요
-        System.out.println("이메일 중복 확인 요청이 들어옴 : " + emailRequestDto.email());
-        String result = mailServiceImpl.checkEmail(emailRequestDto.email());
-        return ResponseEntity.ok(result);
+    @GetMapping("/email-check")
+    public ResponseEntity<String> checkEmail(@RequestParam @Valid String email) { //loginDto사용으로 변경 필요
+        System.out.println("이메일 중복 확인 요청이 들어옴 : " + email);
+        String result = mailServiceImpl.checkEmail(email);
+        return ResponseEntity.ok(result); //200
     }
 
     //Patch - /me/password - 내 비밀번호 변경 - 로그인사용자

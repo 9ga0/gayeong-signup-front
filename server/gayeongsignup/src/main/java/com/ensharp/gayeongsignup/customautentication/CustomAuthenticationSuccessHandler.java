@@ -12,6 +12,8 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 //인증 성공 핸들러. 응답 값 반환
 //Rest API이기 떄문에 redirect 처리 하지 않고, response에 값 넣어줌.
@@ -22,9 +24,12 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
         Member user = (Member) authentication.getPrincipal();
+
+        Map<String, String> data = new HashMap<>();
+        data.put("username", user.getUsername());
+
         response.setStatus(HttpStatus.OK.value());
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-
-        objectMapper.writeValue(response.getWriter(),user);
+        objectMapper.writeValue(response.getWriter(),data);
     }
 }

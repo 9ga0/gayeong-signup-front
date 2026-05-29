@@ -55,11 +55,11 @@ public class SessionController {
                     )) //"비밀번호가 옳지 않습니다"
     })
     @PostMapping("")
-    public ResponseEntity<String> login(@RequestBody @Valid LoginDto loginDto, HttpSession session) { //
+    public ResponseEntity<String> login( HttpSession session) { //
         //세션 생성, service 불러와 로그인 로직 수행 및 이름 가져와 출력.
-        System.out.println("로그인 요청 들어옴: "+loginDto.email());
-        String username = memberServiceImpl.login(loginDto.email(), loginDto.password(),session);
-        return ResponseEntity.ok(username);//회원 이름을 출력
+//        System.out.println("로그인 요청 들어옴: "+loginDto.email());
+//        String username = memberServiceImpl.login(loginDto.email(), loginDto.password(),session);
+        return ResponseEntity.ok("로그인 성공적");//회원 이름을 출력
     }
 
     //Delete - /current - 현재 세션 삭제, 로그아웃 - 로그인 사용자

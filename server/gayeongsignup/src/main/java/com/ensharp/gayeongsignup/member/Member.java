@@ -5,11 +5,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /// 엔티티가 디티오를 알고있지 못하도록
 @Entity
@@ -30,7 +28,7 @@ public class Member implements UserDetails {
      ///상세주소 입력안해도 넘어갈수있어야
     private String detailAddress;
 
-    private String user_role; //권한: ROLE_ADMIN, ROLE_USER
+    private String userRole; //권한: ROLE_ADMIN, ROLE_USER
 
     private Member() {
     }
@@ -77,7 +75,7 @@ public class Member implements UserDetails {
     @Override //사용자의 권한 목록 반환
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-        authorities.add(new SimpleGrantedAuthority(user_role));
+        authorities.add(new SimpleGrantedAuthority(userRole));
         return authorities;
     }
 
@@ -102,8 +100,8 @@ public class Member implements UserDetails {
         return detailAddress;
     }
 
-    public String getUser_role(){
-        return user_role;
+    public String getUserRole(){
+        return userRole;
     }
 
     public void updatePassword(String newPassword) {

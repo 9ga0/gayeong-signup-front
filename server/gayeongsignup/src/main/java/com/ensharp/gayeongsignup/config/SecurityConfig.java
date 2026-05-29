@@ -43,8 +43,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.addAllowedOrigin("http://localhost:8080"); // 허용할 프론트엔드 origin 설정
-        configuration.addAllowedOrigin("http://localhost:5173");
+        configuration.addAllowedOrigin("http://localhost:5173"); // 허용할 프론트엔드 origin 설정
         configuration.addAllowedMethod("*"); // 모든 HTTP 메소드 허용
         configuration.addAllowedHeader("*"); // 모든 헤더 허용
         configuration.setAllowCredentials(true); // 쿠키 허용
@@ -58,16 +57,18 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http
+                .cors(cors -> cors.configurationSource(corsConfigurationSource())) // cors 설정 코드 추가
+                .csrf(csrf -> csrf.disable()) // 개발 단계에서는 CSRF 비활성화. 원래는 활성화
                 //개발 중 편의 설정
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/v1/users/me", "/api/v1/sessions/current").hasRole("USER")
-                        .requestMatchers("/admin").hasRole("ADMIN")
+//                        .requestMatchers("/api/v1/users/me", "/api/v1/sessions/current").hasRole("USER")
+//                        .requestMatchers("/api/v1/admin").hasRole("ADMIN")
                         .anyRequest().permitAll()
                 )
                 .addFilterBefore(ajaxAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling(config ->config
                         .authenticationEntryPoint(authenticationEntryPoint)
-                        .accessDeniedHandler(accessDeniedHandler))
+                        .accessDeniedHandler(accessDeniedHandler));
                 //로그인 페이지 설정.
 //                .formLogin(login -> login
 //                                .loginPage("http://localhost:8080/").permitAll()  // 커스텀 로그인 페이지
@@ -87,8 +88,7 @@ public class SecurityConfig {
 //                        .logoutSuccessUrl("/")
 //                        .permitAll()
 //                )
-                .csrf(csrf -> csrf.disable()) // 개발 단계에서는 CSRF 비활성화. 원래는 활성화
-                .cors(cors -> cors.configurationSource(corsConfigurationSource()));    // cors 설정 코드 추가
+
 
         return http.build();
     }

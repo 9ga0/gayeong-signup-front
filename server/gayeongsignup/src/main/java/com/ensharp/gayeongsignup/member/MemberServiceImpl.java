@@ -34,7 +34,7 @@ public class MemberServiceImpl implements MemberService {
         Member foundMember = memberRepository.findByEmailAndPassword(email, password)
                 .orElseThrow(() -> new CustomException(ErrorCode.INVALID_PASSWORD));
 
-        if (!foundMember.getPassword().equals(password)) {
+        if (foundMember==null || !foundMember.getPassword().equals(password)) {
             throw new CustomException(ErrorCode.INVALID_PASSWORD);
         }
 
