@@ -141,6 +141,7 @@ export default function EmailBox(props) {
     }
   }
   //이메일 중복검사api. 전송버튼 누르면 작동
+  //이메일 사용가능 여부 조회 api 연결
   const handleEmailCheck = async (e) => {
     e.preventDefault()
 
@@ -151,9 +152,9 @@ export default function EmailBox(props) {
     }
 
     try {
-      const response = await API.post(
+      const response = await API.get(
         '/api/v1/users/email-availability', {
-        email: registerParam.email,
+        params: { 'email': registerParam.email } 
       })
       console.log(response.status);
       console.log('사용 가능한 이메일입니다.');

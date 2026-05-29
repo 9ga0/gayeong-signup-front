@@ -38,7 +38,7 @@ export default function LogIn() {
       localStorage.setItem(LS_KEY_ID, email);
     }
 
-    console.log(email, ':', password);
+    //console.log(email, ':', password);
     try {
       const response = await API.post('/api/v1/sessions', {
         email: email,
