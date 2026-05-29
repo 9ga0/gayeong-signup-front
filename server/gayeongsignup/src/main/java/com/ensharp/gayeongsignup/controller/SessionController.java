@@ -1,13 +1,11 @@
 package com.ensharp.gayeongsignup.controller;
 
 
-import ch.qos.logback.core.model.Model;
 import com.ensharp.gayeongsignup.exception.CustomException;
 import com.ensharp.gayeongsignup.exception.ErrorCode;
 import com.ensharp.gayeongsignup.member.LoginDto;
 import com.ensharp.gayeongsignup.member.MemberServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -15,7 +13,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpSession;
-import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -80,7 +77,6 @@ public class SessionController {
     @DeleteMapping("/current")
     public ResponseEntity<String> logout(HttpSession session) {
         System.out.println("로그아웃, 세션 삭제 요청이 들어옴 : " + session.getId());
-        if (session==null) throw new CustomException(ErrorCode.INTERNAL_SERVER_ERROR);
         session.invalidate(); //세션 무효화
         System.out.println("로그아웃(세션 삭제) 성공");
         return ResponseEntity.ok("로그아웃 되었습니다");

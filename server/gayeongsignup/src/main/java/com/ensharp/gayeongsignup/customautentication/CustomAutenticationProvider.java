@@ -18,19 +18,19 @@ public class CustomAutenticationProvider implements AuthenticationProvider {
     public CustomAutenticationProvider(CustomUserDetailsService customUserDetailsService, PasswordEncoder passwordEncoder){
         this.userDetailsService=customUserDetailsService;
         this. passwordEncoder=passwordEncoder;
-    };
+    }
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String email= authentication.getName(); //name이지만 email이라고 생각
         String password = authentication.getCredentials().toString();
         //사용자 정보를 조회
-        Member user =(Member)userDetailsService.loadUserByUsername(email);
+        Member user =userDetailsService.loadUserByUsername(email);
         if(!passwordEncoder.matches(password,user.getPassword())){
             throw new BadCredentialsException("유효하지 않은 이메일 또는 패스워드.");
         }
         //인증 성공 시, authentication객체 리턴
-        UsernamePasswordAuthenticationToken authenticatedUser =null;
+        UsernamePasswordAuthenticationToken authenticatedUser ;
         authenticatedUser = new UsernamePasswordAuthenticationToken(user, password, user.getAuthorities());
         return authenticatedUser;
     }

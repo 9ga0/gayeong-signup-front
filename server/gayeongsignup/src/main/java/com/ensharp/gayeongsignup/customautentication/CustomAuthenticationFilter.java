@@ -13,7 +13,7 @@ import org.springframework.util.StringUtils;
 import java.io.IOException;
 
 public class CustomAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
-    private ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     //url과 일치할 경우 해당 필터가 동작.
     public CustomAuthenticationFilter(String defaultFilterProcessesUrl) {

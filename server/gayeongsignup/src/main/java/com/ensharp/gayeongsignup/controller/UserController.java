@@ -59,11 +59,10 @@ public class UserController {
                     ))
     })
     @PostMapping("/signup")
-    public ResponseEntity<SignupRequestDto> join(@RequestBody @Valid SignupRequestDto signupRequestDto) throws Exception {
+    public ResponseEntity<SignupRequestDto> join(@RequestBody @Valid SignupRequestDto signupRequestDto) {
         System.out.println("회원가입 요청이 들어옴 : " + signupRequestDto.email());
         SignupRequestDto result = memberServiceImpl.join(signupRequestDto); //리턴값은 바디로 출력됨
 
-        //if("success".equals(result)){
         //회원가입 성공시에만 동작. 그 전에 service에서 예외 던져짐
         return ResponseEntity.ok(result);
     }

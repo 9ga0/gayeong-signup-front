@@ -28,7 +28,7 @@ Patch - / - 이메일 인증 상태 변경, 인증번호 검증 - 전체
 public class EmailVerificaitonController {
     private final MailServiceImpl mailServiceImpl;
 
-    public EmailVerificaitonController(MemberServiceImpl memberServiceImpl, MailServiceImpl mailServiceImpl) {
+    public EmailVerificaitonController(MailServiceImpl mailServiceImpl) {
         this.mailServiceImpl = mailServiceImpl;
     }
 

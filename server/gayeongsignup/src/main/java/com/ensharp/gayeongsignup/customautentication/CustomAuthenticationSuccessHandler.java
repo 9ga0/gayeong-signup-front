@@ -17,10 +17,10 @@ import java.io.IOException;
 //Rest API이기 떄문에 redirect 처리 하지 않고, response에 값 넣어줌.
 @Component
 public class CustomAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
-    private ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
-    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
         Member user = (Member) authentication.getPrincipal();
         response.setStatus(HttpStatus.OK.value());
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
