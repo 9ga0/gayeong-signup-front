@@ -1,14 +1,15 @@
-package com.ensharp.gayeongsignup.member;
+package com.ensharp.gayeongsignup.customautentication;
 
+import com.ensharp.gayeongsignup.member.Member;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+//입력받은 정보 확인 인증 성공 시, 토큰 생성
 @Component
 public class CustomAutenticationProvider implements AuthenticationProvider {
     private final CustomUserDetailsService userDetailsService;
@@ -24,7 +25,7 @@ public class CustomAutenticationProvider implements AuthenticationProvider {
         String email= authentication.getName(); //name이지만 email이라고 생각
         String password = authentication.getCredentials().toString();
         //사용자 정보를 조회
-        UserDetails user =userDetailsService.loadUserByUsername(email);
+        Member user =(Member)userDetailsService.loadUserByUsername(email);
         if(!passwordEncoder.matches(password,user.getPassword())){
             throw new BadCredentialsException("유효하지 않은 이메일 또는 패스워드.");
         }

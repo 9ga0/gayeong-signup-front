@@ -1,5 +1,7 @@
-package com.ensharp.gayeongsignup.member;
+package com.ensharp.gayeongsignup.customautentication;
 
+import com.ensharp.gayeongsignup.member.Member;
+import com.ensharp.gayeongsignup.member.MemberRepository;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -16,8 +18,8 @@ public class CustomUserDetailsService implements UserDetailsService {
     }
 
     @Override
-    public Member loadUserByUsername(String username) throws UsernameNotFoundException {
-        Member user = memberRepository.findByUsername(username)
+    public Member loadUserByUsername(String email) throws UsernameNotFoundException {
+        Member user = memberRepository.findByUsername(email)
                 .orElseThrow(()->new UsernameNotFoundException("사용자 없음"));
         return user;
     }
