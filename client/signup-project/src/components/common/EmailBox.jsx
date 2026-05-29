@@ -8,7 +8,7 @@ import axios from 'axios';
 //import sendMail from '../../utils/API.jsx';
 import API from '../../services/API.jsx';
 //import EmailPostApi from '../../services/EmailApi.jsx';
-//(api함수 따로 services에 파서 어떻게 하는지 모르겟다..)
+//(api함수 따로 services에 파서 할 수 있을 것 같은데 일단 다른거부터 하겠습니다)
 
 export default function EmailBox(props) {
   const initState = {
