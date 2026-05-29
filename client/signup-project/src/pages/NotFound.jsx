@@ -5,20 +5,17 @@ import SubmitButton from '../components/common/SubmitButton';
 import '../components/common/Common.css'
 import { useLocation } from 'react-router-dom';
 
-export default function MyPage() {
+//페이지 못찾을때 띄울 페이지
+export default function NotFound() {
     const location = useLocation();
-    const userInfo = location.state?.userInfo;
     return (
         <div className="background-gradient">
             <main className="card-box2" >
-                <CardTitle title="내정보" />
+                <CardTitle title="페이지를 못 찾았습니다!" />
                 <div >
-                    <p className='sub-title'>이름: {userInfo.username}</p>
-                    <p className='sub-title'>이메일: {userInfo.email}</p>
-                    <p className='sub-title'>주소: {userInfo.streetAddress}</p>
-                    <p className='sub-title'>상세주소: {userInfo.detailAddress}</p>
+                    <p className='sub-title'>ERROR ERROR ERROR</p>
                 </div>
-                <SubmitButton text="로그아웃" link='/login' isActive={true} />
+                <SubmitButton text="로그인화면으로 돌아가기" link='/login' isActive={true} />
 
             </main>
         </div>

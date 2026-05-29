@@ -8,7 +8,7 @@ import axios from 'axios';
 //import sendMail from '../../utils/API.jsx';
 import API from '../../services/API.jsx';
 //import EmailPostApi from '../../services/EmailApi.jsx';
-//(api함수 따로 services에 파서 어떻게 하는지 모르겟다..)
+//(api함수 따로 services에 파서 할 수 있을 것 같은데 일단 다른거부터 하겠습니다)
 
 export default function EmailBox(props) {
   const initState = {
@@ -97,7 +97,7 @@ export default function EmailBox(props) {
     e.preventDefault()
     try {
       const response = await API.post(
-        '/api/v1/email-verification/request',
+        '/api/v1/email-verifications',
         { email: registerParam.email });
       console.log(response.data); //인증 번호가 발송되었습니다
       console.log(response.status); //200
@@ -120,8 +120,8 @@ export default function EmailBox(props) {
   const handleEqual = async (e, number) => {
     e.preventDefault()
     try {
-      const response = await API.post(
-        '/api/v1/email-verification/confirm', {
+      const response = await API.patch(
+        '/api/v1/email-verifications', {
         email: registerParam.email,
         verificationCode: number,
       });
@@ -141,6 +141,7 @@ export default function EmailBox(props) {
     }
   }
   //이메일 중복검사api. 전송버튼 누르면 작동
+  //이메일 사용가능 여부 조회 api 연결
   const handleEmailCheck = async (e) => {
     e.preventDefault()
 
@@ -151,10 +152,11 @@ export default function EmailBox(props) {
     }
 
     try {
-      const response = await API.post(
-        '/api/v1/auth/email-check', {
-        email: registerParam.email,
+      const response = await API.get(
+        '/api/v1/users/email-availability', {
+        params: { 'email': registerParam.email } 
       })
+      console.log(response.status);
       console.log('사용 가능한 이메일입니다.');
       handlePost(e);
     } catch (error) {

@@ -1,11 +1,18 @@
 package com.ensharp.gayeongsignup.member;
 
 import jakarta.persistence.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 /// 엔티티가 디티오를 알고있지 못하도록
 @Entity
 @Table(name = "members")///members 또는 users
-public class Member {
+public class Member implements UserDetails {
     //    @Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
 //    private Long id;
@@ -20,6 +27,8 @@ public class Member {
     private String streetAddress;
      ///상세주소 입력안해도 넘어갈수있어야
     private String detailAddress;
+
+    private String userRole; //권한: ROLE_ADMIN, ROLE_USER
 
     private Member() {
     }
@@ -63,6 +72,18 @@ public class Member {
         return email;
     }
 
+    @Override //사용자의 권한 목록 반환
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+        authorities.add(new SimpleGrantedAuthority(userRole));
+        return authorities;
+    }
+
+    @Override
+    public boolean isEnabled(){
+        return this.isEnabled(); //사용자 활성화 여부 반환
+    }
+
     public String getPassword() {
         return password;
     }
@@ -77,6 +98,10 @@ public class Member {
 
     public String getDetailAddress() {
         return detailAddress;
+    }
+
+    public String getUserRole(){
+        return userRole;
     }
 
     public void updatePassword(String newPassword) {
