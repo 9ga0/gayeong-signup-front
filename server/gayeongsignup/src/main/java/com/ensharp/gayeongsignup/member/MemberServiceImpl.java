@@ -2,6 +2,7 @@ package com.ensharp.gayeongsignup.member;
 
 import com.ensharp.gayeongsignup.exception.CustomException;
 import com.ensharp.gayeongsignup.exception.ErrorCode;
+import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -28,10 +29,16 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public String login(String email, String password) {
+    @Transactional
+    public String login(String email, String password, HttpSession session) {
         Member foundMember = memberRepository.findByEmailAndPassword(email, password)
-        .orElseThrow(() ->  new CustomException(ErrorCode.INVALID_PASSWORD));
+                .orElseThrow(() -> new CustomException(ErrorCode.INVALID_PASSWORD));
 
+        if (!foundMember.getPassword().equals(password)) {
+            throw new CustomException(ErrorCode.INVALID_PASSWORD);
+        }
+
+        session.setAttribute("LoginUser", foundMember.getUsername()); //세션에 저장
         System.out.println("로그인 성공!");
         return foundMember.getUsername();
         //return "비밀번호가 옳지 않습니다.";
@@ -39,10 +46,10 @@ public class MemberServiceImpl implements MemberService {
 
     //비밀번호 변경 시에 성공/실패 점검 및 반환
     @Transactional
-    ///하다가 오류나도 되돌릴수있게 해줌. db조회에도 필요할수있다.
+    @Override
     public String changePassword(String email, String newPassword) {
         Member foundMember = memberRepository.findByEmail(email)
-                .orElseThrow(() ->  new CustomException(ErrorCode.USER_NOT_FOUND));//"회원 못찾음"
+                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));//"회원 못찾음"
 
         //비밀번호 유효성검사도 프론트에 되어있지만 추가해야함?
 
@@ -51,6 +58,7 @@ public class MemberServiceImpl implements MemberService {
         return "success";
     }
 
+    @Override
     public SignupRequestDto getUserInfo(String email) {
         Member foundMember = memberRepository.findByEmail(email)
                 .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));

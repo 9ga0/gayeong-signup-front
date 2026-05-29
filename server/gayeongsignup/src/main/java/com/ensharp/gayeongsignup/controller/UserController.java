@@ -68,32 +68,6 @@ public class UserController {
         return ResponseEntity.ok(result);
     }
 
-    //로그인
-//    @Operation(summary = "로그인 요청",
-//            description = "회원가입되어있는 계정이면 로그인에 성공합니다.")
-//    @ApiResponses({
-//            @ApiResponse(responseCode = "200", description = "Success",
-//                    content =
-//                    @Content(
-//                            mediaType = "text/success-message",
-//                            schema = @Schema(implementation = String.class),
-//                            examples = @ExampleObject(value = "구가영")
-//                    )), //{username}
-//            @ApiResponse(responseCode = "401", description = "Error 401",
-//                    content =
-//                    @Content(
-//                            mediaType = "text/error-message",
-//                            schema = @Schema(implementation = String.class),
-//                            examples = @ExampleObject(value = "비밀번호가 옳지 않습니다")
-//                    )) //"비밀번호가 옳지 않습니다"
-//    })
-//    @PostMapping("/login")
-//    public ResponseEntity<String> login(@RequestBody @Valid LoginDto loginDto) { //loginDto사용으로 변경 필요
-//        System.out.println("로그인 요청이 들어옴 : " + loginDto.email());
-//        String result = memberServiceImpl.login(loginDto.email(), loginDto.password());
-//        return ResponseEntity.ok(result);
-//    }
-
     //Post 이메일 중복 검사
     //Get - /email-availability?email={email} - 이메일 사용 가능 여부 조회 - 전체
     @Operation(summary = "이메일 중복 검사 요청",
