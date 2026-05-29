@@ -40,7 +40,7 @@ export default function LogIn() {
 
     console.log(email, ':', password);
     try {
-      const response = await API.post('/api/v1/auth/login', {
+      const response = await API.post('/api/v1/sessions', {
         email: email,
         password: password
       })

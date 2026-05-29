@@ -97,7 +97,7 @@ export default function EmailBox(props) {
     e.preventDefault()
     try {
       const response = await API.post(
-        '/api/v1/email-verification/request',
+        '/api/v1/email-verifications',
         { email: registerParam.email });
       console.log(response.data); //인증 번호가 발송되었습니다
       console.log(response.status); //200
@@ -120,8 +120,8 @@ export default function EmailBox(props) {
   const handleEqual = async (e, number) => {
     e.preventDefault()
     try {
-      const response = await API.post(
-        '/api/v1/email-verification/confirm', {
+      const response = await API.patch(
+        '/api/v1/email-verifications', {
         email: registerParam.email,
         verificationCode: number,
       });
@@ -152,9 +152,10 @@ export default function EmailBox(props) {
 
     try {
       const response = await API.post(
-        '/api/v1/auth/email-check', {
+        '/api/v1/users/email-availability', {
         email: registerParam.email,
       })
+      console.log(response.status);
       console.log('사용 가능한 이메일입니다.');
       handlePost(e);
     } catch (error) {

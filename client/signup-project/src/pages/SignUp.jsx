@@ -88,7 +88,7 @@ export default function SignUp() {
       return; //새로고침? 값 초기화?
     }
     try {
-      const response = await API.post('/api/v1/auth/signup', {
+      const response = await API.post('/api/v1/users', {
         email: registerParam.email,
         password: registerParam.password,
         username: registerParam.userName,

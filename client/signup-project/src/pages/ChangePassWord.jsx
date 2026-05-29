@@ -23,7 +23,7 @@ export default function ChangePassword(props) {
         }
         try {
             const response = await API.patch(
-                '/api/v1/auth/password', {
+                '/api/v1/users/me/password', {
                 email: data.email,
                 password: password
             });

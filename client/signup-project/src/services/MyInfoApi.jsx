@@ -4,7 +4,7 @@ import API from "./API";
 export const getMyInfo = async (email) => {
   try {
     const response = await API.get(
-      '/api/v1/auth/me', { params: { 'email': email } }
+      '/api/v1/users/me', { params: { 'email': email } }
     );
     console.log('api 연결 성공');
     console.log(response.data);

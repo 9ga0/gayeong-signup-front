@@ -7,7 +7,7 @@ export const EmailPostApi = async (e) => {
     e.preventDefault();
     try {
         const response = await API.post(
-            '/api/v1/email-verification/request');
+            '/api/v1/email-verifications');
 
         console.log(response.data);
     } catch (error) {
