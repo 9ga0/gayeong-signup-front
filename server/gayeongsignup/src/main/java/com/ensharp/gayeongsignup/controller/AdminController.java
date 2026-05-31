@@ -1,5 +1,8 @@
 package com.ensharp.gayeongsignup.controller;
 
+import com.ensharp.gayeongsignup.emailsend.EmailRepository;
+import com.ensharp.gayeongsignup.exception.CustomException;
+import com.ensharp.gayeongsignup.exception.ErrorCode;
 import com.ensharp.gayeongsignup.member.MemberRepository;
 import com.ensharp.gayeongsignup.member.MemberServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
@@ -28,10 +31,12 @@ Delete - /email-verifications - 이메일 인증 기록 전체 삭제
 @CrossOrigin
 public class AdminController {
     private final MemberRepository memberRepository;
+    private final EmailRepository emailRepository;
     private final MemberServiceImpl memberServiceImpl;
 
-    public AdminController(MemberRepository memberRepository, MemberServiceImpl memberServiceImpl) {
+    public AdminController(MemberRepository memberRepository, EmailRepository emailRepository, MemberServiceImpl memberServiceImpl) {
         this.memberRepository = memberRepository;
+        this.emailRepository = emailRepository;
         this.memberServiceImpl = memberServiceImpl;
     }
 
@@ -45,7 +50,7 @@ public class AdminController {
                     description = "Success",
                     content =
                     @Content(
-                            mediaType = "text/success-message",
+                            mediaType = "text/plain",
                             schema = @Schema(implementation = String.class),
                             examples = @ExampleObject(value = "해당 회원 정보를 삭제했습니다")
                     )
@@ -59,12 +64,32 @@ public class AdminController {
         System.out.println("회원정보 삭제 요청이 들어옴 : " + email);
         if (memberRepository.existsByEmail(email)) { //회원 존재하면 해당 회원 삭제
             memberRepository.deleteByEmail(email);
+            System.out.println("회원 삭제 성공");
+            return ResponseEntity.ok("해당 회원 정보를 삭제했습니다");
         }
-        System.out.println("회원 삭제 성공");
-        return ResponseEntity.ok("success");
+        throw new CustomException(ErrorCode.USER_NOT_FOUND);
     }
 
     //Delete - /email-verifications - 이메일 인증 기록 전체 삭제
-
+    @ApiResponses({
+            @ApiResponse(responseCode = "200",
+                    description = "Success",
+                    content =
+                    @Content(
+                            mediaType = "text/plain",
+                            schema = @Schema(implementation = String.class),
+                            examples = @ExampleObject(value = "모든 이메일 인증 기록을 삭제했습니다")
+                    )
+            )
+    })
+    @Transactional
+    @Operation(summary = "이메일 인증 기록 전체 삭제", description = "이메일 인증 기록을 전체 삭제합니다.")
+    @DeleteMapping("/email-verifications")
+    public ResponseEntity<String> deleteEmail() {
+        System.out.println("이메일 인증 기록 전체 삭제 요청이 들어옴 : ");
+        emailRepository.deleteAll();
+        System.out.println("전체 삭제 성공");
+        return ResponseEntity.ok("모든 이메일 인증 기록을 삭제했습니다");
+    }
 
 }

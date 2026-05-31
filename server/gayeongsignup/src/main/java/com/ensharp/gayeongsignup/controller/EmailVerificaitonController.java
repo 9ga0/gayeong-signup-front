@@ -28,62 +28,62 @@ Patch - / - 이메일 인증 상태 변경, 인증번호 검증 - 전체
 public class EmailVerificaitonController {
     private final MailServiceImpl mailServiceImpl;
 
-    public EmailVerificaitonController(MemberServiceImpl memberServiceImpl, MailServiceImpl mailServiceImpl) {
+    public EmailVerificaitonController(MailServiceImpl mailServiceImpl) {
         this.mailServiceImpl = mailServiceImpl;
     }
 
     //Post - / - 이메일 인증 요청 생성, 인증번호 메일 전송 -전체
-    @Operation(summary = "이메일 인증 검사 요청",
-            description = "해당 이메일과 인증번호가 일치하면 통과합니다.")
+    @Operation(summary = "이메일 인증 전송 요청",
+            description = "해당 이메일로 인증번호 메일을 전송합니다.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Success",
                     content =
                     @Content(
-                            mediaType = "text/success-message",
+                            mediaType = "text/plain",
                             schema = @Schema(implementation = String.class),
                             examples = @ExampleObject(value = "인증 번호가 발송되었습니다")
                     )), //인증 번호가 발송되었습니다.
             @ApiResponse(responseCode = "400", description = "Error 400",
                     content =
                     @Content(
-                            mediaType = "text/error-message",
+                            mediaType = "text/plain",
                             schema = @Schema(implementation = String.class),
                             examples = @ExampleObject(value = "유효한 이메일 형식을 입력하세요")
                     )) //유효한 이메일 형식을 입력하세요.
     })
-    @PostMapping("/")
+    @PostMapping("")
     public ResponseEntity<String> sendMessage(@RequestBody @Valid EmailRequestDto emailRequestDto) {
         System.out.println("이메일 인증번호 전송 요청이 들어옴 : " + emailRequestDto.email());
         mailServiceImpl.deleteEmailSendHistoryIfExists(emailRequestDto.email());
 
         String result = mailServiceImpl.sendTextEmail(emailRequestDto.email());
         //위에서 예외발생하지 않았으면 아래 실행됨
-        return ResponseEntity.ok(result);
+        return ResponseEntity.ok("인증 번호가 발송되었습니다");
     }
 
     //Patch - / - 이메일 인증 상태 변경, 인증번호 검증 - 전체
-    @Operation(summary = "이메일 인증 검사 요청",
-            description = "해당 이메일과 인증번호가 일치하면 통과합니다.")
+    @Operation(summary = "이메일 인증번호 검증 요청",
+            description = "해당 이메일과 인증번호가 일치하면 통과합니다.") //설명 수정하기..
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Success",
                     content =
                     @Content(
-                            mediaType = "text/success-message",
+                            mediaType = "text/plain",
                             schema = @Schema(implementation = String.class),
                             examples = @ExampleObject(value = "인증 번호가 확인되었습니다")
                     )), //인증 번호가 확인되었습니다.
             @ApiResponse(responseCode = "404", description = "Error 404",
                     content =
                     @Content(
-                            mediaType = "text/error-message",
+                            mediaType = "text/plain",
                             schema = @Schema(implementation = String.class),
                             examples = @ExampleObject(value = "해당 메일로 인증 코드가 전송된 기록이 없습니다")
                     )) //해당 메일로 인증 코드가 전송된 기록이 없습니다
     })
-    @PatchMapping("/") //Patch 변경됨. 이메일 dto에 인증 상태 추가하여, 인증 상태를 업데이트할 수 있도록 수정 필요?
+    @PatchMapping("") //Patch 변경됨. 이메일 dto에 인증 상태 추가하여, 인증 상태를 업데이트할 수 있도록 수정 필요?
     public ResponseEntity<String> confirmVerificationCode(@RequestBody @Valid EmailVerificationDto emailVerificationDto) {
         System.out.println("이메일 인증번호 검증 : " + emailVerificationDto.email());
         String result = mailServiceImpl.confirmVerificationCode(emailVerificationDto.email(), emailVerificationDto.verificationCode());
-        return ResponseEntity.ok(result);
+        return ResponseEntity.ok("인증 번호가 확인되었습니다");
     }
 }

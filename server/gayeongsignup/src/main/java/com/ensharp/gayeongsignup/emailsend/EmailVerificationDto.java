@@ -14,12 +14,14 @@ public record EmailVerificationDto(
         String email,
         @Schema(description = "인증번호", example = "123456")
         @NotBlank(message = "인증 번호를 입력해 주세요")
-        String verificationCode
+        String verificationCode,
+        boolean isAuthenticated
 ) {
     public EmailVerificationDto(EmailVerification entity) { //생성자
         this(
                 entity.getEmail(),
-                entity.getVerificationCode()
+                entity.getVerificationCode(),
+                entity.getIsAuthenticated()
         );
     }
 }

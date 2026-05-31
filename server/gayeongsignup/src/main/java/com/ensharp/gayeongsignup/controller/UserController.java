@@ -53,44 +53,17 @@ public class UserController {
             @ApiResponse(responseCode = "409", description = "Error 409",
                     content =
                     @Content(
-                            mediaType = "text/error-message",
+                            mediaType = "text/plain",
                             schema = @Schema(implementation = String.class),
                             examples = @ExampleObject(value = "이미 사용 중인 이메일입니다")
                     ))
     })
-    @PostMapping("/signup")
-    public ResponseEntity<SignupRequestDto> join(@RequestBody @Valid SignupRequestDto signupRequestDto) throws Exception {
+    @PostMapping("")
+    public ResponseEntity<SignupRequestDto> join(@RequestBody @Valid SignupRequestDto signupRequestDto) {
         System.out.println("회원가입 요청이 들어옴 : " + signupRequestDto.email());
         SignupRequestDto result = memberServiceImpl.join(signupRequestDto); //리턴값은 바디로 출력됨
 
-        //if("success".equals(result)){
         //회원가입 성공시에만 동작. 그 전에 service에서 예외 던져짐
-        return ResponseEntity.ok(result);
-    }
-
-    //로그인
-    @Operation(summary = "로그인 요청",
-            description = "회원가입되어있는 계정이면 로그인에 성공합니다.")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Success",
-                    content =
-                    @Content(
-                            mediaType = "text/success-message",
-                            schema = @Schema(implementation = String.class),
-                            examples = @ExampleObject(value = "구가영")
-                    )), //{username}
-            @ApiResponse(responseCode = "401", description = "Error 401",
-                    content =
-                    @Content(
-                            mediaType = "text/error-message",
-                            schema = @Schema(implementation = String.class),
-                            examples = @ExampleObject(value = "비밀번호가 옳지 않습니다")
-                    )) //"비밀번호가 옳지 않습니다"
-    })
-    @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody @Valid LoginDto loginDto) { //loginDto사용으로 변경 필요
-        System.out.println("로그인 요청이 들어옴 : " + loginDto.email());
-        String result = memberServiceImpl.login(loginDto.email(), loginDto.password());
         return ResponseEntity.ok(result);
     }
 
@@ -102,23 +75,23 @@ public class UserController {
             @ApiResponse(responseCode = "200", description = "Success",
                     content =
                     @Content(
-                            mediaType = "text/success-message",
+                            mediaType = "text/plain", /// 정해진 값이 있다. 커스텀XX
                             schema = @Schema(implementation = String.class),
                             examples = @ExampleObject(value = "사용 가능한 이메일입니다")
                     )), //사용 가능한 이메일입니다
             @ApiResponse(responseCode = "409", description = "Error 409",
                     content =
                     @Content(
-                            mediaType = "text/error-message",
+                            mediaType = "text/plain",
                             schema = @Schema(implementation = String.class),
                             examples = @ExampleObject(value = "이미 사용 중인 이메일입니다")
                     )) //이미 사용 중인 이메일입니다
     })
-    @PostMapping("/email-check")
-    public ResponseEntity<String> checkEmail(@RequestBody @Valid EmailRequestDto emailRequestDto) { //loginDto사용으로 변경 필요
-        System.out.println("이메일 중복 확인 요청이 들어옴 : " + emailRequestDto.email());
-        String result = mailServiceImpl.checkEmail(emailRequestDto.email());
-        return ResponseEntity.ok(result);
+    @GetMapping("/email-availability")
+    public ResponseEntity<String> checkEmail(@RequestParam @Valid String email) { //loginDto사용으로 변경 필요
+        System.out.println("이메일 중복 확인 요청이 들어옴 : " + email);
+        String result = mailServiceImpl.checkEmail(email);
+        return ResponseEntity.ok(result); //200
     }
 
     //Patch - /me/password - 내 비밀번호 변경 - 로그인사용자
@@ -128,7 +101,7 @@ public class UserController {
             @ApiResponse(responseCode = "204", description = "Success",
                     content =
                     @Content(
-                            mediaType = "text/success-message",
+                            mediaType = "text/plain",
                             schema = @Schema(implementation = String.class),
                             examples = @ExampleObject(value = "비밀번호가 변경되었습니다")
                     )) //
@@ -148,7 +121,7 @@ public class UserController {
             @ApiResponse(responseCode = "409", description = "Error 409",
                     content =
                     @Content(
-                            mediaType = "text/error-message",
+                            mediaType = "text/plain",
                             schema = @Schema(implementation = String.class),
                             examples = @ExampleObject(value = "존재하지 않는 회원입니다")
                     )

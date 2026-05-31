@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.UnsupportedEncodingException;
 
-@Service
+@Service //빈으로 등록 안해도됨.
 public interface MailService {
 
     String sendTextEmail(String email) throws UnsupportedEncodingException;
