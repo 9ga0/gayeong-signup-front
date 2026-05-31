@@ -23,11 +23,12 @@ public class Member implements UserDetails {
     private String password;
     @Column(nullable = false)
     private String username;
-    @Column(nullable = false)
+    @Column(nullable = false,name="street_address")
     private String streetAddress;
      ///상세주소 입력안해도 넘어갈수있어야
+    @Column(name="detail_address")
     private String detailAddress;
-
+    @Column(name="user_role")
     private String userRole; //권한: ROLE_ADMIN, ROLE_USER
 
     private Member() {
@@ -39,6 +40,9 @@ public class Member implements UserDetails {
         this.username = builder.username;
         this.streetAddress = builder.streetAddress;
         this.detailAddress = builder.detailAddress;
+        if (builder.email.equals("koo050803@gmail.com"))
+            this.userRole="ROLE_ADMIN";
+        else this.userRole="ROLE_USER";
     }
 
     public static class MemberBuilder {
@@ -75,13 +79,14 @@ public class Member implements UserDetails {
     @Override //사용자의 권한 목록 반환
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-        authorities.add(new SimpleGrantedAuthority(userRole));
+        String role = (userRole != null) ? userRole : "ROLE_USER";
+        authorities.add(new SimpleGrantedAuthority(role));
         return authorities;
     }
 
     @Override
     public boolean isEnabled(){
-        return this.isEnabled(); //사용자 활성화 여부 반환
+        return true; //사용자 활성화 여부 반환
     }
 
     public String getPassword() {
