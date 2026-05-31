@@ -39,7 +39,7 @@ export default function UserPostComponent() {
   const handleSubmit = async (e) => {
     console.log("handleSubmit() 호출");
     e.preventDefault();
-    console.log("email : ", formData.email);
+    //console.log("email : ", formData.email);
     if (formData.email === "") {
       alert("이메일을 입력해주세요.");
       return false;

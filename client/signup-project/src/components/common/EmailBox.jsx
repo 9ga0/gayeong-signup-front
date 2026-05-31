@@ -84,7 +84,7 @@ export default function EmailBox(props) {
       [name]: error
     })
     if (isSend && name === 'verification') {
-      console.log(e.target.value);
+      //console.log(e.target.value);
       handleEqual(e, e.target.value);
     }
 
