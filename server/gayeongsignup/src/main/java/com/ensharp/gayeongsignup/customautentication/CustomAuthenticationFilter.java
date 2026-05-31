@@ -17,15 +17,12 @@ public class CustomAuthenticationFilter extends AbstractAuthenticationProcessing
 
     //url과 일치할 경우 해당 필터가 동작.
     public CustomAuthenticationFilter(String defaultFilterProcessesUrl) {
-        super(defaultFilterProcessesUrl); // "/api/login" 를 넘겨받고 있음
+        super(defaultFilterProcessesUrl); // "/api/v1/sessions" 을 넘겨받고 있음
     }
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        LoginDto loginDto = objectMapper.readValue(request.getInputStream(), LoginDto.class);
-
-//        Member foundMember = memberRepository.findByEmailAndPassword(loginDto.email(), loginDto.password())
-//                .orElseThrow(() -> new CustomException(ErrorCode.INVALID_PASSWORD));
+        LoginDto loginDto = objectMapper.readValue(request.getInputStream(), LoginDto.class); //응답json값을 LoginDto에 매핑
 
         // 아이디, 비밀번호값이 없으면 커스텀 에러던지기
         if(!StringUtils.hasLength(loginDto.email())) {
@@ -42,5 +39,6 @@ public class CustomAuthenticationFilter extends AbstractAuthenticationProcessing
         //manager에게 토큰 넘겨주어서 인증처리 맡김
         Authentication authentication = getAuthenticationManager().authenticate(token);
         return authentication;
+        //왜 반환? 인증 정보 누락되지 않게 하기 위해. & 성공핸들러에서 사용됨.
     }
 }

@@ -55,7 +55,7 @@ public class SessionController {
                     )) //"비밀번호가 옳지 않습니다"
     })
     @PostMapping("")
-    public ResponseEntity<String> login( HttpSession session) { //
+    public ResponseEntity<String> login( HttpSession session) { /// 로직수정
         //세션 생성, service 불러와 로그인 로직 수행 및 이름 가져와 출력.
 //        System.out.println("로그인 요청 들어옴: "+loginDto.email());
 //        String username = memberServiceImpl.login(loginDto.email(), loginDto.password(),session);
@@ -69,7 +69,7 @@ public class SessionController {
             @ApiResponse(responseCode = "200", description = "Success",
                     content =
                     @Content(
-                            mediaType = "text/success-message",
+                            mediaType = "text/plain",
                             schema = @Schema(implementation = String.class),
                             examples = @ExampleObject(value = "로그아웃 되었습니다")
                     )), //로그아웃 되었습니다
@@ -89,14 +89,14 @@ public class SessionController {
             @ApiResponse(responseCode = "200", description = "Success",
                     content =
                     @Content(
-                            mediaType = "text/success-message",
+                            mediaType = "text/plain",
                             schema = @Schema(implementation = String.class),
                             examples = @ExampleObject(value = "구가영")
                     )), //{username}
             @ApiResponse(responseCode = "401", description = "Error 401",
                     content =
                     @Content(
-                            mediaType = "text/error-message",
+                            mediaType = "text/plain",
                             schema = @Schema(implementation = String.class),
                             examples = @ExampleObject(value = "로그인되어 있지 않습니다")
                     )), //로그인되어 있지 않습니다

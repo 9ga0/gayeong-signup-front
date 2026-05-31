@@ -38,11 +38,13 @@ public class MailServiceImpl implements MailService {
     public void deleteEmailSendHistoryIfExists(String email) {
         if (emailRepository.existsByEmail(email)) {
             emailRepository.deleteByEmail(email);
+            System.out.println("이메일 삭제 완료");
         }
     }
     @Transactional
     public void saveSendEmail(String email, String authNumber) {
         EmailVerification emailEntity = new EmailVerification(email, authNumber);
+        System.out.println(emailEntity.getIsAuthenticated());
         emailRepository.save(emailEntity);
         System.out.println("이메일과 인증번호를 데이터베이스에도 저장");
     }
@@ -73,15 +75,18 @@ public class MailServiceImpl implements MailService {
         }
     }
 
+    @Transactional
     @Override
     public String confirmVerificationCode(String email, String verificationCode) {
         EmailVerification emailVerification = emailRepository.findByEmail(email)
                 .orElseThrow(()->new CustomException(ErrorCode.MAIL_NOT_FOUND));//"해당 이메일로 보낸적이 없다"
 
         if (emailVerification.getVerificationCode().equals(verificationCode)) {
+            emailVerification.updateIsAuthenticated(true);
             System.out.println("인증번호 일치");
             return "success";
         } else {
+            emailVerification.updateIsAuthenticated(false);
             System.out.println("인증번호 불일치");
             throw new CustomException(ErrorCode.INCORRECT_AUTH_NUMBER);
             //return "fail";

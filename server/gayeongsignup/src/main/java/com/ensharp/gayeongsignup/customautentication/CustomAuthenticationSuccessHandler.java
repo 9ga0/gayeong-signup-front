@@ -23,10 +23,12 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
+        //인증에 성공하면 Authentication 객체 안에 진짜 사용자 정보(Principal)가 담겨서 돌아옴.
         Member user = (Member) authentication.getPrincipal();
 
         Map<String, String> data = new HashMap<>();
         data.put("username", user.getUsername());
+        //로그인 성공시 유저이름을 http응답 바디에 넣음
 
         response.setStatus(HttpStatus.OK.value());
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
