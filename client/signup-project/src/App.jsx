@@ -10,7 +10,7 @@ import UserPostComponent from './pages/Test.jsx';
 import MyPage from './pages/MyPage.jsx';
 import AdminPage from './pages/AdminPage.jsx';
 import NotFound from './pages/NotFound.jsx';
-NotFound
+import Unauthorized from './pages/UnauthorizedPage.jsx';
 
 function App() {
   return (
@@ -26,8 +26,9 @@ function App() {
           <Route path="/test" element={<UserPostComponent />} />
           <Route path="/my-page" element={<MyPage />} />
           <Route path="/admin-page" element={<AdminPage />} />
+          <Route path="/unauthorized" element={<Unauthorized />} />
 
-          {<Route path="*" element={<NotFound />} />}
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
     </div>

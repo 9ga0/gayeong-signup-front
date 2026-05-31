@@ -58,7 +58,7 @@ export default function LogIn() {
         setError('아이디 또는 비밀번호가 올바르지 않습니다');
         setIsAbleToLogin(false);
       }
-      console.error('signupUser에서 api 연결 실패:', error.message);
+      else console.error('loginUser에서 api 연결 실패:', error.message);
     }
   }
   const changeHandler = (e) => {
