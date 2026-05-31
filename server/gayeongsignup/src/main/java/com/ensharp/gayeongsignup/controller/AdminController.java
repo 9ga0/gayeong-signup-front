@@ -1,5 +1,7 @@
 package com.ensharp.gayeongsignup.controller;
 
+import com.ensharp.gayeongsignup.exception.CustomException;
+import com.ensharp.gayeongsignup.exception.ErrorCode;
 import com.ensharp.gayeongsignup.member.MemberRepository;
 import com.ensharp.gayeongsignup.member.MemberServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
@@ -59,9 +61,10 @@ public class AdminController {
         System.out.println("회원정보 삭제 요청이 들어옴 : " + email);
         if (memberRepository.existsByEmail(email)) { //회원 존재하면 해당 회원 삭제
             memberRepository.deleteByEmail(email);
+            System.out.println("회원 삭제 성공");
+            return ResponseEntity.ok("success");
         }
-        System.out.println("회원 삭제 성공");
-        return ResponseEntity.ok("success");
+        throw new CustomException(ErrorCode.USER_NOT_FOUND);
     }
 
     //Delete - /email-verifications - 이메일 인증 기록 전체 삭제
