@@ -2,6 +2,7 @@ package com.ensharp.gayeongsignup.member;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface MemberRepository extends JpaRepository<Member, String> {
@@ -16,4 +17,6 @@ public interface MemberRepository extends JpaRepository<Member, String> {
     public void deleteByEmail(String email);
 
     public Optional<Member> findByUsername(String username);
+
+    public List<Member> findAll();
 }

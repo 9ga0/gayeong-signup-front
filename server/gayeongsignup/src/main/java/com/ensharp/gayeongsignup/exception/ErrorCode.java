@@ -8,6 +8,7 @@ public enum ErrorCode {
     MAIL_NOT_FOUND(404, "해당 메일로 인증 코드가 전송된 기록이 없습니다"),
     INVALID_EMAIL(400, "유효한 이메일 형식을 입력하세요"),
     INVALID_LOGIN_SESSION(401,"로그인되어 있지 않습니다"),
+    UNAUTHORIZED(403, "권한이 없습니다"),
 
     //500 INTERNAL SERVER ERROR
     INTERNAL_SERVER_ERROR(500,"서버 에러입니다."); /// 고치기

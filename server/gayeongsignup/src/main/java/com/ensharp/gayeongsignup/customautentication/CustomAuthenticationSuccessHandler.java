@@ -25,11 +25,26 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
         //인증에 성공하면 Authentication 객체 안에 진짜 사용자 정보(Principal)가 담겨서 돌아옴.
         Member user = (Member) authentication.getPrincipal();
+        String userRole = user.getUserRole();
+        String targetUrl = "/my-page"; //기본 url
+
+        System.out.println("로그인 성공 핸들러 동작");
 
         Map<String, String> data = new HashMap<>();
-        data.put("username", user.getUsername());
+        if (user.getEmail().equals("koo050803@gmail.com")){ //관리자 이메일 하드코딩
+            /// 추후 관리자 repository 파야 할듯
+            data.put("username", user.getUsername());
+            data.put("role", user.getUserRole()); 
+            targetUrl="/admin-page"; //admin일떄 이동할 프론트url
+            //내정보 페이지로 이동
+        }else{ //유저 계정으로 로그인했을때
+            data.put("username", user.getUsername());
+            data.put("role", user.getUserRole());
+            targetUrl="/admin-page"; //admin일떄 이동할 프론트url
+            //관리자 페이지로 이동한다.
+        }
+        data.put("redirectUrl", targetUrl);
         //로그인 성공시 유저이름을 http응답 바디에 넣음
-
         response.setStatus(HttpStatus.OK.value());
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         objectMapper.writeValue(response.getWriter(),data);

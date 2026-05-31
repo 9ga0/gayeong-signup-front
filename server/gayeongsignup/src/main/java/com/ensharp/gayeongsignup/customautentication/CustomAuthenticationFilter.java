@@ -6,6 +6,7 @@ import com.ensharp.gayeongsignup.member.LoginDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 import org.springframework.util.StringUtils;
@@ -32,7 +33,7 @@ public class CustomAuthenticationFilter extends AbstractAuthenticationProcessing
         }
 
         //인증 되지 않은 토큰 생성
-        CustomAuthenticationToken token = new CustomAuthenticationToken(
+        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
                 loginDto.email(), loginDto.password()
         );
 

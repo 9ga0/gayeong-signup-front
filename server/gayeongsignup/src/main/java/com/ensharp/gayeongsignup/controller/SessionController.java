@@ -12,9 +12,14 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.web.bind.annotation.*;
 
 /*
@@ -42,24 +47,25 @@ public class SessionController {
             @ApiResponse(responseCode = "200", description = "Success",
                     content =
                     @Content(
-                            mediaType = "text/success-message",
+                            mediaType = "text/plain",
                             schema = @Schema(implementation = String.class),
                             examples = @ExampleObject(value = "구가영")
                     )), //{username}
             @ApiResponse(responseCode = "401", description = "Error 401",
                     content =
                     @Content(
-                            mediaType = "text/error-message",
+                            mediaType = "text/plain",
                             schema = @Schema(implementation = String.class),
-                            examples = @ExampleObject(value = "비밀번호가 옳지 않습니다")
-                    )) //"비밀번호가 옳지 않습니다"
+                            examples = @ExampleObject(value = "사용자를 찾을 수 없습니다")
+                    )) //"사용자를 찾을 수 없습니다"
     })
     @PostMapping("")
-    public ResponseEntity<String> login( HttpSession session) { /// 로직수정
+    public ResponseEntity<String> login(@RequestBody @Valid LoginDto loginDto, HttpSession session) { /// 로직수정
         //세션 생성, service 불러와 로그인 로직 수행 및 이름 가져와 출력.
 //        System.out.println("로그인 요청 들어옴: "+loginDto.email());
 //        String username = memberServiceImpl.login(loginDto.email(), loginDto.password(),session);
-        return ResponseEntity.ok("로그인 성공적");//회원 이름을 출력
+//        return ResponseEntity.ok(username);//회원 이름을 출력
+        return ResponseEntity.ok("Spring Security 필터가 로그인 세션을 사용해서 처리합니다");
     }
 
     //Delete - /current - 현재 세션 삭제, 로그아웃 - 로그인 사용자
@@ -75,9 +81,14 @@ public class SessionController {
                     )), //로그아웃 되었습니다
     })
     @DeleteMapping("/current")
-    public ResponseEntity<String> logout(HttpSession session) {
-        System.out.println("로그아웃, 세션 삭제 요청이 들어옴 : " + session.getId());
-        session.invalidate(); //세션 무효화
+    public ResponseEntity<String> logout(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("로그아웃, 세션 삭제 요청이 들어옴 ");
+        Authentication auththentication = SecurityContextHolder.getContext().getAuthentication();
+        if(auththentication != null){
+            //시큐리티가 제공하는 로그아웃 핸들러 사용
+            new SecurityContextLogoutHandler().logout(request, response, auththentication);
+        }
+        //session.invalidate(); //세션 무효화
         System.out.println("로그아웃(세션 삭제) 성공");
         return ResponseEntity.ok("로그아웃 되었습니다");
     }
@@ -102,14 +113,23 @@ public class SessionController {
                     )), //로그인되어 있지 않습니다
     })
     @GetMapping("/current")
-    public ResponseEntity<String> getCurrentSession(HttpSession session){
-        String username = session.getAttribute("loginUser").toString();
+    public ResponseEntity<String> getCurrentSession(Authentication authentication) {
         System.out.println("로그인 상태 확인(현재 세션 조회) 요청");
-        if(username!=null){
-            return ResponseEntity.ok(username);
-        } else{
+
+        //로그인 중인 사용자가 없거나, 익명의 사용자라면 로그인되지 않은 것
+        if (authentication == null ||!authentication.isAuthenticated()|| "anonymousUser".equals(authentication.getPrincipal())) {
             throw new CustomException(ErrorCode.INVALID_LOGIN_SESSION);
         }
+        return ResponseEntity.ok(authentication.getName()); //로그인 상태인 유저의 이름을 반환
+
+//        //현재 스레드의 인증정보를 가져옴
+//        SecurityContextHolder.getContext();
+//        //현재 로그인한 사용자의 Authentication객체를 반환.
+//        SecurityContextHolder.getContext().getAuthentication();
+//        //현재 사용자가 인증된 상태인지 boolean으로 확인
+//        authentication.isAuthenticated();
+//        //세션에 담긴 사용자 정보를 꺼냄
+//        authentication.getPrincipal();
     }
 
 }

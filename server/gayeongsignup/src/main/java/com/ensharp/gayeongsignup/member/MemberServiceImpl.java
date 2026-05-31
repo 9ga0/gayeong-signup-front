@@ -4,16 +4,24 @@ import com.ensharp.gayeongsignup.exception.CustomException;
 import com.ensharp.gayeongsignup.exception.ErrorCode;
 import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class MemberServiceImpl implements MemberService {
     private final MemberRepository memberRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public MemberServiceImpl(MemberRepository memberRepository) {
+    public MemberServiceImpl(MemberRepository memberRepository, PasswordEncoder passwordEncoder) {
         this.memberRepository = memberRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
+    @Transactional
     @Override
     //@Transactional //조회만 할 경우 필요하지 않고, 삽입할 때에 필요?
     public SignupRequestDto join(SignupRequestDto signupRequestDto) {
@@ -23,6 +31,9 @@ public class MemberServiceImpl implements MemberService {
             throw new CustomException(ErrorCode.HAS_EMAIL);
         }
         Member member = new Member.MemberBuilder(signupRequestDto).build();
+        //비밀번호 인코딩해서 생성한 멤버 객체를 db에 저장
+        String encodedPassword = passwordEncoder.encode(member.getPassword());
+        member.updatePassword(encodedPassword);
         memberRepository.save(member);
         System.out.println("회원가입 정보 저장");
         return signupRequestDto;
@@ -66,4 +77,21 @@ public class MemberServiceImpl implements MemberService {
         System.out.println("회원 정보 전달");
         return foundMember.toDto();
     }
+
+    @Override
+    public List<SignupRequestDto> getAllUserInfo(){
+        List<Member> members =memberRepository.findAll();
+
+        if(members.isEmpty()){ //회원이 0명일때
+            throw new CustomException(ErrorCode.USER_NOT_FOUND);
+        }
+        List<SignupRequestDto> dtos = new ArrayList<>();
+
+        return members.stream()
+                .map(member->new SignupRequestDto(
+                        member.getEmail(), member.getPassword(), member.getUsername(),
+                        member.getStreetAddress(), member.getDetailAddress()))
+                .collect(Collectors.toList());
+    }
+
 }
