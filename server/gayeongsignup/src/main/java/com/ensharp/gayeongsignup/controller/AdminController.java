@@ -5,6 +5,7 @@ import com.ensharp.gayeongsignup.exception.CustomException;
 import com.ensharp.gayeongsignup.exception.ErrorCode;
 import com.ensharp.gayeongsignup.member.MemberRepository;
 import com.ensharp.gayeongsignup.member.MemberServiceImpl;
+import com.ensharp.gayeongsignup.member.SignupRequestDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -16,6 +17,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.transaction.Transactional;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /*
 Get - /users - 전체 유저조회 - ADMIN
@@ -41,7 +44,13 @@ public class AdminController {
     }
 
     //Get - /users - 전체 유저조회 - ADMIN
-
+    @Operation(summary = "전체 유저 조회", description = "회원가입된 모든 유저를 조회합니다.")
+    @GetMapping("/users")
+    public ResponseEntity<List<SignupRequestDto>> getAllUserInfo() {
+        System.out.println("전체 유저 정보 확인 요청이 들어옴");
+        List<SignupRequestDto> result = memberServiceImpl.getAllUserInfo();
+        return ResponseEntity.ok(result); //매핑된 유저 데이터 전달해야함
+    }
 
 
     //Delete - /users/{email} - 특정 유저 삭제 -ADMIN
@@ -58,7 +67,7 @@ public class AdminController {
     })
     @Transactional
     @Operation(summary = "특정 유저 삭제", description = "이메일을 기준으로 사용자를 삭제합니다.")
-    @DeleteMapping("/users/{email}")
+    @DeleteMapping("/users")
     public ResponseEntity<String> deleteUser(@Parameter(name = "email", description = "이메일", required = true, example = "koo050803@naver.com")
                                              @RequestParam String email) {
         System.out.println("회원정보 삭제 요청이 들어옴 : " + email);

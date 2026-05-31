@@ -1,16 +1,13 @@
 package com.ensharp.gayeongsignup.config;
 
-import com.ensharp.gayeongsignup.customautentication.CustomAccessDeniedHandler;
-import com.ensharp.gayeongsignup.customautentication.CustomAuthenticationFailureHandler;
-import com.ensharp.gayeongsignup.customautentication.CustomAuthenticationFilter;
-import com.ensharp.gayeongsignup.customautentication.CustomAuthenticationSuccessHandler;
+import com.ensharp.gayeongsignup.customautentication.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
@@ -31,7 +28,8 @@ public class SecurityConfig {
     private final AuthenticationConfiguration authenticationConfiguration;
     private final CustomAccessDeniedHandler accessDeniedHandler;
 
-    public SecurityConfig(CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler, CustomAuthenticationFailureHandler customAuthenticationFailureHandler, AuthenticationEntryPoint authenticationEntryPoint, AuthenticationConfiguration authenticationConfiguration, CustomAccessDeniedHandler accessDeniedHandler) {
+    public SecurityConfig(CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler, CustomAuthenticationFailureHandler customAuthenticationFailureHandler,
+                          AuthenticationEntryPoint authenticationEntryPoint, AuthenticationConfiguration authenticationConfiguration, CustomAccessDeniedHandler accessDeniedHandler){
         this.customAuthenticationSuccessHandler = customAuthenticationSuccessHandler;
         this.customAuthenticationFailureHandler = customAuthenticationFailureHandler;
         this.authenticationEntryPoint = authenticationEntryPoint;
@@ -63,34 +61,28 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable()) // 개발 단계에서는 CSRF 비활성화. 원래는 활성화
                 //개발 중 편의 설정
                 .authorizeHttpRequests(auth -> auth
-//                        .requestMatchers("/api/v1/users/me/**", "/api/v1/sessions/current").hasRole("USER")
+//                        .requestMatchers("/swagger-ui/**").permitAll()
+//                        .requestMatchers("/api/v1/users/me/**","/api/v1/sessions/current").hasRole("USER")
 //                        .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
                         .anyRequest().permitAll()
                 )
                 //기본 로그인 필터
-                .addFilterBefore(ajaxAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(customAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
                 //인증 실패/인가 거부 시 호출될 핸들러 지정
                 .exceptionHandling(config -> config
                         .authenticationEntryPoint(authenticationEntryPoint)
                         .accessDeniedHandler(accessDeniedHandler));
-
-        //                //로그아웃 처리
-//                .logout(logout -> logout
-//                        .logoutUrl("/logout")
-//                        .logoutSuccessUrl("/")
-//                        .permitAll()
-//                )
 
 
         return http.build();
     }
 
     @Bean
-    public CustomAuthenticationFilter ajaxAuthenticationFilter() throws Exception {
+    public CustomAuthenticationFilter customAuthenticationFilter() throws Exception {
         // Post api주소(/api/v1/sessions) 요청 받으면 이 필터가 동작
         CustomAuthenticationFilter customAuthenticationFilter = new CustomAuthenticationFilter("/api/v1/sessions"); //
         //인증 처리할 관리자 설정
-        customAuthenticationFilter.setAuthenticationManager(authenticationManager());
+        customAuthenticationFilter.setAuthenticationManager(authenticationConfiguration.getAuthenticationManager());
         //로그인 성공/실패 로직
         customAuthenticationFilter.setAuthenticationSuccessHandler(customAuthenticationSuccessHandler);
         customAuthenticationFilter.setAuthenticationFailureHandler(customAuthenticationFailureHandler);
@@ -104,13 +96,10 @@ public class SecurityConfig {
         return customAuthenticationFilter;
     }
 
-    @Bean //아이디/비밀번호가 맞는지 실제 검증을 수행하는 주체
-    public AuthenticationManager authenticationManager() throws Exception {
-        return authenticationConfiguration.getAuthenticationManager();
-    }
-
     @Bean //비밀번호 단방향 암호화
     public PasswordEncoder passwordEncoder() {
-        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+        //BCrypt 알고리즘을 사용하여 비밀번호를 암호화.
+        return new BCryptPasswordEncoder();
     }
+
 }
