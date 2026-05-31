@@ -43,13 +43,20 @@ export default function AdminPage() {
             else console.error('handleDeleteUser에서 api 연결 실패:', error.message);
         }
     }
+    const handleQuiryAllUser = (e) =>{
+        //모든 유저 정보 콘솔?에 출력하기
+    }
     return (
         <div className="background-gradient">
             <main className="card-box2" >
                 <CardTitle title="관리자 페이지" />
                 <div className='gap-24px'>
                     {/* 현재 링크페이지 notFound라고 뜸 */}
-                    <SubmitButton text="전체 유저 조회" link='/inquiry-all-user' isActive={true} />
+                    <button type="button" className="submit-button"
+                        onClick={handleQuiryAllUser}>
+                        <p className='button-text'>전체 유저 조회</p>
+
+                    </button>
 
                     <div className="line-box" >
 

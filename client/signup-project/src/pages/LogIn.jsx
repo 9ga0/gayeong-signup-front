@@ -40,18 +40,25 @@ export default function LogIn() {
 
     //console.log(email, ':', password);
     try {
-      const response = await API.post('/api/v1/sessions', {
-        email: email,
-        password: password
-      })
-      if (response.status === 200) {
-        setIsAbleToLogin(true);
-        console.log('올바른 입력으로 로그인되었습니다.');
+      const response = await API.post('/api/v1/sessions'
+        , {
+          email,
+          password
+        }
+      )
+      setIsAbleToLogin(true);
+      console.log('올바른 입력으로 로그인되었습니다.');
+
+      console.log(response.data);
+      if (response.data.role === "ROLE_ADMIN") {
+        navigate('/admin-page');
+      } else {
         const userInfo = await getMyInfo(email); //유저정보 api 연결
         navigate('/my-page', {
           state: { userInfo }
         });
       }
+
     } catch (error) {
       console.log(status);
       if (error.response && error.response.status === 401) {

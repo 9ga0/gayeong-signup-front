@@ -87,6 +87,7 @@ export default function SignUp() {
       setAbleToSubmit(false);
       return; //새로고침? 값 초기화?
     }
+    setError(""); //입력값 형태 통과하면 에러문구 삭제.
     try {
       const response = await API.post('/api/v1/users', {
         email: registerParam.email,
@@ -108,7 +109,7 @@ export default function SignUp() {
         setIsExistEmail(true)
         setAbleToSubmit(false);
       }
-      console.error('signupUser에서 api 연결 실패:', error.message);
+      else console.error('signupUser에서 api 연결 실패:', error.message);
     }
   };
 
