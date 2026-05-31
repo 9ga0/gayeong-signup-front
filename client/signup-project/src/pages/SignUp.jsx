@@ -35,7 +35,7 @@ export default function SignUp() {
       ...prev,
       [name]: value
     }));
-    console.log(registerParam);
+    //console.log(registerParam);
     //함수가 끝나고 랜더링되므로 한박자 늦게 저장된것처럼 보임.
   }
   const setEmailHandler = (value) => {
@@ -43,14 +43,14 @@ export default function SignUp() {
       ...prev,
       email: value
     }));
-    console.log(registerParam);
+    //console.log(registerParam);
   } //((e 객체 반환으로 고치기))
   const setPasswordHandler = (value) => {
     setRegisterParam((prev) => ({
       ...prev,
       password: value
     }));
-    console.log(registerParam);
+    //console.log(registerParam);
   }
   const setAddressHandler = (address) => {
     setRegisterParam((prev) => ({
