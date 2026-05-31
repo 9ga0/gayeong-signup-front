@@ -75,7 +75,8 @@ public class Member implements UserDetails {
     @Override //사용자의 권한 목록 반환
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-        authorities.add(new SimpleGrantedAuthority(userRole));
+        String role = (userRole != null) ? userRole : "ROLE_USER";
+        authorities.add(new SimpleGrantedAuthority(role));
         return authorities;
     }
 

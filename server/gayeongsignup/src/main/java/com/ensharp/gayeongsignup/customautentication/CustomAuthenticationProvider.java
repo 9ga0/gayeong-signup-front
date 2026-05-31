@@ -4,6 +4,7 @@ import com.ensharp.gayeongsignup.exception.CustomException;
 import com.ensharp.gayeongsignup.exception.ErrorCode;
 import com.ensharp.gayeongsignup.member.Member;
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -30,10 +31,12 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         Member user =userDetailsService.loadUserByUsername(email);
         //비밀번호 일치 판단
         if(!passwordEncoder.matches(password,user.getPassword())){
-            throw new CustomException(ErrorCode.INVALID_PASSWORD);
+            //throw new CustomException(ErrorCode.INVALID_PASSWORD);
+            throw new BadCredentialsException("비밀번호가 일치하지 않습니다.");
         }
         //인증 성공 시 권한 포함한 토큰 반환
-        return new UsernamePasswordAuthenticationToken(user.getAuthorities(), email);
+        //(principal-user객체 ,credentials-비밀번호는 보안위해 null처리, authorities-권한 목록)
+        return new UsernamePasswordAuthenticationToken(user,null,user.getAuthorities());
     }
 
     @Override

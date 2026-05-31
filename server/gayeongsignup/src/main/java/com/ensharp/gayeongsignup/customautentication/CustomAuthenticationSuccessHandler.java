@@ -43,10 +43,9 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
             targetUrl="/admin-page"; //admin일떄 이동할 프론트url
             //관리자 페이지로 이동한다.
         }
-        data.put("redirectUrl", targetUrl);
+        //data.put("redirectUrl", targetUrl);
         //로그인 성공시 유저이름을 http응답 바디에 넣음
         response.setStatus(HttpStatus.OK.value());
-        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         objectMapper.writeValue(response.getWriter(),data);
     }
 }

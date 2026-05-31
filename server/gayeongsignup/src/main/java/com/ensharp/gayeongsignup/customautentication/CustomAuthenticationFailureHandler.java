@@ -45,8 +45,9 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
 
         Map<String,String> data = new HashMap<>();
         data.put("error",ErrorCode.USER_NOT_FOUND.getMessage());
-
-        objectMapper.writeValue(response.getWriter(), data);
+        
+        response.getWriter().write("{\"message\": \"아이디 또는 비밀번호가 틀렸습니다\"}");
+        //objectMapper.writeValue(response.getWriter(), data);
 
     }
 }
