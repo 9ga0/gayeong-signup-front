@@ -58,7 +58,7 @@ public class UserController {
                             examples = @ExampleObject(value = "이미 사용 중인 이메일입니다")
                     ))
     })
-    @PostMapping("/signup")
+    @PostMapping("")
     public ResponseEntity<SignupRequestDto> join(@RequestBody @Valid SignupRequestDto signupRequestDto) {
         System.out.println("회원가입 요청이 들어옴 : " + signupRequestDto.email());
         SignupRequestDto result = memberServiceImpl.join(signupRequestDto); //리턴값은 바디로 출력됨
@@ -87,7 +87,7 @@ public class UserController {
                             examples = @ExampleObject(value = "이미 사용 중인 이메일입니다")
                     )) //이미 사용 중인 이메일입니다
     })
-    @GetMapping("/email-check")
+    @GetMapping("/email-availability")
     public ResponseEntity<String> checkEmail(@RequestParam @Valid String email) { //loginDto사용으로 변경 필요
         System.out.println("이메일 중복 확인 요청이 들어옴 : " + email);
         String result = mailServiceImpl.checkEmail(email);

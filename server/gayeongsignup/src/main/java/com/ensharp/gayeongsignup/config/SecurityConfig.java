@@ -44,6 +44,10 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.addAllowedOrigin("http://localhost:5173"); // 허용할 프론트엔드 origin 설정
+        configuration.addAllowedOrigin("https://localhost:5173");
+        configuration.addAllowedHeader("*");
+        configuration.addAllowedMethod("*");
+
         configuration.setAllowCredentials(true); // 쿠키 허용. 세션ID를 주고받기 위함.
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
@@ -59,8 +63,8 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable()) // 개발 단계에서는 CSRF 비활성화. 원래는 활성화
                 //개발 중 편의 설정
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/v1/users/me/**", "/api/v1/sessions/current").hasRole("USER")
-                        .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
+//                        .requestMatchers("/api/v1/users/me/**", "/api/v1/sessions/current").hasRole("USER")
+//                        .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
                         .anyRequest().permitAll()
                 )
                 //기본 로그인 필터

@@ -58,7 +58,7 @@ public class EmailVerificaitonController {
 
         String result = mailServiceImpl.sendTextEmail(emailRequestDto.email());
         //위에서 예외발생하지 않았으면 아래 실행됨
-        return ResponseEntity.ok(result);
+        return ResponseEntity.ok("인증 번호가 발송되었습니다");
     }
 
     //Patch - / - 이메일 인증 상태 변경, 인증번호 검증 - 전체
@@ -84,6 +84,6 @@ public class EmailVerificaitonController {
     public ResponseEntity<String> confirmVerificationCode(@RequestBody @Valid EmailVerificationDto emailVerificationDto) {
         System.out.println("이메일 인증번호 검증 : " + emailVerificationDto.email());
         String result = mailServiceImpl.confirmVerificationCode(emailVerificationDto.email(), emailVerificationDto.verificationCode());
-        return ResponseEntity.ok(result);
+        return ResponseEntity.ok("인증 번호가 확인되었습니다");
     }
 }
