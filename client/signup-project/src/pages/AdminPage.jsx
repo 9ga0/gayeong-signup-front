@@ -5,10 +5,26 @@ import SubmitButton from '../components/common/SubmitButton';
 import '../components/common/Common.css'
 import axios from 'axios';
 import API from '../services/API';
-import { useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { checkLogin } from '../services/CheckLoginApi';
 
 //'/admin-page'
 export default function AdminPage() {
+    const navigate =useNavigate();
+    useEffect(() => { 
+        //api 호출함. 관리자가 아닌데 접근했을때 권한없음 페이지로 이동시킴.
+        //관리자 페이지인데 로그인이 안되어있는 상태면, 관리자 상태가 아닌 것이므로
+        //접근 권한 없는 것임.
+        const verifyAdmin= async()=>{
+            const isAuthrized = await checkLogin();
+            if(!isAuthrized){
+                navigate('/unauthorized');
+            }
+        }
+        verifyAdmin();
+
+    }, []) //컴포넌트가 처음 나타날 때 한번 실행됨.
+
     const [email, setEmail] = useState("");
     const location = useLocation();
     const [error, setError] = useState("");

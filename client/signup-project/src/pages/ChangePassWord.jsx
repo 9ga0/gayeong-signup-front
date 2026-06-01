@@ -12,6 +12,17 @@ export default function ChangePassword(props) {
     const data = { ...location.state }; ///??{} 새로고침 버그 예방
     const [isMatch, setIsMatch] = useState(false); //비밀번호 입력 및 통과했는지
     const [password, setPassword] = useState('');
+
+    useEffect(() => {
+        //비밀번호 찾기페이지(이메일인증받음)를 통해서 들어온 것이 아니면 
+        //401에러로 권한없음 페이지로 이동.
+        if (data.email === '') {
+            console.log('접근 권한이 없습니다.');
+            navigate('/Unauthorized');
+        }
+
+    }, [])
+
     //비밀번호 변경시키는 api 호출.
     const changePw = async (e) => {
         e.preventDefault();
@@ -33,9 +44,9 @@ export default function ChangePassword(props) {
                 state: { context: "비밀번호 재설정 완료" }
             });
         } catch (error) {
-            if (error.response.status==401){
+            if (error.response.status == 401) {
                 alert('존재하지 않는 계정입니다. 로그인화면으로 돌아갑니다.')
-                navigate('/login');;
+                navigate('/login');
             }
             console.error('changePw에서 api 연결 실패:', error.message);
         }
