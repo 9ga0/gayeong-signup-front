@@ -28,7 +28,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         String email= authentication.getName(); //name이지만 email이라고 생각
         String password = authentication.getCredentials().toString();
         //사용자 정보를 조회
-        Member user =userDetailsService.loadUserByUsername(email);
+        UserDetails user =userDetailsService.loadUserByUsername(email);
         //비밀번호 일치 판단
         if(!passwordEncoder.matches(password,user.getPassword())){
             //throw new CustomException(ErrorCode.INVALID_PASSWORD);
