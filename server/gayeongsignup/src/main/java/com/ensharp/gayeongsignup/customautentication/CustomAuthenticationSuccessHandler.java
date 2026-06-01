@@ -1,6 +1,11 @@
 package com.ensharp.gayeongsignup.customautentication;
 
+import com.ensharp.gayeongsignup.exception.CustomException;
+import com.ensharp.gayeongsignup.exception.ErrorCode;
+import com.ensharp.gayeongsignup.member.LoginResponseDto;
 import com.ensharp.gayeongsignup.member.Member;
+import com.ensharp.gayeongsignup.member.MemberRepository;
+import com.ensharp.gayeongsignup.member.SignupRequestDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,29 +25,37 @@ import java.util.Map;
 @Component
 public class CustomAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
     private final ObjectMapper objectMapper = new ObjectMapper();
+    private final MemberRepository memberRepository;
+
+    public CustomAuthenticationSuccessHandler(MemberRepository memberRepository) {
+        this.memberRepository = memberRepository;
+    }
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
         //인증에 성공하면 Authentication 객체 안에 진짜 사용자 정보(Principal)가 담겨서 돌아옴.
-        Member user = (Member) authentication.getPrincipal();
+        String email = authentication.getName();
+        Member user = memberRepository.findByEmail(email)
+                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
+        //Member user = (Member) authentication.getPrincipal();
         System.out.println("로그인 성공 핸들러 동작");
 
-        Map<String, Object> data = new HashMap<>();
-        if (user.getEmail().equals("koo050803@gmail.com")) { //관리자 이메일 하드코딩
-            /// 추후 관리자 repository 파야 할듯
-            data.put("role", "ROLE_ADMIN");
-        }else {
-            data.put("role", "ROLE_USER");
-        }
-
-            //관리자일때, 관리자 페이지로 이동한
-            //유저 계정으로 로그인했을때, //내정보 페이지로 이동
-        data.put("username", user.getUsername());
-        data.put("detailAddress",user.getDetailAddress());
-        data.put("streetAddress",user.getStreetAddress());
-
-        //로그인 성공시 유저이름을 http응답 바디에 넣음
         response.setStatus(HttpStatus.OK.value());
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-        new ObjectMapper().writeValue(response.getWriter(), data);    }
+        response.setCharacterEncoding("UTF-8");
+
+        String role = authentication.getAuthorities().stream()
+                .map(grantedAuthority -> grantedAuthority.getAuthority())
+                .findFirst()
+                .orElse("ROLE_USER");
+        LoginResponseDto loginResponseDto = new LoginResponseDto(
+                user.getUsername(),
+                user.getEmail(),
+                role,
+                user.getStreetAddress(),
+                user.getDetailAddress()
+        );
+        objectMapper.writeValue(response.getWriter(), loginResponseDto);
+
+    }
 }
