@@ -34,7 +34,6 @@ export default function AdminPage() {
             })
 
             console.log('해당 회원 정보를 삭제했습니다');
-            handlePost(e);
         } catch (error) {
             if (error.response && error.response.status === 401) {
                 console.log(error.response.data);
@@ -43,8 +42,37 @@ export default function AdminPage() {
             else console.error('handleDeleteUser에서 api 연결 실패:', error.message);
         }
     }
-    const handleQuiryAllUser = (e) =>{
-        //모든 유저 정보 콘솔?에 출력하기
+    //모든 유저 정보 콘솔?에 출력하기 api
+    const handleQuiryAllUser = async (e) => {
+        e.preventDefault()
+        try {
+            const response = await API.get(
+                '/api/v1/admin/users', {
+            })
+            console.log('모든 유저 정보를 불러옵니다');
+            console.log(response.data)
+            alert("모든 유저 정보가 콘솔에 출력되었습니다.");
+        } catch (error) {
+            console.error('handleQuiryAllUser에서 api 연결 실패:', error.message);
+        }
+    }
+    //모든 이메일 인증 기록 삭제하기 api
+    const handleDeleteAllEmailSend = async (e) => {
+
+        e.preventDefault()
+        try {
+            const response = await API.delete(
+                '/api/v1/admin/email-verifications', {
+            })
+            console.log('모든 이메일 인증 기록을 삭제했습니다');
+            alert("모든 이메일 인증 기록이 삭제되었습니다.");
+        } catch (error) {
+            // if (error.response && error.response.status === 401) {
+            //     console.log(error.response.data);
+            //     setError('존재하지 않는 이메일입니다');
+            // }
+            console.error('handleDeleteAllEmailSend에서 api 연결 실패:', error.message);
+        }
     }
     return (
         <div className="background-gradient">
@@ -79,7 +107,11 @@ export default function AdminPage() {
                     </div>
                     {error && <div className='error'>{error}</div>}
 
-                    <SubmitButton text="이메일 인증 기록 전체 삭제" link='/delete-email-verification-history' isActive={true} />
+                    <button type="button" className="submit-button"
+                        onClick={handleDeleteAllEmailSend}>
+                        <p className='button-text'>이메일 인증 기록 전체 삭제</p>
+
+                    </button>
                 </div>
                 <SubmitButton text="로그아웃" link='/login' isActive={true} />
 
