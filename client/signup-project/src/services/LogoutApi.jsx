@@ -7,9 +7,9 @@ export const logout = async (e) => {
         const response = await API.delete(
             '/api/v1/sessions/current'
         );
-        console.log('logout api 연결 성공');
+        console.log('logout api 성공');
     }
     catch (error) {
-        console.error('logout api 연결 실패:', error.message);
+        console.error('logout api 실패:', error.message);
     }
 };

@@ -53,9 +53,9 @@ export default function LogIn() {
       if (response.data.role === "ROLE_ADMIN") {
         navigate('/admin-page');
       } else {
-        const userInfo = await getMyInfo(email); //유저정보 api 연결
+        //const userInfo = await getMyInfo(email); //유저정보 api 연결
         navigate('/my-page', {
-          state: { userInfo }
+          state: { userInfo: response.data }
         });
       }
 
