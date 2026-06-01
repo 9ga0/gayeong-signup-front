@@ -6,25 +6,30 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "email_send") ///스네이크케이스. 복수형
+@Table(name = "email_send")
+///스네이크케이스. 복수형
 public class EmailVerification {
     @Id
     @Column(nullable = false) //필수 정보들. 비어있을 수 없다
     private String email;
     @Column(nullable = false)
     private String verificationCode;
+    @Column
+    private boolean isAuthenticated;
 
     private EmailVerification() {
     }
-/// EmailVerification네이밍
+
     public EmailVerification(String email, String verificationCode) {
-        this.email=email;
-        this.verificationCode=verificationCode;
+        this.email = email;
+        this.verificationCode = verificationCode;
+        this.isAuthenticated = false;
     }
 
     private EmailVerification(Builder builder) { //Member 생성자
         this.email = builder.email;
         this.verificationCode = builder.verificationCode;
+        this.isAuthenticated = false;
     }
 
     public static class Builder {
@@ -35,6 +40,7 @@ public class EmailVerification {
             this.email = emailVerificationDto.email();
             this.verificationCode = emailVerificationDto.verificationCode();
         }
+
     }
 
     public String getEmail() {
@@ -43,5 +49,13 @@ public class EmailVerification {
 
     public String getVerificationCode() {
         return verificationCode;
+    }
+
+    public boolean getIsAuthenticated() {
+        return isAuthenticated;
+    }
+
+    public void updateIsAuthenticated(boolean isAuthenticated){
+        this.isAuthenticated=isAuthenticated;
     }
 }

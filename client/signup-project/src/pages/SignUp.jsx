@@ -35,7 +35,7 @@ export default function SignUp() {
       ...prev,
       [name]: value
     }));
-    console.log(registerParam);
+    //console.log(registerParam);
     //함수가 끝나고 랜더링되므로 한박자 늦게 저장된것처럼 보임.
   }
   const setEmailHandler = (value) => {
@@ -43,14 +43,14 @@ export default function SignUp() {
       ...prev,
       email: value
     }));
-    console.log(registerParam);
+    //console.log(registerParam);
   } //((e 객체 반환으로 고치기))
   const setPasswordHandler = (value) => {
     setRegisterParam((prev) => ({
       ...prev,
       password: value
     }));
-    console.log(registerParam);
+    //console.log(registerParam);
   }
   const setAddressHandler = (address) => {
     setRegisterParam((prev) => ({
@@ -87,6 +87,7 @@ export default function SignUp() {
       setAbleToSubmit(false);
       return; //새로고침? 값 초기화?
     }
+    setError(""); //입력값 형태 통과하면 에러문구 삭제.
     try {
       const response = await API.post('/api/v1/users', {
         email: registerParam.email,
@@ -108,7 +109,7 @@ export default function SignUp() {
         setIsExistEmail(true)
         setAbleToSubmit(false);
       }
-      console.error('signupUser에서 api 연결 실패:', error.message);
+      else console.error('signupUser에서 api 연결 실패:', error.message);
     }
   };
 

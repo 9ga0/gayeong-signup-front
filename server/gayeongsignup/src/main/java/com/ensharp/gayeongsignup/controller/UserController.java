@@ -53,12 +53,12 @@ public class UserController {
             @ApiResponse(responseCode = "409", description = "Error 409",
                     content =
                     @Content(
-                            mediaType = "text/error-message",
+                            mediaType = "text/plain",
                             schema = @Schema(implementation = String.class),
                             examples = @ExampleObject(value = "이미 사용 중인 이메일입니다")
                     ))
     })
-    @PostMapping("/signup")
+    @PostMapping("")
     public ResponseEntity<SignupRequestDto> join(@RequestBody @Valid SignupRequestDto signupRequestDto) {
         System.out.println("회원가입 요청이 들어옴 : " + signupRequestDto.email());
         SignupRequestDto result = memberServiceImpl.join(signupRequestDto); //리턴값은 바디로 출력됨
@@ -75,19 +75,19 @@ public class UserController {
             @ApiResponse(responseCode = "200", description = "Success",
                     content =
                     @Content(
-                            mediaType = "text/success-message",
+                            mediaType = "text/plain", /// 정해진 값이 있다. 커스텀XX
                             schema = @Schema(implementation = String.class),
                             examples = @ExampleObject(value = "사용 가능한 이메일입니다")
                     )), //사용 가능한 이메일입니다
             @ApiResponse(responseCode = "409", description = "Error 409",
                     content =
                     @Content(
-                            mediaType = "text/error-message",
+                            mediaType = "text/plain",
                             schema = @Schema(implementation = String.class),
                             examples = @ExampleObject(value = "이미 사용 중인 이메일입니다")
                     )) //이미 사용 중인 이메일입니다
     })
-    @GetMapping("/email-check")
+    @GetMapping("/email-availability")
     public ResponseEntity<String> checkEmail(@RequestParam @Valid String email) { //loginDto사용으로 변경 필요
         System.out.println("이메일 중복 확인 요청이 들어옴 : " + email);
         String result = mailServiceImpl.checkEmail(email);
@@ -101,7 +101,7 @@ public class UserController {
             @ApiResponse(responseCode = "204", description = "Success",
                     content =
                     @Content(
-                            mediaType = "text/success-message",
+                            mediaType = "text/plain",
                             schema = @Schema(implementation = String.class),
                             examples = @ExampleObject(value = "비밀번호가 변경되었습니다")
                     )) //
@@ -121,7 +121,7 @@ public class UserController {
             @ApiResponse(responseCode = "409", description = "Error 409",
                     content =
                     @Content(
-                            mediaType = "text/error-message",
+                            mediaType = "text/plain",
                             schema = @Schema(implementation = String.class),
                             examples = @ExampleObject(value = "존재하지 않는 회원입니다")
                     )

@@ -1,16 +1,13 @@
 package com.ensharp.gayeongsignup.config;
 
-import com.ensharp.gayeongsignup.customautentication.CustomAccessDeniedHandler;
-import com.ensharp.gayeongsignup.customautentication.CustomAuthenticationFailureHandler;
-import com.ensharp.gayeongsignup.customautentication.CustomAuthenticationFilter;
-import com.ensharp.gayeongsignup.customautentication.CustomAuthenticationSuccessHandler;
+import com.ensharp.gayeongsignup.customautentication.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
@@ -31,7 +28,8 @@ public class SecurityConfig {
     private final AuthenticationConfiguration authenticationConfiguration;
     private final CustomAccessDeniedHandler accessDeniedHandler;
 
-    public SecurityConfig(CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler, CustomAuthenticationFailureHandler customAuthenticationFailureHandler, AuthenticationEntryPoint authenticationEntryPoint, AuthenticationConfiguration authenticationConfiguration, CustomAccessDeniedHandler accessDeniedHandler) {
+    public SecurityConfig(CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler, CustomAuthenticationFailureHandler customAuthenticationFailureHandler,
+                          AuthenticationEntryPoint authenticationEntryPoint, AuthenticationConfiguration authenticationConfiguration, CustomAccessDeniedHandler accessDeniedHandler){
         this.customAuthenticationSuccessHandler = customAuthenticationSuccessHandler;
         this.customAuthenticationFailureHandler = customAuthenticationFailureHandler;
         this.authenticationEntryPoint = authenticationEntryPoint;
@@ -44,9 +42,11 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.addAllowedOrigin("http://localhost:5173"); // 허용할 프론트엔드 origin 설정
-        configuration.addAllowedMethod("*"); // 모든 HTTP 메소드 허용
-        configuration.addAllowedHeader("*"); // 모든 헤더 허용
-        configuration.setAllowCredentials(true); // 쿠키 허용
+        configuration.addAllowedOrigin("https://localhost:5173");
+        configuration.addAllowedHeader("*");
+        configuration.addAllowedMethod("*");
+
+        configuration.setAllowCredentials(true); // 쿠키 허용. 세션ID를 주고받기 위함.
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration); // 모든 경로에 대해 위 설정 적용
@@ -57,74 +57,37 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http
-                .cors(cors -> cors.configurationSource(corsConfigurationSource())) // cors 설정 코드 추가
+                .cors(cors -> cors.configurationSource(corsConfigurationSource())) // 위에서 설정한 cors
                 .csrf(csrf -> csrf.disable()) // 개발 단계에서는 CSRF 비활성화. 원래는 활성화
                 //개발 중 편의 설정
                 .authorizeHttpRequests(auth -> auth
-//                        .requestMatchers("/api/v1/users/me", "/api/v1/sessions/current").hasRole("USER")
-//                        .requestMatchers("/api/v1/admin").hasRole("ADMIN")
+//                        .requestMatchers("/swagger-ui/**").permitAll()
+//                        .requestMatchers("/api/v1/users/me/**","/api/v1/sessions/current").hasRole("USER")
+//                        .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
                         .anyRequest().permitAll()
                 )
-                .addFilterBefore(ajaxAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
-                .exceptionHandling(config ->config
+                //기본 로그인 필터
+                .addFilterBefore(customAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
+                //인증 실패/인가 거부 시 호출될 핸들러 지정
+                .exceptionHandling(config -> config
                         .authenticationEntryPoint(authenticationEntryPoint)
                         .accessDeniedHandler(accessDeniedHandler));
-                //로그인 페이지 설정.
-//                .formLogin(login -> login
-//                                .loginPage("http://localhost:8080/").permitAll()  // 커스텀 로그인 페이지
-//                                //.loginProcessingUrl("/loginProcess") //제출된 폼 데이터로 post요청할 url
-//                                .usernameParameter("email") //email을 로그인할때 사용할 것이므로 변경.
-//                                .passwordParameter("password")
-//
-////                                .successHandler(customAuthenticationSuccessHandler)
-////                                .failureHandler(customAuthenticationFailureHandler)
-//
-//                                .defaultSuccessUrl("/home", true) //로그인 성공시 이동 url
-//                                .permitAll()
-//                )
-//                //로그아웃 처리
-//                .logout(logout -> logout
-//                        .logoutUrl("/logout")
-//                        .logoutSuccessUrl("/")
-//                        .permitAll()
-//                )
 
 
         return http.build();
     }
 
-//    //폼 로그링 대신 Rest API를 통해 사용자 인증
-//    //다음 사용하여 맞춤형 인증 시나리오 게시
-//    @Bean
-//    public AuthenticationManager authenticationManager(
-//            UserDetailsService userDetailsService,
-//            PasswordEncoder passwordEncoder) {
-//        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider(userDetailsService);
-//        authenticationProvider.setPasswordEncoder(passwordEncoder);
-//
-//        ProviderManager providerManager = new ProviderManager(authenticationProvider);
-//        providerManager.setEraseCredentialsAfterAuthentication(false);
-//
-//        return providerManager;
-//    }
-
-//    @Bean
-//    public UserDetailsService userdetailsService() {
-//        UserDetails userDetails = User.withDefaultPasswordEncoder()
-//                .username("email")
-//                .password("password")
-//                .roles("USER")
-//                .build();
-//        return new InMemoryUserDetailsManager(userDetails);
-//    }
-
     @Bean
-    public CustomAuthenticationFilter ajaxAuthenticationFilter() throws Exception {
-        CustomAuthenticationFilter customAuthenticationFilter = new CustomAuthenticationFilter("/api/login"); //로그인할 페이지
-        customAuthenticationFilter.setAuthenticationManager(authenticationManager());
+    public CustomAuthenticationFilter customAuthenticationFilter() throws Exception {
+        // Post api주소(/api/v1/sessions) 요청 받으면 이 필터가 동작
+        CustomAuthenticationFilter customAuthenticationFilter = new CustomAuthenticationFilter("/api/v1/sessions"); //
+        //인증 처리할 관리자 설정
+        customAuthenticationFilter.setAuthenticationManager(authenticationConfiguration.getAuthenticationManager());
+        //로그인 성공/실패 로직
         customAuthenticationFilter.setAuthenticationSuccessHandler(customAuthenticationSuccessHandler);
         customAuthenticationFilter.setAuthenticationFailureHandler(customAuthenticationFailureHandler);
 
+        //인증된 결과를 HttpSession에 저장.
         customAuthenticationFilter.setSecurityContextRepository(
                 new DelegatingSecurityContextRepository(
                         new RequestAttributeSecurityContextRepository(),
@@ -133,13 +96,10 @@ public class SecurityConfig {
         return customAuthenticationFilter;
     }
 
-    @Bean
-    public AuthenticationManager authenticationManager() throws Exception{
-        return authenticationConfiguration.getAuthenticationManager();
+    @Bean //비밀번호 단방향 암호화
+    public PasswordEncoder passwordEncoder() {
+        //BCrypt 알고리즘을 사용하여 비밀번호를 암호화.
+        return new BCryptPasswordEncoder();
     }
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
-    }
 }

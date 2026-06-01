@@ -4,6 +4,8 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public interface MemberService {
 
@@ -17,6 +19,8 @@ public interface MemberService {
     String changePassword(String email, String newPassword);
 
     SignupRequestDto getUserInfo(String email);
+
+    List<SignupRequestDto> getAllUserInfo();
 
     //비밀번호 변경 시에 성공/실패 점검 및 반환
     //@Transactional

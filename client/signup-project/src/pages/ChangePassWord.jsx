@@ -15,7 +15,7 @@ export default function ChangePassword(props) {
     //비밀번호 변경시키는 api 호출.
     const changePw = async (e) => {
         e.preventDefault();
-        console.log(data.email, ':', password);
+        //console.log(data.email, ':', password);
         console.log("비밀번호 일치 여부:", isMatch);
         if (!isMatch || !password) {
             console.log('비밀번호를 확인하고 다시 입력해주세요.')
@@ -35,7 +35,7 @@ export default function ChangePassword(props) {
         } catch (error) {
             if (error.response.status==401){
                 alert('존재하지 않는 계정입니다. 로그인화면으로 돌아갑니다.')
-                navigate('/');
+                navigate('/login');;
             }
             console.error('changePw에서 api 연결 실패:', error.message);
         }

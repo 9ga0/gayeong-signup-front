@@ -9,7 +9,6 @@ public interface EmailRepository extends JpaRepository<EmailVerification,String>
     public Optional<EmailVerification> findByEmail(String email); ///Optional 사용하기
     public boolean existsByEmail(String email);
 
-    //@Modifying
-    ///어노테이션 잘 공부하기!!!
     public void deleteByEmail(String email);
+    public void deleteAll();
 }
