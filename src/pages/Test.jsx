@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import API from '../services/API';
+import API from '../services/API.jsx';
 
 export default function UserPostComponent() {
   const [saveIDFlag, setSaveIDFlag] = useState(false);

@@ -1,4 +1,4 @@
-import API from "./API";
+import API from "./API.jsx";
 
 
 //이메일로 특정 유저 정보 조회하는 get api. 로그인성공하면 내 정보 페이지로 넘어갈때 호출

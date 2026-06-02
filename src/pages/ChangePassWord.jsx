@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import CardTitle from "../components/common/CardTitle"
-import PasswordBox from "../components/common/PasswordBox"
-import SubmitButton from '../components/common/SubmitButton';
+import CardTitle from "../components/common/CardTitle.jsx"
+import PasswordBox from "../components/common/PasswordBox.jsx"
+import SubmitButton from '../components/common/SubmitButton.jsx';
 import "../components/common/Common.css"
 import { useLocation, useNavigate } from 'react-router-dom';
-import API from '../services/API';
+import API from '../services/API.jsx';
 
 export default function ChangePassword(props) {
     const location = useLocation();
