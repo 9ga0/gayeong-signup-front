@@ -3,8 +3,8 @@ import Check from "../assets/Check.svg"
 import React from 'react';
 import '../components/common/Common.css';
 import '../styles/Success.css'
-import CardTitle from "../components/common/CardTitle";
-import SubmitButton from "../components/common/SubmitButton";
+import CardTitle from "../components/common/CardTitle.jsx";
+import SubmitButton from "../components/common/SubmitButton.jsx";
 import { useLocation } from 'react-router-dom';
 
 export default function Success() {

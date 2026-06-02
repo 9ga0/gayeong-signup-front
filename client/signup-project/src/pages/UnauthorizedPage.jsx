@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import CardTitle from "../components/common/CardTitle"
-import PasswordBox from "../components/common/PasswordBox"
-import SubmitButton from '../components/common/SubmitButton';
+import CardTitle from "../components/common/CardTitle.jsx"
+import PasswordBox from "../components/common/PasswordBox.jsx"
+import SubmitButton from '../components/common/SubmitButton.jsx';
 import '../components/common/Common.css'
 import { useLocation } from 'react-router-dom';
 

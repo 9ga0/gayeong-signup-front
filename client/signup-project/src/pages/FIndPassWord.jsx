@@ -1,7 +1,7 @@
 
-import CardTitle from "../components/common/CardTitle"
-import EmailBox from "../components/common/EmailBox"
-import SubmitButton from "../components/common/SubmitButton"
+import CardTitle from "../components/common/CardTitle.jsx"
+import EmailBox from "../components/common/EmailBox.jsx"
+import SubmitButton from "../components/common/SubmitButton.jsx"
 import '../components/common/Common.css';
 import { useState } from "react";
 

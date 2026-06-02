@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from "react";
 import EyeLock from "../../assets/EyeLock.svg"
-import PasswordInput from './PasswordInput';
+import PasswordInput from './PasswordInput.jsx';
 import './Common.css';
 
 export default function PasswordBox(props) {

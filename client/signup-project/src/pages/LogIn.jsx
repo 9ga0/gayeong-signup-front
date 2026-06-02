@@ -5,12 +5,12 @@ import '../styles/Login.css';
 import { Link, useNavigate } from "react-router-dom";
 import Email from '/src/assets/Email.svg';
 import Password from '/src/assets/Password.svg';
-import SubmitButton from "../components/common/SubmitButton";
-import PasswordInput from "../components/common/PasswordInput";
-import CardTitle from "../components/common/CardTitle";
-import API from '../services/API';
+import SubmitButton from "../components/common/SubmitButton.jsx";
+import PasswordInput from "../components/common/PasswordInput.jsx";
+import CardTitle from "../components/common/CardTitle.jsx";
+import API from '../services/API.jsx';
 import '../components/common/Common.css';
-import { getMyInfo } from "../services/MyInfoApi";
+import { getMyInfo } from "../services/MyInfoApi.jsx";
 
 export default function LogIn() {
   const [saveIDFlag, setSaveIDFlag] = useState(false);

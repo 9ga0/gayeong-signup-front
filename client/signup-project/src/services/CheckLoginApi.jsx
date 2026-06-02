@@ -1,6 +1,6 @@
 import API from "./API";
 import axios from 'axios';
-import Unauthorized from "../pages/UnauthorizedPage";
+import Unauthorized from "../pages/UnauthorizedPage.jsx";
 
 export const checkLogin = async () => {
     //불리언을 페이지로 반환하여, 페이지에서 Navigate하기 

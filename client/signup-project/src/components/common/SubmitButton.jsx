@@ -1,7 +1,7 @@
 import React from 'react';
 import './Common.css';
 import { useNavigate } from "react-router-dom";
-import { logout } from '../../services/LogoutApi';
+import { logout } from '../../services/LogoutApi.jsx';
 
 const SubmitButton = (props) => {
   const navigate = useNavigate();
