@@ -208,3 +208,15 @@
   border-radius: 10px; 
   border: 7px solid rgba(211, 222, 246, 0.8);
 }
+
+/* 내정보 페이지 버튼 */
+.mypage-button {
+  width: 100%;
+  max-width: 70px;
+  height: 40px;
+  border-radius: 10px;
+  border-width: 1px;
+  background-color: rgba(231, 242, 255, 1);
+  border: 1px solid rgba(206, 222, 247, 0.4);
+  float: right;
+}
