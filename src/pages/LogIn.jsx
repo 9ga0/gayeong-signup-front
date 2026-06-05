@@ -49,7 +49,7 @@ export default function LogIn() {
       setIsAbleToLogin(true);
       console.log('올바른 입력으로 로그인되었습니다.');
 
-      //console.log(response.data);
+      console.log(response.data);
       if (response.data.role === "ROLE_ADMIN") {
         navigate('/admin-page');
       } else {
