@@ -171,3 +171,18 @@
 ::-ms-reveal {
   display: none;
 }
+
+.chat-submit-button{
+   width: 100%;
+  max-width: 80px;
+  height: 53px;
+  border-radius: 10px;
+  border-width: 1px;
+  padding: 16px, 48px;
+  margin-right: 0px;
+  margin-left: 8px;
+  gap: 10px;
+  background-color: rgba(231, 242, 255, 1);
+  border: 1px solid rgba(206, 222, 247, 0.4);
+  float: right;
+}

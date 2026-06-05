@@ -54,7 +54,7 @@ export default function LogIn() {
         navigate('/admin-page');
       } else {
         //const userInfo = await getMyInfo(email); //유저정보 api 연결
-        navigate('/my-page', {
+        navigate('/chatbot', {
           state: { userInfo: response.data }
         });
       }
@@ -137,7 +137,6 @@ export default function LogIn() {
                 </div>
                 <Link className="find-password-link-text" to="/find-password">비밀번호 찾기</Link>
               </div>
-
             </div>
 
             <div className="gap-16px">
