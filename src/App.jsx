@@ -12,7 +12,6 @@ import AdminPage from './pages/AdminPage.jsx';
 import NotFound from './pages/NotFound.jsx';
 import Unauthorized from './pages/UnauthorizedPage.jsx';
 import ChatBot from './pages/ChatBotPage.jsx';
-//import AskGemini from './pages/BotTest.jsx';
 
 function App() {
   return (
@@ -30,7 +29,6 @@ function App() {
           <Route path="/admin-page" element={<AdminPage />} />
           <Route path="/unauthorized" element={<Unauthorized />} />
           <Route path="/chatbot" element={<ChatBot />} />
-          {/* <Route path="/test-chatbot" element={<AskGemini />} /> */}
 
           <Route path="*" element={<NotFound />} />
         </Routes>
