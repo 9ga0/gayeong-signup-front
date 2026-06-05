@@ -1,5 +1,5 @@
 //npm install @google/genai
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import '../components/common/Common.css';
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import CardTitle from '../components/common/CardTitle';
@@ -12,6 +12,8 @@ export default function ChatBot(props) {
     const [input, setInput] = useState(""); //입력값
     // const [botMessage, setBotMessage] = useState(""); //챗봇의 대답
     //내 질문과 ai의 응답 저장하는 메시지 배열? 필요할듯
+
+    const scrollRef = useRef(); //데이터가 아닌 웹페이지의 ref를 사용할때
 
     //모델 객체 생성함
     const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });//503 오류 뜨면 2.5,3.5 등 바꿔사용
@@ -39,12 +41,14 @@ export default function ChatBot(props) {
     }
     return (
         <div className="background-gradient">
-            <main className="card-box2" >
+            <main className="card-box" >
                 <p className='sub-title'>En# ChatBot!!</p>
                 <button>내정보</button> {/*이미지 적용하여 버튼으로 사용 예정 */}
-                <div className="chat-box">
+
+                {/* 스크롤바 생성 */}
+                <div className="chat-box scroll-box" ref={scrollRef}> 
                     {/* 챗봇과의 대화 출력 */}
-                    {messages.map((message,index) => ( //messages 배열을 모두 하나씩 순회하며 message로 꺼냄
+                    {messages.map((message, index) => ( //messages 배열을 모두 하나씩 순회하며 message로 꺼냄
                         <div key={index} className={`message ${message.sender}`}>
                             {message.text}
                         </div>
