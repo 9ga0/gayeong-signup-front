@@ -25,7 +25,7 @@ export default function ChatBot(props) {
 
     //모델 객체 생성함
     const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });//503 오류 뜨면 2.5,3.5 등 바꿔사용
-    //const chat = model.startChat({ history: [] });//대화 맥락 유지 가능
+    const chat = model.startChat({ history: [] });//대화 맥락 유지 가능
     //데이터 베이스에 저장해두고 주입해주면, 새로고침해도 맥락 유지 가능할듯. 일단 새로고침하면 리셋으로.
 
     //메시지 입력하고 전송버튼 클릭시 동작. 챗봇한테 보내짐
@@ -42,7 +42,7 @@ export default function ChatBot(props) {
             setMessages(prev => [...prev, botMessage]);
             //console.log(response.text()); //콘솔에 대답 출력
         } catch (error) {
-            console.error("chat api 연결 오류발생");
+            console.error("chat api 연결 오류발생"+error.message);
             setMessages(prev => [...prev, { text: "[ERROR] 서버연결에서 오류가 발생하였습니다.", sender: 'bot' }]);
 
         };
