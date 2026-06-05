@@ -5,10 +5,14 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 import CardTitle from '../components/common/CardTitle';
 import '../styles/testChat.css'
 import SubmitButton from '../components/common/SubmitButton';
+import { useLocation } from 'react-router-dom';
 
 const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY); // 서버 환경변수 사용
 
 export default function ChatBot(props) {
+    const location = useLocation();
+    const userInfo = location.state?.userInfo || {};
+
     const [messages, setMessages] = useState([]); //모든대화기록 저장
     const [input, setInput] = useState(""); //현재 유저 입력값 저장
 
@@ -48,7 +52,8 @@ export default function ChatBot(props) {
             <main className="card-box" >
                 <div className="line-box" >
                     <p className='sub-title'>En# ChatBot!!</p>
-                    <SubmitButton link='/my-page' text='내 정보' className='mypage-button'/> {/*이미지 적용하여 버튼으로 사용 예정 */}
+                    <SubmitButton link='/my-page' text='내 정보'
+                        className='mypage-button' userInfo={userInfo} /> {/*이미지 적용할지 고민 */}
                 </div>
 
                 <div className="chat-box scroll-box" ref={scrollRef}> {/* 스크롤바 생성 */}

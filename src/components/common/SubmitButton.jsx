@@ -25,9 +25,8 @@ const SubmitButton = (props) => {
   return (
     <button
       type={props.link ? "button" : "submit"}
-      className="submit-button"
-      className={props.className} 
-      //className 2번하면 뒤의 것이 적용됨. ==className 입력받았으면 위 코드 무시
+      className={props.className? props.className :"submit-button"}
+      //className 입력받았으면 className 적용. 기본은 submit-button
       style={props.style}
       onClick={moveToNextPage}
     >
