@@ -1,5 +1,5 @@
 //npm install @google/genai
-import { useState, useRef } from 'react';
+import { useState,useEffect, useRef } from 'react';
 import '../components/common/Common.css';
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import CardTitle from '../components/common/CardTitle';
@@ -13,7 +13,11 @@ export default function ChatBot(props) {
     // const [botMessage, setBotMessage] = useState(""); //챗봇의 대답
     //내 질문과 ai의 응답 저장하는 메시지 배열? 필요할듯
 
-    const scrollRef = useRef(); //데이터가 아닌 웹페이지의 ref를 사용할때
+    const scrollRef = useRef(); //데이터가 아닌 브라우저
+
+    useEffect(() => {
+        scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+      }, [messages])
 
     //모델 객체 생성함
     const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });//503 오류 뜨면 2.5,3.5 등 바꿔사용
