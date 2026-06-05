@@ -1,0 +1,33 @@
+.chat-box {
+    width: 400px;
+}
+
+.message { /*대화 박스 설정 */
+    padding: 10px 20px;
+    margin: 10px 0;
+    border-radius: 5px;
+}
+
+.user { /*유저 박스*/
+    background-color: rgba(231, 242, 255, 1);
+    border-color: #0056b3;
+    border: 0.5px solid rgba(191, 188, 188, 0.4);
+    border-radius: 10px;
+    margin-left:80px;
+}
+
+.bot { /*봇 박스*/
+    background-color: #ffffff;
+    border-color: #0056b3;
+    border: 0.5px solid rgba(191, 188, 188, 0.4);
+    border-radius: 10px;
+    margin-right:80px;
+}
+
+/* 모든 버튼에 적용. -클릭감 향상 */
+button {
+    cursor: pointer;
+}
+button:hover {
+    background-color: #aec8e3;
+}
