@@ -24,7 +24,7 @@ export default function ChatBot(props) {
     }, [messages])
 
     //모델 객체 생성함
-    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });//503 오류 뜨면 2.5,3.5 등 바꿔사용
+    const model = genAI.getGenerativeModel({ model: "gemini-3.1-flash-lite" });//503 오류 뜨면 2.5,3.5 등 바꿔사용
     const chat = model.startChat({ history: [] });//대화 맥락 유지 가능
     //데이터 베이스에 저장해두고 주입해주면, 새로고침해도 맥락 유지 가능할듯. 일단 새로고침하면 리셋으로.
 
